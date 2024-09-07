@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -8,10 +9,12 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private menuController: MenuController
+  ) { }
 
   ngOnInit() {
-    
+    this.menuController.enable(false);
   }
 
   async loguear(){
