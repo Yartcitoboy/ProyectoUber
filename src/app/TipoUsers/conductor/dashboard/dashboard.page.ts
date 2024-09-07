@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { person, time, home } from 'ionicons/icons';
 
@@ -9,11 +10,14 @@ import { person, time, home } from 'ionicons/icons';
 })
 export class DashboardPage implements OnInit {
 
-  constructor() {
+  constructor(
+    private menuController: MenuController
+  ) {
     addIcons({ person, time, home})
    }
 
   ngOnInit() {
+    this.menuController.enable(true);
   }
 
   
