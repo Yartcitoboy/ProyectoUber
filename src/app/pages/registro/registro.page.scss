@@ -1,5 +1,12 @@
 ion-content{
     --ion-background-color: #FFC72B !important;
+
+    img {
+      display: flex;
+      margin-left: 40px;
+      margin-top: -10px;
+      width: 70%;
+  }
 }
 
 ion-title{

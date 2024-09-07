@@ -13,7 +13,6 @@ export class DashboardPage implements OnInit {
   selectedSegment: string = 'default';
 
 
-
   constructor(
     private menuController: MenuController
   ) { 
