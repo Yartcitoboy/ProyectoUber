@@ -11,6 +11,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class DashboardPage implements OnInit {
 
   usuarios: Usuario[] = [];
+  
 
   constructor(
     private menuController: MenuController,
