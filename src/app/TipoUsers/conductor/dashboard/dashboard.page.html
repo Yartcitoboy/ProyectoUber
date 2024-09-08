@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-tabs>
+    <ion-tab-bar>
+      <ion-tab-button routerLink="/historial" tab="time">
+        <ion-icon name="time"></ion-icon>
+        Historial
+      </ion-tab-button>
+      <ion-tab-button tab="home">
+        <ion-icon name="home"></ion-icon>
+        Inicio
+      </ion-tab-button>
+      <ion-tab-button routerLink="/perfil" tab="person">
+        <ion-icon name="person"></ion-icon>
+        Perfil
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

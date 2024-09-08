@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaulHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Tu Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item *ngFor="let viaje of viajes" (click)="seleccionarViaje(viaje)">
+      <ion-label>
+        <h2>{{ viaje.destino }}</h2>
+        <p>Salida: {{ viaje.horaSalida }} - Costo: ${{ viaje.costo }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

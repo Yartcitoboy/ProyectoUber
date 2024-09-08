@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Que haremos hoy?</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Menu lateral -->
+  <ion-menu  contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title class="title">nombre</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <!-- Aquí puedes agregar opciones del menú -->
+      <ion-list>
+        <ion-item routerLink="/home">
+          <ion-icon name="home" slot="start"></ion-icon>
+          <ion-label>Inicio</ion-label>
+        </ion-item>
+        <ion-item routerLink="/perfil">
+          <ion-icon name="person" slot="start"></ion-icon>
+          <ion-label>Perfil</ion-label>
+        </ion-item>
+        <ion-item routerLink="/historial">
+          <ion-icon name="search" slot="start"></ion-icon>
+          <ion-label>Historial</ion-label>
+        </ion-item>
+        <ion-item routerLink="/create-trip">
+          <ion-icon name="settings" slot="start"></ion-icon>
+          <ion-label>Configuracion</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <!-- Contenido principal -->
+  <div class="ion-page" id="main-content">
+    <ion-content class="ion-padding">
+      <!-- Aquí puedes agregar el contenido de la página de inicio -->
+      <div class="home-container">
+        <ion-card>
+          <ion-img src="/assets/menu/mapa.jpg"></ion-img>
+        </ion-card>
+
+        <div class="action-buttons">
+          <ion-button expand="block" color="primary" routerLink="/pedir-viaje">Crear Viaje</ion-button>
+          <ion-button expand="block" color="secondary" routerLink="/programar-viaje">Buscar Viaje</ion-button>
+        </div>
+      </div>
+    </ion-content>
+  </div>
+</ion-content>
+

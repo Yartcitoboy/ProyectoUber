@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" style="background-color: #F5F5F5;">
+  <!-- Descripción Introductoria -->
+  <div class="intro-container">
+    <h2>Bienvenido a TeLlevoAPP</h2>
+    <p>Regístrate como conductor o pasajero para comenzar a compartir viajes con tus compañeros.</p>
+  </div>
+  <img alt="Silhouette of mountains" src="assets/pok-avatar/avatar.png"/>
+
+  <!-- Tarjeta Informativa o Promocional -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Fácil, rápido y seguro</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      Con TeLlevoAPP, puedes compartir viajes fácilmente con compañeros de clase. ¡Ahorra tiempo y dinero mientras
+      contribuyes a un ambiente más amigable!
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Botón para abrir el modal -->
+  <ion-button id="open-modal" expand="block" color="primary">Elije una opción</ion-button>
+
+  <!-- Modal -->
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form [formGroup]="loginForm">
+          <ion-item>
+            <ion-input
+              label="Correo"
+              labelPlacement="stacked"
+              type="text"
+              placeholder="Ingresa tu Correo"
+              formControlName="email"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input
+              label="Contraseña"
+              labelPlacement="stacked"
+              type="password"
+              placeholder="Ingresa tu contraseña"
+              formControlName="pass"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-select formControlName="role" label="Tipo de Usuario">
+              <ion-select-option value="pasajero">Pasajero</ion-select-option>
+              <ion-select-option value="conductor">Conductor</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <div class="btns">
+            <ion-button color="dark" fill="solid" shape="round" (click)="confirm()" [strong]="true">Ingresar</ion-button>
+          </div>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>
