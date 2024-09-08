@@ -6,24 +6,22 @@
     </ion-card-header>
 
     <ion-card-content [formGroup]="loginForm">
-        <ion-item>
-          <ion-input formControlName="email" [(ngModel)]="emailValue" type="email" label="Correo" labelPlacement="floating" placeholder="ejemplp@gmail.cl"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-input type="password" label="Contraseña" labelPlacement="floating" placeholder="********" formControlName="pass" [(ngModel)]="passValue">
-            <ion-input-password-toggle slot="end"></ion-input-password-toggle>
-          </ion-input>
-        </ion-item>
-      
+      <ion-item>
+        <ion-input formControlName="email" type="email" label="Correo" labelPlacement="floating" placeholder="ejemplp@gmail.cl"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="pass" type="password" label="Contraseña" labelPlacement="floating" placeholder="********">
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+      </ion-item>
 
       <div class="btns">
-        <ion-button color="dark" fill="solid" shape="round" (click)="login()" >Ingresar</ion-button>
+        <ion-button color="dark" fill="solid" shape="round" (click)="login()">Ingresar</ion-button>
       </div>
 
       <div class="tag">
-        <span>Iniciar Sessión con</span>
+        <span>Iniciar Sesión con</span>
       </div>
-
 
       <div class="social-icon">
         <ion-button class="btn-social" fill="clear">
