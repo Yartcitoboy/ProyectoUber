@@ -51,6 +51,9 @@
 </ion-content>
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaulHref="home"></ion-back-button>
+    </ion-buttons>
     <ion-title>Registro</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -58,8 +61,7 @@
 <ion-content class="ion-padding" style="background-color: #F5F5F5;">
   <!-- Descripción Introductoria -->
   <div class="intro-container">
-    <h2>Bienvenido a TeLlevoAPP</h2>
-    <p>Regístrate como conductor o pasajero para comenzar a compartir viajes con tus compañeros.</p>
+    <h2>Bienvenido a TeLlevo</h2>
   </div>
   <img alt="Silhouette of mountains" src="assets/pok-avatar/avatar.png"/>
 
@@ -69,7 +71,7 @@
       <ion-card-title>Fácil, rápido y seguro</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      Con TeLlevoAPP, puedes compartir viajes fácilmente con compañeros de clase. ¡Ahorra tiempo y dinero mientras
+      Con TeLlevo, puedes compartir viajes fácilmente con amigos. ¡Ahorra tiempo y dinero mientras
       contribuyes a un ambiente más amigable!
     </ion-card-content>
   </ion-card>
@@ -81,6 +83,11 @@
   <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
     <ng-template>
       <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Volver</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
         <form [formGroup]="loginForm">
