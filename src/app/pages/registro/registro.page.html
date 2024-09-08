@@ -58,7 +58,7 @@ git<ion-header>
         </ion-segment>
 
         <!-- Formulario para Conductor -->
-        <!-- <ng-container *ngIf="role === 'conductor'">
+         <!-- <ng-container *ngIf="role === 'conductor'">
           <ion-item>
             <ion-input label="Nombre" labelPlacement="stacked" type="text" placeholder="Nombre del conductor"
               [(ngModel)]="conductor.nombre"></ion-input>
@@ -80,7 +80,7 @@ git<ion-header>
               [(ngModel)]="conductor.pass"></ion-input>
           </ion-item>
           <ion-button expand="full" (click)="registrarse()">Registrarse</ion-button>
-        </ng-container> -->
+        </ng-container>  -->
 
         <!-- Formulario para Pasajero -->
         <ng-container [formGroup]="loginForm" *ngIf="role === 'pasajero'">
