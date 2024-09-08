@@ -25,11 +25,8 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit() {
-<<<<<<< HEAD
     this.menuController.enable(true);
-=======
     this.menuController.enable(false);
->>>>>>> origin/rama_isa
     const usuarioLogin = localStorage.getItem('usuarioLogin');
     if (usuarioLogin) {
       const user = JSON.parse(usuarioLogin);
@@ -39,36 +36,6 @@ export class DashboardPage implements OnInit {
     } else {
 
     }
-<<<<<<< HEAD
-=======
-  }
-
-  configSideMenu() {
-    if (this.tipoUsuario === 'admin') {
-      this.appPages = [
-        {title: 'Dashboard', url:'/admin-dashboard',icon:'home'},
-        {title: 'Administrar Usuarios', url:'/admin-users',icon:'people'},
-        {title: 'Cerrar Sesión', url:'/loguear',icon:'log-out'},
-      ]
-    } else if (this.tipoUsuario === 'pasajero') {
-      this.appPages = [
-        {title: 'Dashboard', url:'/TipoUsers/pasajero-dashboard',icon:'home'},
-        {title: 'Perfil', url:'/perfil',icon:'settings'},
-        {title: 'Cerrar Sesión', url:'/loguear',icon:'log-out'},
-      ]
-    } else if (this.tipoUsuario === 'conductor') {
-      this.appPages = [
-        {title: 'Dashboard', url:'/TipoUsers/conductor-dashboard',icon:'home'},
-        {title: 'Perfil', url:'/perfil',icon:'settings'},
-        {title: 'Cerrar Sesión', url:'/loguear',icon:'log-out'},
-      ]
-    } else {
-      this.appPages = [
-        {title: 'Login', url:'/loguear',icon:'log-out'},
-        {title: 'Registrarse', url:'/registro',icon:'log-out'},
-      ]
-    }
->>>>>>> origin/rama_isa
   }
 
   configSideMenu() {
