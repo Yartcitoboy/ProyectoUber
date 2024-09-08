@@ -9,7 +9,9 @@ import { person, time, qrCode } from 'ionicons/icons';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-//hola
+
+  usuarioLogin?: string;
+
   constructor(
     private menuController: MenuController
   ) {
@@ -18,8 +20,7 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     this.menuController.enable(false);
+    this.usuarioLogin = localStorage.getItem('usuarioLogin') || '';
   }
-
-  
 
 }

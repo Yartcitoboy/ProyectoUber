@@ -25,7 +25,6 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit() {
-    this.menuController.enable(true);
     this.menuController.enable(false);
     const usuarioLogin = localStorage.getItem('usuarioLogin');
     if (usuarioLogin) {
@@ -34,7 +33,7 @@ export class DashboardPage implements OnInit {
       this.emailUsuario = user.email;
       this.configSideMenu();
     } else {
-
+      
     }
   }
 
