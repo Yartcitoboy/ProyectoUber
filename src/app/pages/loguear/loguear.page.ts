@@ -74,13 +74,13 @@ export class LoguearPage implements OnInit {
         if (usuario.tipo === 'admin') {
           this.router.navigate(['/usuarios']);
         } else if (usuario.tipo === 'pasajero') {
-<<<<<<< HEAD
+
           this.router.navigate(['./pasajero-dashboard']);
         } else if (usuario.tipo === 'conductor') {
           this.router.navigate(['./conductor-dashboard']); 
-=======
+
           this.router.navigate(['./pasajero-dashboard']);  
->>>>>>> origin/main
+
         } else {
           this.router.navigate(['./conductor-dashboard']);
         }
