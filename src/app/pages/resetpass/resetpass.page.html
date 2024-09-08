@@ -1,13 +1,23 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>resetpass</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaulHref="login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Recuperar contraseña</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">resetpass</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding" style="background-color: #F5F5F5;">
+  <form [formGroup]="resetForm">
+    <ion-item>
+      <ion-input label="Correo" labelPlacement="stacked" type="text" placeholder="Ingresa tu Correo"
+        formControlName="email"></ion-input>
+    </ion-item>
+
+    <div class="btns">
+      <ion-button color="dark" id="present-alert">Enviar</ion-button>
+      <ion-alert trigger="present-alert" header="Enviado" subHeader=""
+        message="Se ha enviado un codigo a su email.Verfique." [buttons]="alertButtons"></ion-alert>
+    </div>
+  </form>
 </ion-content>

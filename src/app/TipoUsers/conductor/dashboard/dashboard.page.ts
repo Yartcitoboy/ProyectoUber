@@ -17,7 +17,7 @@ export class DashboardPage implements OnInit {
    }
 
   ngOnInit() {
-    this.menuController.enable(true);
+    this.menuController.enable(false);
   }
 
   

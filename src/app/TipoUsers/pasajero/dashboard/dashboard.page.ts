@@ -25,7 +25,7 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit() {
-    this.menuController.enable(true);
+    this.menuController.enable(false);
     const usuarioLogin = localStorage.getItem('usuarioLogin');
     if (usuarioLogin) {
       const user = JSON.parse(usuarioLogin);

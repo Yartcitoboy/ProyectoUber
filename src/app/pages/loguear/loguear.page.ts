@@ -32,6 +32,10 @@ export class LoguearPage implements OnInit {
   ngOnInit() {
     this.menuController.enable(false);
   }
+  async recuperar(){
+    this.router.navigate(['resetpass'])
+  }
+
 
   async login() {
     if (this.loginForm.invalid) {
