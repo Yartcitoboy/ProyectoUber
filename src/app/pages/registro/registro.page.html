@@ -32,7 +32,6 @@ git<ion-header>
       <ion-header>
       </ion-header>
       <ion-content class="ion-padding">
-<<<<<<< HEAD
         <!-- Opciones de Registro -->
         <ion-segment [(ngModel)]="role" color="primary">
           <ion-segment-button value="conductor">
@@ -45,9 +44,6 @@ git<ion-header>
 
         <!-- Formulario para Conductor -->
          <!-- <ng-container *ngIf="role === 'conductor'">
-=======
-        <form [formGroup]="loginForm">
->>>>>>> origin/rama_isa
           <ion-item>
             <ion-input
               label="Correo"
@@ -72,7 +68,6 @@ git<ion-header>
               <ion-select-option value="conductor">Conductor</ion-select-option>
             </ion-select>
           </ion-item>
-<<<<<<< HEAD
           <ion-item>
             <ion-input label="Telefono" labelPlacement="stacked" type="text" placeholder="Telefono del conductor"
               [(ngModel)]="conductor.fono"></ion-input>
@@ -103,12 +98,6 @@ git<ion-header>
           </ion-item>
           <ion-button expand="full" (click)="registrarse()">Registrarse</ion-button>
         </ng-container>
-=======
-          <div class="btns">
-            <ion-button color="dark" fill="solid" shape="round" (click)="confirm()" [strong]="true">Ingresar</ion-button>
-          </div>
-        </form>
->>>>>>> origin/rama_isa
       </ion-content>
     </ng-template>
   </ion-modal>
