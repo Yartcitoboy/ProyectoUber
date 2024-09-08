@@ -9,7 +9,7 @@ import { person, time, qrCode } from 'ionicons/icons';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-
+//hola
   constructor(
     private menuController: MenuController
   ) {
@@ -17,7 +17,7 @@ export class DashboardPage implements OnInit {
    }
 
   ngOnInit() {
-    this.menuController.enable(true);
+    this.menuController.enable(false);
   }
 
   
