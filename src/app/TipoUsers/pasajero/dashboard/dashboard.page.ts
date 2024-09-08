@@ -17,6 +17,7 @@ export class DashboardPage implements OnInit {
   public tipoUsuario?: string;
   public emailUsuario?: string;
 
+  usuarioLogin?: string;
 
   constructor(
     private menuController: MenuController
@@ -30,7 +31,7 @@ export class DashboardPage implements OnInit {
     if (usuarioLogin) {
       const user = JSON.parse(usuarioLogin);
       this.tipoUsuario = user.tipo;
-      this.emailUsuario = user.email;
+      this.usuarioLogin = user.email || '';
       this.configSideMenu();
     } else {
       
