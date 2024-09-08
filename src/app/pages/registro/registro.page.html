@@ -1,4 +1,55 @@
-git<ion-header>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaulHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Historial de Viaje</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-content color="light">
+    <ion-list [inset]="true">
+
+      <ion-item>
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="assets/pok-avatar/charmander.png" />
+        </ion-avatar>
+        <ion-label>Ignacio Catalán</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="assets/pok-avatar/snorlax.png" />
+        </ion-avatar>
+        <ion-label>Sebastián Orellana</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="assets/pok-avatar/pikachu.png" />
+        </ion-avatar>
+        <ion-label>Benjamín Ortega</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <ion-label>Pac-Man</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar>
+          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+        <ion-label>Super Mario World</ion-label>
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+</ion-content>
+<ion-header>
   <ion-toolbar>
     <ion-title>Registro</ion-title>
   </ion-toolbar>
@@ -32,18 +83,7 @@ git<ion-header>
       <ion-header>
       </ion-header>
       <ion-content class="ion-padding">
-        <!-- Opciones de Registro -->
-        <ion-segment [(ngModel)]="role" color="primary">
-          <ion-segment-button value="conductor">
-            Conductor
-          </ion-segment-button>
-          <ion-segment-button value="pasajero">
-            Pasajero
-          </ion-segment-button>
-        </ion-segment>
-
-        <!-- Formulario para Conductor -->
-         <!-- <ng-container *ngIf="role === 'conductor'">
+        <form [formGroup]="loginForm">
           <ion-item>
             <ion-input
               label="Correo"
@@ -68,36 +108,10 @@ git<ion-header>
               <ion-select-option value="conductor">Conductor</ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-item>
-            <ion-input label="Telefono" labelPlacement="stacked" type="text" placeholder="Telefono del conductor"
-              [(ngModel)]="conductor.fono"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input label="Contraseña" labelPlacement="stacked" type="text" placeholder="Nombre del conductor"
-              [(ngModel)]="conductor.pass"></ion-input>
-          </ion-item>
-          <ion-button expand="full" (click)="registrarse()">Registrarse</ion-button>
-        </ng-container>  -->
-
-        <!-- Formulario para Pasajero -->
-        <ng-container [formGroup]="loginForm" *ngIf="role === 'pasajero'">
-          <ion-item>
-            <ion-input fornControlName="nombre" label="Nombre" labelPlacement="stacked" type="text"
-              placeholder="Nombre del pasajero">
-            </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input fornControlName="email" label="Email" labelPlacement="stacked" type="email"
-              placeholder="Ingrese Correo" [(ngModel)]="pasajeroEmail">
-            </ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input fornControlName="pass" label="Contraseña" labelPlacement="stacked" type="password"
-              placeholder="Contraseña" [(ngModel)]="pasajeroPass">
-            </ion-input>
-          </ion-item>
-          <ion-button expand="full" (click)="registrarse()">Registrarse</ion-button>
-        </ng-container>
+          <div class="btns">
+            <ion-button color="dark" fill="solid" shape="round" (click)="confirm()" [strong]="true">Ingresar</ion-button>
+          </div>
+        </form>
       </ion-content>
     </ng-template>
   </ion-modal>
