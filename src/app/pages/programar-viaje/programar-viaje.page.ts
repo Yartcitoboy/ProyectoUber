@@ -14,14 +14,12 @@ export class ProgramarViajePage {
   constructor(private router: Router) {}
 
   onSubmit() {
-    // Simula guardar el viaje programado
     console.log('Viaje programado:', {
       destino: this.destino,
       horaSalida: this.horaSalida,
       costo: this.costo,
     });
 
-    // Navegar de vuelta a la página de inicio
     this.router.navigate(['/home']);
   }
 }

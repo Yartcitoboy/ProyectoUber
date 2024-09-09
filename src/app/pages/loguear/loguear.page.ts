@@ -48,13 +48,11 @@ export class LoguearPage implements OnInit {
       return;
     }
 
-    // CREAMOS EL LOADING
     const loading = await this.loadingController.create({
       message: 'Cargando.....',
       duration: 2000
     });
 
-    // CREAMOS LA ALERTA
     const alert = await this.alertController.create({
       header: 'Acceso denegado',
       message: 'Usuario o contraseña incorrectas!',
@@ -64,7 +62,6 @@ export class LoguearPage implements OnInit {
     const email = this.loginForm.get('email')?.value;
     const pass = this.loginForm.get('pass')?.value;
 
-    // PREGUNTAR POR EL USUARIO
     const aux = this.usuariosService.getUsuario();
     const usuario = aux.find(aux => aux.email === email && aux.pass === pass);
 

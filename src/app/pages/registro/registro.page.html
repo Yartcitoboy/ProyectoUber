@@ -8,13 +8,11 @@
 </ion-header>
 
 <ion-content class="ion-padding" >
-  <!-- Descripción Introductoria -->
   <div class="intro-container">
     <h2>Bienvenido a TeLlevo</h2>
   </div>
   <img alt="Silhouette of mountains" src="assets/pok-avatar/avatar.png"/>
 
-  <!-- Tarjeta Informativa o Promocional -->
   <ion-card>
     <ion-card-header>
       <ion-card-title>Fácil, rápido y seguro</ion-card-title>
@@ -25,10 +23,8 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Botón para abrir el modal -->
   <ion-button id="open-modal" expand="block" color="dark">Elije una opción</ion-button>
 
-  <!-- Modal -->
   <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
     <ng-template>
       <ion-header>
