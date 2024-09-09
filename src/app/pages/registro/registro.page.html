@@ -1,64 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaulHref="home"></ion-back-button>
+      <ion-back-button color="dark" defaulHref="home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Historial de Viaje</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-content color="light">
-    <ion-list [inset]="true">
-
-      <ion-item>
-        <ion-avatar>
-          <img alt="Silhouette of a person's head" src="assets/pok-avatar/charmander.png" />
-        </ion-avatar>
-        <ion-label>Ignacio Catalán</ion-label>
-      </ion-item>
-
-      <ion-item>
-        <ion-avatar>
-          <img alt="Silhouette of a person's head" src="assets/pok-avatar/snorlax.png" />
-        </ion-avatar>
-        <ion-label>Sebastián Orellana</ion-label>
-      </ion-item>
-
-      <ion-item>
-        <ion-avatar>
-          <img alt="Silhouette of a person's head" src="assets/pok-avatar/pikachu.png" />
-        </ion-avatar>
-        <ion-label>Benjamín Ortega</ion-label>
-      </ion-item>
-
-      <ion-item>
-        <ion-avatar>
-          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-        </ion-avatar>
-        <ion-label>Pac-Man</ion-label>
-      </ion-item>
-
-      <ion-item>
-        <ion-avatar>
-          <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-        </ion-avatar>
-        <ion-label>Super Mario World</ion-label>
-      </ion-item>
-
-    </ion-list>
-  </ion-content>
-</ion-content>
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaulHref="home"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Registro</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding" style="background-color: #F5F5F5;">
+<ion-content class="ion-padding" >
   <!-- Descripción Introductoria -->
   <div class="intro-container">
     <h2>Bienvenido a TeLlevo</h2>
@@ -77,15 +25,15 @@
   </ion-card>
 
   <!-- Botón para abrir el modal -->
-  <ion-button id="open-modal" expand="block" color="primary">Elije una opción</ion-button>
+  <ion-button id="open-modal" expand="block" color="dark">Elije una opción</ion-button>
 
   <!-- Modal -->
   <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
-    <ng-template>
-      <ion-header>
+    <ng-template >
+      <ion-header >
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-button (click)="cancel()">Volver</ion-button>
+            <ion-button color="dark" (click)="cancel()">Volver</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>

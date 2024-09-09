@@ -8,6 +8,37 @@ ion-content {
 }
   
 h1{
-    margin-top: 30px;
+    margin-top: 15px;
+    text-align: center;
     font-family: 'Rammetto One';
 } 
+
+ion-card {
+  --ion-margin: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  --ion-background-color: transparent;
+  box-shadow: none !important;
+}
+
+ion-list {
+  margin-top: 5px;
+}
+
+.custom-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name {
+  flex: 1;
+  margin-right: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price {
+  flex: 0;
+}
