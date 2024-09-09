@@ -10,9 +10,7 @@ import { Page } from 'src/app/interfaces/page';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-<<<<<<< HEAD
-//hola
-=======
+
 
   public appPages: Page[] = [];
   public tipoUsuario?: string;
@@ -20,17 +18,14 @@ export class DashboardPage implements OnInit {
 
   usuarioLogin?: string;
 
->>>>>>> rama_isa
+
   constructor(
     private menuController: MenuController
   ) {
     addIcons({ person, time, qrCode})
    }
 
-<<<<<<< HEAD
-  ngOnInit() {
-    this.menuController.enable(false);
-=======
+
    ngOnInit() {
     this.menuController.enable(false);
     const usuarioLogin = localStorage.getItem('usuarioLogin');
@@ -41,7 +36,6 @@ export class DashboardPage implements OnInit {
     } else {
       
     }
->>>>>>> rama_isa
-  }
 
+  }
 }

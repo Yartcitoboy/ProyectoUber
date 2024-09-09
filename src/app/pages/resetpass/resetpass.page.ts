@@ -35,10 +35,4 @@ export class ResetpassPage implements OnInit {
   ngOnInit() {
     
   }
-
-
-<<<<<<< HEAD
-=======
-
->>>>>>> rama_isa
 }
