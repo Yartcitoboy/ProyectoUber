@@ -84,6 +84,7 @@ export class LoguearPage implements OnInit {
         }
       }, 2000);
 
+
     } else {
       await alert.present();
       this.loginForm.reset();  

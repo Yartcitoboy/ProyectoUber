@@ -37,4 +37,8 @@ export class ResetpassPage implements OnInit {
   }
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> rama_isa
 }

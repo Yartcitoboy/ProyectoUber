@@ -8,8 +8,10 @@ import { Router } from '@angular/router';
 })
 export class HomePage implements OnInit {
   username: string = 'Usuario';
+  
 
   constructor(private router: Router) {}
+  
 
   ngOnInit() {
       

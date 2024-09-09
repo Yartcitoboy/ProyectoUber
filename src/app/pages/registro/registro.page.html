@@ -1,13 +1,18 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
+<<<<<<< HEAD
       <ion-back-button defaulHref="home"></ion-back-button>
     </ion-buttons>
     <ion-title>Registro</ion-title>
+=======
+      <ion-back-button color="dark" defaulHref="home"></ion-back-button>
+    </ion-buttons>
+>>>>>>> rama_isa
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" style="background-color: #F5F5F5;">
+<ion-content class="ion-padding" >
   <!-- Descripción Introductoria -->
   <div class="intro-container">
     <h2>Bienvenido a TeLlevo</h2>
@@ -26,15 +31,23 @@
   </ion-card>
 
   <!-- Botón para abrir el modal -->
-  <ion-button id="open-modal" expand="block" color="primary">Elije una opción</ion-button>
+  <ion-button id="open-modal" expand="block" color="dark">Elije una opción</ion-button>
 
   <!-- Modal -->
   <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+<<<<<<< HEAD
     <ng-template>
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-button (click)="cancel()">Volver</ion-button>
+=======
+    <ng-template >
+      <ion-header >
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button color="dark" (click)="cancel()">Volver</ion-button>
+>>>>>>> rama_isa
           </ion-buttons>
         </ion-toolbar>
       </ion-header>

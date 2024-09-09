@@ -1,10 +1,47 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Pasajero</ion-title>
+    <ion-title>{{ usuarioLogin }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <div class="container">
+    <ion-searchbar class="searchbar" placeholder="¿Dónde deseas ir?"></ion-searchbar>
+    <ion-card>
+      <ion-img class="background-img" src="assets/pok-wallpaper/mapa.jpeg" alt=""></ion-img>
+    </ion-card>
+  </div>
+  
+  <ion-card class="card-pasajero" color="light">
+    <ion-card-header>
+      <ion-card-title>A donde quieres ir?</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content class="ion-card-center">
+      Ingresa una direccion hacia donde quieres ir.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item>
+    <ion-button slot="start">
+      <ion-icon slot="icon-only" name="navigate"></ion-icon>
+    </ion-button>
+    <ion-label>AV. Allende con Provivencia</ion-label>
+    <ion-button slot="end">
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+  </ion-item>
+
+  <ion-item>
+    <ion-button slot="start">
+      <ion-icon slot="icon-only" name="navigate"></ion-icon>
+    </ion-button>
+    <ion-label>Calle Jose perez #234</ion-label>
+    <ion-button slot="end">
+      <ion-icon slot="icon-only" name="star"></ion-icon>
+    </ion-button>
+  </ion-item>
+
   <ion-tabs>
     <ion-tab-bar>
       <ion-tab-button routerLink="/historial" tab="time">

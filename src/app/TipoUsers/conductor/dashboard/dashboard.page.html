@@ -1,10 +1,36 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Conductor</ion-title>
+    <ion-title>{{ usuarioLogin }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-img
+    src="assets/pok-wallpaper/mapa.jpeg"
+    alt=""
+    ></ion-img>
+  </ion-card>
+
+  <ion-list>
+    <ion-item class="custom-item">
+      <ion-label class="name">Juan Carlos Bodoque</ion-label>
+      <ion-label class="price">$3500</ion-label>
+    </ion-item>
+    <ion-item class="custom-item">
+      <ion-label class="name">Antonio Kast</ion-label>
+      <ion-label class="price">$3500</ion-label>
+    </ion-item>
+    <ion-item class="custom-item">
+      <ion-label class="name">Salvador Allende</ion-label>
+      <ion-label class="price">Junaeb</ion-label>
+    </ion-item>
+    <ion-item class="custom-item">
+      <ion-label class="name">Augusto Pinochet</ion-label>
+      <ion-label class="price">Pagare</ion-label>
+    </ion-item>
+  </ion-list>
+
   <ion-tabs>
     <ion-tab-bar>
       <ion-tab-button routerLink="/historial" tab="time">

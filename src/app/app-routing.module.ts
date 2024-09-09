@@ -83,7 +83,7 @@ const routes: Routes = [
         loadChildren: () => import('./TipoUsers/admin/detalle-admin/detalle-admin.module').then( m => m.DetalleAdminPageModule)
       }
     ]
-  }
+  },
 ];
 
 @NgModule({
