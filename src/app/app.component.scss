@@ -1,0 +1,18 @@
+.header-title {
+    display: flex; // Flexbox para alinear en fila
+    align-items: center; // Centrado vertical
+    justify-content: start; // Alineado a la izquierda
+    gap: 5px;
+    
+    
+    .bienvenido {
+      font-weight: bold;
+        font-size: 16px;
+    }
+  
+    .email {
+      font-style: italic; // Ajustes de estilo opcionales
+      font-size: 14px;
+    }
+  }
+  

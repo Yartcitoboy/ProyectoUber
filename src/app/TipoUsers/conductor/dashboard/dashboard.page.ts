@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
-import { addIcons } from 'ionicons';
-import { person, time, qrCode } from 'ionicons/icons';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MenuController, NavController } from '@ionic/angular';
+import { IonMenu } from '@ionic/angular';
+import { Usuario } from 'src/app/interfaces/usuario';
+import { UsuariosService } from 'src/app/services/usuarios.service';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -9,17 +11,27 @@ import { person, time, qrCode } from 'ionicons/icons';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
-//hola
+  @ViewChild(IonMenu) menu?: IonMenu;
+
+  usuarios: Usuario[] = [];
+
   constructor(
-    private menuController: MenuController
+    private menuController: MenuController,
+    private navCtrl: NavController,
+    private usuarioService: UsuariosService
   ) {
-    addIcons({ person, time, qrCode})
+    
    }
 
   ngOnInit() {
-    this.menuController.enable(false);
+    this.menuController.enable(true);
+    this.config();
+  }
+  config(){
+    this.usuarios = this.usuarioService.getUsuario();
   }
 
-  
-
+  openMenu() {
+    this.menu?.open();
+  }
 }

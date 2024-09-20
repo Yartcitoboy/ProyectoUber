@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Page } from './interfaces/page';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent {
   public tipoUsuario?: string;
   public emailUsuario?: string;
 
-  constructor() {}
+  constructor(private navCtrl: NavController) {}
 
   ngOnInit() {
     const usuarioLogin = localStorage.getItem('usuarioLogin');
@@ -22,7 +23,7 @@ export class AppComponent {
       this.emailUsuario = user.email;
       this.configSideMenu();
     } else {
-
+      this.navCtrl.navigateRoot('/loguear');
     }
   }
 
@@ -41,9 +42,12 @@ export class AppComponent {
       ]
     } else if (this.tipoUsuario === 'conductor') {
       this.appPages = [
-        {title: 'Dashboard', url:'/TipoUsers/conductor-dashboard',icon:'home'},
-        {title: 'Perfil', url:'/perfil',icon:'settings'},
-        {title: 'Cerrar Sesión', url:'/loguear',icon:'log-out'},
+        { title: 'Inicio', url: '/TipoUsers/conductor/historial', icon: 'home' }, 
+        { title: 'Billetera', url: '/TipoUsers/conductor/mapa', icon: 'card' }, 
+        { title: 'Historial', url: '/TipoUsers/conductor/dashboard', icon: 'time' },
+        { title: 'Notificaciones', url: '/TipoUsers/conductor/perfil', icon: 'notifications' },
+        { title: 'Ajustes', url: '/TipoUsers/conductor/perfil', icon: 'settings' },
+        { title: 'Cerrar Sesión', url: '/loguear', icon: 'log-out' },
       ]
     } else {
       this.appPages = [
