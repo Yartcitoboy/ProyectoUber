@@ -4,6 +4,9 @@ import { IonMenu } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
+import { addIcons } from 'ionicons';
+import { eye, lockClosed } from 'ionicons/icons';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +23,7 @@ export class DashboardPage implements OnInit {
     private menuController: MenuController,
     private usuarioService: UsuariosService
   ) {
-    
+    addIcons({ eye, lockClosed });
    }
 
   ngOnInit() {

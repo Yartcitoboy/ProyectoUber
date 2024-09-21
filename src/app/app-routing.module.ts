@@ -100,8 +100,6 @@ const routes: Routes = [
     path: 'conductor-ajustes',
     loadChildren: () => import('./TipoUsers/conductor/menu/ajustes/ajustes.module').then( m => m.AjustesPageModule)
   },
-
-
 ];
 
 @NgModule({

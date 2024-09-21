@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { addIcons } from 'ionicons';
+import { chevronForward, listCircle } from 'ionicons/icons';
 
 @Component({
   selector: 'app-ajustes',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AjustesPage implements OnInit {
 
-  constructor() { }
+  constructor() {
+    addIcons({ chevronForward, listCircle });
+   }
 
   ngOnInit() {
   }

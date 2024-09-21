@@ -1,13 +1,48 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>billetera</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/conductor-dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Billetera</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">billetera</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-label> $ Dinero</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">First Content</div> // aca va un for para historial del dinero
+    </ion-accordion>
+  </ion-accordion-group>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>3543 6757 2345 8375</ion-card-subtitle>
+      <br>
+      <ion-card-title>Visa</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <div>
+        <div>Juan Carlos Bodoque </div>
+        <div>05/28</div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>3543 6757 2345 8375</ion-card-subtitle>
+      <br>
+      <ion-card-title>MasterCard</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <div>
+        <div>Nicolas Allende </div>
+        <div>05/28</div>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

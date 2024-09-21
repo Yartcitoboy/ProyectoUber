@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Page } from './interfaces/page';
 import { NavController } from '@ionic/angular';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -14,6 +15,8 @@ export class AppComponent {
   public emailUsuario?: string;
 
   constructor(private navCtrl: NavController) {}
+
+  
 
   ngOnInit() {
     const usuarioLogin = localStorage.getItem('usuarioLogin');

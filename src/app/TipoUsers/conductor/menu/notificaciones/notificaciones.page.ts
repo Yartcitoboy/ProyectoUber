@@ -10,28 +10,35 @@ export class NotificacionesPage {
 
   @ViewChild(IonModal) modal?: IonModal;
   notifications = [
-    { id: 1, message: 'Notificación 1', date: '2024-09-01' },
-    { id: 2, message: 'Notificación 2', date: '2024-09-15' },
-    { id: 3, message: 'Notificación 3', date: '2024-09-20' },
-    // Agrega más notificaciones según sea necesario
+    {
+      sender: 'Juan Carlos',
+      message: 'Viaje',
+      note: 'Juan carlos se unio a tu viaje',
+      time: '06:11',
+    },
+    {
+      sender: 'Ionitron',
+      message: 'I have become sentient',
+      note: 'That is all.',
+      time: '03:44',
+    },
+    {
+      sender: 'Steam',
+      message: 'Game Store Sale',
+      note: 'That game you added to your wish list 2 years ago is now on sale!',
+      time: 'Yesterday',
+    },
+    {
+      sender: 'Ionic',
+      message: 'Announcing Ionic 7.0',
+      note: 'This version is one more than Ionic 6!',
+      time: 'Yesterday',
+    },
   ];
 
-  filteredNotifications = [...this.notifications];
+  selectedNotification: any = null;
 
-  filterDate?: string;
-  selectedNotification: any;
-
-  filterNotifications() {
-    if (this.filterDate) {
-      this.filteredNotifications = this.notifications.filter(notification =>
-        notification.date === this.filterDate
-        
-      );
-    } else {
-      this.filteredNotifications = [...this.notifications];
-      
-    }
-  }
+  
 
   openModal(notification: any) {
     this.selectedNotification = notification;
