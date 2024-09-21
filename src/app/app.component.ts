@@ -36,17 +36,20 @@ export class AppComponent {
       ]
     } else if (this.tipoUsuario === 'pasajero') {
       this.appPages = [
-        {title: 'Dashboard', url:'/TipoUsers/pasajero-dashboard',icon:'home'},
-        {title: 'Perfil', url:'/perfil',icon:'settings'},
-        {title: 'Cerrar Sesión', url:'/loguear',icon:'log-out'},
+        { title: 'Inicio', url: '/TipoUsers/pasajero/historial', icon: 'home' }, 
+        { title: 'Billetera', url: '/TipoUsers/pasajero/billetera', icon: 'card' }, 
+        { title: 'Historial', url: '/TipoUsers/pasajero/historial', icon: 'time' },
+        { title: 'Notificaciones', url: '/TipoUsers/pasajero/notificaciones', icon: 'notifications' },
+        { title: 'Ajustes', url: '/TipoUsers/pasajero/ajustes', icon: 'settings' },
+        { title: 'Cerrar Sesión', url: '/loguear', icon: 'log-out' },
       ]
     } else if (this.tipoUsuario === 'conductor') {
       this.appPages = [
-        { title: 'Inicio', url: '/TipoUsers/conductor/historial', icon: 'home' }, 
-        { title: 'Billetera', url: '/TipoUsers/conductor/mapa', icon: 'card' }, 
-        { title: 'Historial', url: '/TipoUsers/conductor/dashboard', icon: 'time' },
-        { title: 'Notificaciones', url: '/TipoUsers/conductor/perfil', icon: 'notifications' },
-        { title: 'Ajustes', url: '/TipoUsers/conductor/perfil', icon: 'settings' },
+        { title: 'Inicio', url: '/conductor/dashboard', icon: 'home' }, 
+        { title: 'Billetera', url: '/conductor-billetera', icon: 'card' }, 
+        { title: 'Historial', url: '/conductor-historial', icon: 'time' },
+        { title: 'Notificaciones', url: '/conductor-notificaciones', icon: 'notifications' },
+        { title: 'Ajustes', url: '/conductor-ajustes', icon: 'settings' },
         { title: 'Cerrar Sesión', url: '/loguear', icon: 'log-out' },
       ]
     } else {

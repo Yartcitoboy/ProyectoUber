@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/conductor-dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Historial</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Av. Mexico 2234</ion-card-subtitle>
+      <ion-card-subtitle>Duoc UC. Puente alto</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-button id="open-modal" expand="block">Ver más</ion-button>
+      
+        <ion-modal
+          trigger="open-modal"
+          [initialBreakpoint]="0.25"
+          [breakpoints]="[0, 0.25, 0.5, 0.75]"
+          handleBehavior="cycle"
+        >
+          <ng-template>
+            <ion-content class="ion-padding">
+              <div class="ion-margin-top">
+                <ion-label>Informacion del viaje</ion-label>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Luis barros borgopos</ion-card-subtitle>
+      <ion-card-subtitle>Duoc UC. Puente alto</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-button id="open-modal" expand="block">Ver más</ion-button>
+      
+        <ion-modal
+          trigger="open-modal"
+          [initialBreakpoint]="0.25"
+          [breakpoints]="[0, 0.25, 0.5, 0.75]"
+          handleBehavior="cycle"
+        >
+          <ng-template>
+            <ion-content class="ion-padding">
+              <div class="ion-margin-top">
+                <ion-label>Informacion del viaje</ion-label>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Lider, Puent alto</ion-card-subtitle>
+      <ion-card-subtitle>Duoc UC. Puente alto</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content>
+      Here's a small text description for the card content. Nothing more, nothing less.
+    </ion-card-content>
+  </ion-card> -->
+</ion-content>

@@ -83,7 +83,25 @@ const routes: Routes = [
         loadChildren: () => import('./TipoUsers/admin/detalle-admin/detalle-admin.module').then( m => m.DetalleAdminPageModule)
       }
     ]
-  }
+  },
+  {
+    path: 'conductor-billetera',
+    loadChildren: () => import('./TipoUsers/conductor/menu/billetera/billetera.module').then( m => m.BilleteraPageModule)
+  },
+  {
+    path: 'conductor-historial',
+    loadChildren: () => import('./TipoUsers/conductor/menu/historial/historial.module').then( m => m.HistorialPageModule)
+  },
+  {
+    path: 'conductor-notificaciones',
+    loadChildren: () => import('./TipoUsers/conductor/menu/notificaciones/notificaciones.module').then( m => m.NotificacionesPageModule)
+  },
+  {
+    path: 'conductor-ajustes',
+    loadChildren: () => import('./TipoUsers/conductor/menu/ajustes/ajustes.module').then( m => m.AjustesPageModule)
+  },
+
+
 ];
 
 @NgModule({

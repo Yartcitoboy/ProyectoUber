@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MenuController, NavController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
 import { IonMenu } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { UsuariosService } from 'src/app/services/usuarios.service';
@@ -12,12 +12,12 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class DashboardPage implements OnInit {
   @ViewChild(IonMenu) menu?: IonMenu;
+  selectedSegment: string = 'default';
 
   usuarios: Usuario[] = [];
 
   constructor(
     private menuController: MenuController,
-    private navCtrl: NavController,
     private usuarioService: UsuariosService
   ) {
     
@@ -31,7 +31,5 @@ export class DashboardPage implements OnInit {
     this.usuarios = this.usuarioService.getUsuario();
   }
 
-  openMenu() {
-    this.menu?.open();
-  }
+  
 }

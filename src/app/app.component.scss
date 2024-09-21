@@ -1,7 +1,7 @@
 .header-title {
-    display: flex; // Flexbox para alinear en fila
-    align-items: center; // Centrado vertical
-    justify-content: start; // Alineado a la izquierda
+    display: flex; 
+    align-items: center; 
+    justify-content: start; 
     gap: 5px;
     
     
@@ -11,7 +11,7 @@
     }
   
     .email {
-      font-style: italic; // Ajustes de estilo opcionales
+      font-style: italic; 
       font-size: 14px;
     }
   }
