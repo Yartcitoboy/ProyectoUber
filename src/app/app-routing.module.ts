@@ -99,7 +99,11 @@ const routes: Routes = [
   {
     path: 'conductor-ajustes',
     loadChildren: () => import('./TipoUsers/conductor/menu/ajustes/ajustes.module').then( m => m.AjustesPageModule)
+  },  {
+    path: 'qr',
+    loadChildren: () => import('./TipoUsers/conductor/menu/qr/qr.module').then( m => m.QRPageModule)
   },
+
 ];
 
 @NgModule({
