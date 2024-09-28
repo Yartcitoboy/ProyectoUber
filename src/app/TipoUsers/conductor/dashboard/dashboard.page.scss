@@ -1,9 +1,38 @@
-ion-icon{
-    margin-right: 10px;
+ion-icon {
+  margin-right: 10px;
 }
-ion-item{
-    size: 38px;
-}
+
 ion-item {
-    cursor: pointer;
-  }  
+  size: 38px;
+}
+
+ion-card {
+  height: 100vh; /* Altura total */
+}
+
+/* Posiciona los botones en la parte inferior */
+.button-container {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  padding: 0 10px;
+  z-index: 10; /* Asegúrate de que los botones estén encima del mapa */
+}
+
+/* Espaciado entre los botones */
+ion-button {
+  margin-bottom: 10px;
+}
+
+/* Botón de menú */
+.menu-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+}
+
+#map {
+  z-index: 1; 
+}

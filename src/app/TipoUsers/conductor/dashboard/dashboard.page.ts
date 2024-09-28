@@ -6,7 +6,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 
 import { addIcons } from 'ionicons';
 import { eye, lockClosed } from 'ionicons/icons';
-
+import { GoogleMap } from '@capacitor/google-maps';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,21 +18,32 @@ export class DashboardPage implements OnInit {
   selectedSegment: string = 'default';
 
   usuarios: Usuario[] = [];
+  private map?: GoogleMap;
 
   constructor(
     private menuController: MenuController,
     private usuarioService: UsuariosService
   ) {
     addIcons({ eye, lockClosed });
-   }
-
-  ngOnInit() {
-    this.menuController.enable(true);
-    this.config();
   }
-  config(){
+
+  async ngOnInit() {
+    this.menuController.enable(true);
+    
+    this.map = await GoogleMap.create({
+      id: 'my-map',
+      element: document.getElementById('map') as HTMLElement,
+      apiKey: 'AIzaSyBGtiLWSXcSGoNfIS1x7PwrX4aDD9yT9mo',
+      config: {
+        center: { lat: 37.7749, lng: -122.4194 },
+        zoom: 10,
+      },
+    });
+  }
+  
+  
+
+  config() {
     this.usuarios = this.usuarioService.getUsuario();
   }
-
-  
 }

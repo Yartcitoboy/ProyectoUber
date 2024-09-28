@@ -1,27 +1,19 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Conductor Dashboard</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Mapa de Viaje</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <!-- Aquí va el mapa -->
-      <div id="mapa" style="height: 300px; background-color: grey;"></div>
-    </ion-card-content>
-  </ion-card>
+  <!-- Botón de menú fuera del ion-header -->
+  <ion-buttons class="menu-button">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
 
-  <ion-button expand="full" color="primary" routerLink="/detalle-conductor">
-    Crear Viaje
-  </ion-button>
-  <ion-button expand="full" color="danger" >
-    Buscar Viaje
-  </ion-button>
+  <!-- Mapa -->
+  <div id="map" style="width: 100%; height: 100%; position: relative;"></div>
+
+  <!-- Botones en la parte inferior -->
+  <div class="button-container">
+    <ion-button expand="full" color="primary" routerLink="/detalle-conductor">
+      Crear Viaje
+    </ion-button>
+    <ion-button expand="full" color="danger">
+      Buscar Viaje
+    </ion-button>
+  </div>
 </ion-content>
