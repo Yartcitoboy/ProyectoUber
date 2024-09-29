@@ -1,74 +1,48 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaulHref="home"></ion-back-button>
-    </ion-buttons>
     <ion-title>Registro</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" style="background-color: #F5F5F5;">
-  <!-- Descripción Introductoria -->
-  <div class="intro-container">
-    <h2>Bienvenido a TeLlevo</h2>
-  </div>
-  <img alt="Silhouette of mountains" src="assets/pok-avatar/avatar.png"/>
+<ion-content>
+  <ion-card-content [formGroup]="loginForm">
+    <ion-item>
+      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-input formControlName="email"  type="email" required></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched">
+      Ingresa un correo válido.
+    </ion-text>
 
-  <!-- Tarjeta Informativa o Promocional -->
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Fácil, rápido y seguro</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      Con TeLlevo, puedes compartir viajes fácilmente con amigos. ¡Ahorra tiempo y dinero mientras
-      contribuyes a un ambiente más amigable!
-    </ion-card-content>
-  </ion-card>
+    <!-- Campo de contraseña -->
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input formControlName="pass"  type="password" required></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="loginForm.controls['pass'].invalid && loginForm.controls['pass'].touched">
+      La contraseña debe tener al menos 6 caracteres.
+    </ion-text>
 
-  <!-- Botón para abrir el modal -->
-  <ion-button id="open-modal" expand="block" color="primary">Elije una opción</ion-button>
+    <!-- Selección de tipo de usuario -->
+    <!-- <ion-item>
+      <ion-label position="floating">Tipo Usuario</ion-label>
+      <ion-input formControlName="tipo" [(ngModel)]="tipoValue" type="text" required></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="loginForm.controls['tipo'].invalid && loginForm.controls['tipo'].touched">
+      La contraseña debe tener al menos 6 caracteres.
+    </ion-text> -->
 
-  <!-- Modal -->
-  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button (click)="cancel()">Volver</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <form [formGroup]="loginForm">
-          <ion-item>
-            <ion-input
-              label="Correo"
-              labelPlacement="stacked"
-              type="text"
-              placeholder="Ingresa tu Correo"
-              formControlName="email"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input
-              label="Contraseña"
-              labelPlacement="stacked"
-              type="password"
-              placeholder="Ingresa tu contraseña"
-              formControlName="pass"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-select formControlName="role" label="Tipo de Usuario">
-              <ion-select-option value="pasajero">Pasajero</ion-select-option>
-              <ion-select-option value="conductor">Conductor</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <div class="btns">
-            <ion-button color="dark" fill="solid" shape="round" (click)="confirm()" [strong]="true">Ingresar</ion-button>
-          </div>
-        </form>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
+    <!-- <ion-item>
+      <ion-select formControlName="tipo" [(ngModel)]="tipoValue" placeholder="Selecciona un tipo">
+        <ion-select-option value="conductor">Conductor</ion-select-option>
+        <ion-select-option value="pasajero">Pasajero</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text color="danger" *ngIf="loginForm.controls['tipo'].invalid && loginForm.controls['tipo'].touched">
+      Debes seleccionar un tipo de usuario.
+    </ion-text> -->
+
+    <!-- Botón de registro -->
+    <ion-button expand="full" (click)="confirm()">Registrar</ion-button>
+  </ion-card-content>
 </ion-content>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
-import { MapService } from 'src/app/services/map-service.service'; // Asegúrate de que esta ruta sea correcta
+import { MapService } from 'src/app/services/map-service.service'; 
 
 @Component({
   selector: 'app-detalle-conductor',
@@ -16,18 +16,12 @@ export class DetalleConductorPage implements OnInit {
   constructor(
     private alertController: AlertController,
     private navCtrl: NavController,
-    private mapService: MapService // Inyección del servicio
+    private mapService: MapService 
   ) {}
 
   ngOnInit() {}
 
-  // Validar direcciones
-  async validateAddress(address: string): Promise<boolean> {
-    // Implementa tu lógica de validación aquí
-    const response = await fetch(`https://api.tu-validacion-de-direccion.com/validate?address=${encodeURIComponent(address)}`);
-    const data = await response.json();
-    return data.valid; // Asumiendo que tu API retorna un objeto con una propiedad 'valid'
-  }
+  // Validar direccione
 
   // Verificar si el formulario es válido
   isFormValid(): boolean {
@@ -35,26 +29,9 @@ export class DetalleConductorPage implements OnInit {
   }
 
   async showConfirmation() {
-    // Validar direcciones
-    const isCurrentAddressValid = await this.validateAddress(this.direccionActual);
-    const isDestinationAddressValid = await this.validateAddress(this.direccionDestino);
   
-    if (!isCurrentAddressValid || !isDestinationAddressValid) {
-      const errorAlert = await this.alertController.create({
-        header: 'Error de Validación',
-        message: 'Una o ambas direcciones ingresadas no son válidas.',
-        buttons: ['OK'],
-      });
-      await errorAlert.present();
-      return;
-    }
-  
-    // Verificar si el formulario es válido
     if (this.isFormValid()) {
-      // Llama a la función para trazar la ruta usando el servicio
-      await this.mapService.trazarRuta(this.direccionActual, this.direccionDestino); // Suponiendo que este método está definido en tu servicio
       
-      // Mostrar alerta de confirmación
       const alert = await this.alertController.create({
         header: 'Confirmar',
         message: `¿Estás seguro de que deseas confirmar esta ruta?`,
@@ -67,7 +44,6 @@ export class DetalleConductorPage implements OnInit {
           {
             text: 'Confirmar',
             handler: async () => {
-              // Si se confirma, mostrar la alerta de viaje confirmado
               const confirmationAlert = await this.alertController.create({
                 header: 'Viaje Confirmado',
                 message: `Tu viaje ha sido confirmado.`,
@@ -89,7 +65,6 @@ export class DetalleConductorPage implements OnInit {
   
       await alert.present();
     } else {
-      // Mostrar alerta indicando que los campos son requeridos
       const errorAlert = await this.alertController.create({
         header: 'Error',
         message: 'Por favor, completa todos los campos requeridos antes de continuar.',
