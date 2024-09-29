@@ -1,0 +1,46 @@
+.datetime-container {
+    display: flex;
+    align-items: center;
+  }
+  .datetime-container ion-icon {
+    margin-right: 10px;
+  }
+
+  .passenger-select-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .passenger-select-container ion-icon {
+    margin-right: 10px;
+  }
+
+  ion-button{
+    align-items: center;
+    display: flex;
+    margin-top: 15px;
+  }
+
+  .confirmation-alert {
+    --background: #f0f9f0; /* Color de fondo verde claro */
+  }
+  
+  .confirmation-alert .alert-title {
+    color: green; /* Color del texto del título */
+  }
+  
+  .confirmation-alert .alert-message {
+    display: flex;
+    align-items: center;
+  }
+  
+  .confirmation-alert .alert-message::before {
+    content: '✔️'; /* Ícono de verificación */
+    margin-right: 10px;
+    font-size: 24px; /* Tamaño del ícono */
+  }
+  
+  #map {
+    height: 400px;
+    width: 100%;
+  }
