@@ -8,16 +8,14 @@
 </ion-header>
 
 <ion-content class="ion-padding" style="background-color: #F5F5F5;">
-  <form [formGroup]="resetForm">
+  <form (submit)="recoveryEmail()">
     <ion-item>
       <ion-input label="Correo" labelPlacement="stacked" type="text" placeholder="Ingresa tu Correo"
-        formControlName="email"></ion-input>
+        [(ngModel)]="email"></ion-input>
     </ion-item>
 
     <div class="btns">
-      <ion-button color="dark" id="present-alert">Enviar</ion-button>
-      <ion-alert trigger="present-alert" header="Enviado" subHeader=""
-        message="Se ha enviado un codigo a su email.Verfique." [buttons]="alertButtons"></ion-alert>
+      <ion-button type="submit" color="dark" id="present-alert">Enviar</ion-button>
     </div>
   </form>
 </ion-content>

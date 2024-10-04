@@ -8,7 +8,7 @@
   <ion-card-content [formGroup]="loginForm">
     <ion-item>
       <ion-label position="floating">Correo Electrónico</ion-label>
-      <ion-input formControlName="email"  type="email" required></ion-input>
+      <ion-input formControlName="email" [(ngModel)]="emailValue" type="email" required></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched">
       Ingresa un correo válido.
@@ -17,22 +17,14 @@
     <!-- Campo de contraseña -->
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input formControlName="pass"  type="password" required></ion-input>
+      <ion-input formControlName="pass" [(ngModel)]="passValue" type="password" required></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="loginForm.controls['pass'].invalid && loginForm.controls['pass'].touched">
       La contraseña debe tener al menos 6 caracteres.
     </ion-text>
 
     <!-- Selección de tipo de usuario -->
-    <!-- <ion-item>
-      <ion-label position="floating">Tipo Usuario</ion-label>
-      <ion-input formControlName="tipo" [(ngModel)]="tipoValue" type="text" required></ion-input>
-    </ion-item>
-    <ion-text color="danger" *ngIf="loginForm.controls['tipo'].invalid && loginForm.controls['tipo'].touched">
-      La contraseña debe tener al menos 6 caracteres.
-    </ion-text> -->
-
-    <!-- <ion-item>
+    <ion-item>
       <ion-select formControlName="tipo" [(ngModel)]="tipoValue" placeholder="Selecciona un tipo">
         <ion-select-option value="conductor">Conductor</ion-select-option>
         <ion-select-option value="pasajero">Pasajero</ion-select-option>
@@ -40,7 +32,7 @@
     </ion-item>
     <ion-text color="danger" *ngIf="loginForm.controls['tipo'].invalid && loginForm.controls['tipo'].touched">
       Debes seleccionar un tipo de usuario.
-    </ion-text> -->
+    </ion-text>
 
     <!-- Botón de registro -->
     <ion-button expand="full" (click)="confirm()">Registrar</ion-button>

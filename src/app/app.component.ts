@@ -39,7 +39,7 @@ export class AppComponent {
       ]
     } else if (this.tipoUsuario === 'pasajero') {
       this.appPages = [
-        { title: 'Inicio', url: '/TipoUsers/pasajero/historial', icon: 'home' }, 
+        { title: 'Inicio', url: '/TipoUsers/pasajero/dashboard', icon: 'home' }, 
         { title: 'Billetera', url: '/TipoUsers/pasajero/billetera', icon: 'card' }, 
         { title: 'Historial', url: '/TipoUsers/pasajero/historial', icon: 'time' },
         { title: 'Notificaciones', url: '/TipoUsers/pasajero/notificaciones', icon: 'notifications' },

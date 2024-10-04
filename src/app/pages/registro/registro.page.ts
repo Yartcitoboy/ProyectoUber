@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, IonModal, LoadingController, MenuController } from '@ionic/angular';
+import { IonModal, LoadingController, MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import Swal from 'sweetalert2';
 
@@ -17,6 +17,7 @@ export class RegistroPage implements OnInit {
   loginForm: FormGroup;
   emailValue: string = '';
   passValue: string = '';
+  tipoValue: string ='';
 
   constructor(
     private router: Router,
@@ -30,6 +31,7 @@ export class RegistroPage implements OnInit {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       pass: ['', [Validators.required, Validators.minLength(6)]],
+      tipo: ['', [Validators.required]]
     });  
   }
 
@@ -60,16 +62,15 @@ export class RegistroPage implements OnInit {
           heightAuto: false
       });
       return;
-  }
-
+    }
     try {
       const loading = await this.loadingController.create({
         message: 'Registrando...',
         duration: 2000,
       });
       await loading.present();
-  
-      const { email, pass } = this.loginForm.value;
+
+      const { email, pass, tipo } = this.loginForm.value;
       // Registrar al usuario con AuthService
       const aux = await this.authService.registro(email, pass);
       const user = aux.user;
@@ -80,6 +81,7 @@ export class RegistroPage implements OnInit {
           uid: user.uid,
           email: user.email,
           pass: pass,
+          tipo: tipo
         });
         await loading.dismiss();
         Swal.fire({
@@ -91,8 +93,9 @@ export class RegistroPage implements OnInit {
         }).then(() => {
           this.router.navigate(['/loguear']);
         });
-      }
+      } 
     } catch (error) {
+      console.error('Error durante el registro:', error);
       // Mostrar mensaje de error si algo falla
       Swal.fire({
         icon: 'error',
