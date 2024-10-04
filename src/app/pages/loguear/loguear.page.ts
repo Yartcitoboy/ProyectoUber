@@ -55,7 +55,10 @@ export class LoguearPage implements OnInit {
         const usuarioLogeado = await this.firestore.collection('usuarios').doc(aux.user.uid).get().toPromise()
         const usuarioData = usuarioLogeado?.data() as Usuario;
   
-        localStorage.setItem('usuarioLogin', email as string);
+        localStorage.setItem('usuarioLogin', JSON.stringify({
+          email: email as string,
+          tipo: usuarioData.tipo
+        }));
         await loading.present();
         
         setTimeout(async () => {

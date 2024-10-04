@@ -83,6 +83,12 @@ export class RegistroPage implements OnInit {
           pass: pass,
           tipo: tipo
         });
+
+        localStorage.setItem('usuarioLogin', JSON.stringify({
+          tipo: tipo,
+          email: user.email
+        }));
+
         await loading.dismiss();
         Swal.fire({
           icon: 'success',
