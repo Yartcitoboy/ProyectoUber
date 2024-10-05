@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, IonModal } from '@ionic/angular';
-import { Usuario } from 'src/app/interfaces/usuario';
-import { UsuariosService } from 'src/app/services/usuarios.service';
+import { IonModal, LoadingController, MenuController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/firebase/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registro',
@@ -14,58 +15,101 @@ export class RegistroPage implements OnInit {
   @ViewChild(IonModal) modal?: IonModal;
 
   loginForm: FormGroup;
-  message = 'Elije qué tipo de usuario deseas ser en la aplicación.';
+  emailValue: string = '';
+  passValue: string = '';
+  tipoValue: string ='';
 
   constructor(
-    private router: Router, 
+    private router: Router,
+    private loadingController: LoadingController, 
     private formBuilder: FormBuilder,
-    private alertController: AlertController,
-    private usuariosServices: UsuariosService
+    private menuController: MenuController,
+    private authService: AuthService,
+    private firestore: AngularFirestore
   ) {
+    // Creando el formulario con validaciones
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       pass: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['', Validators.required]
+      tipo: ['', [Validators.required]]
     });  
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.menuController.enable(false);
+  }
 
+  // Cancelar el modal
   cancel() {
     this.modal?.dismiss(null, 'cancel');
   }
 
-
+  // Manejar el cierre del modal
   onWillDismiss(event: Event) {
     const ev = event as CustomEvent;
     if (ev.detail.role === 'confirm') {
-      this.message = `Hello, ${ev.detail.data}!`;
     }
   }
 
-  confirm() {
-    console.log('Botón registrarse clickeado');
-    if (this.loginForm.valid) {
-      console.log('Formulario válido:', this.loginForm.value);
-      const nuevoUsuario: Usuario = {
-        email: this.loginForm.value.email,
-        pass: this.loginForm.value.pass,
-        tipo: this.loginForm.value.role
-      };
-
-      // Call service to add new user
-      this.usuariosServices.addUsuario(nuevoUsuario);
-      console.log('Registro exitoso:', nuevoUsuario);
-      this.router.navigate(['/login']);
-      this.modal?.dismiss(null, 'confirm');
-    } else {
-      this.alertController.create({
-        header: 'Error',
-        message: 'Por favor, completa todos los campos correctamente.',
-        buttons: ['OK']
-      }).then(alert => alert.present());
+  // Método para confirmar el registro
+  async confirm() {
+    if (this.loginForm.invalid) {
+      Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Por favor, completa el formulario correctamente.',
+          confirmButtonText: 'OK',
+          heightAuto: false
+      });
+      return;
     }
-  }
+    try {
+      const loading = await this.loadingController.create({
+        message: 'Registrando...',
+        duration: 2000,
+      });
+      await loading.present();
 
+      const { email, pass, tipo } = this.loginForm.value;
+      // Registrar al usuario con AuthService
+      const aux = await this.authService.registro(email, pass);
+      const user = aux.user;
   
+      if (user) { 
+        // Guardar el usuario en Firestore
+        await this.firestore.collection('usuarios').doc(user.uid).set({
+          uid: user.uid,
+          email: user.email,
+          pass: pass,
+          tipo: tipo
+        });
+
+        localStorage.setItem('usuarioLogin', JSON.stringify({
+          tipo: tipo,
+          email: user.email
+        }));
+
+        await loading.dismiss();
+        Swal.fire({
+          icon: 'success',
+          title: 'Registro Exitoso',
+          text: 'Usuario registrado correctamente',
+          confirmButtonText: 'OK',
+          heightAuto: false
+        }).then(() => {
+          this.router.navigate(['/loguear']);
+        });
+      } 
+    } catch (error) {
+      console.error('Error durante el registro:', error);
+      // Mostrar mensaje de error si algo falla
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Hubo un error al registrar el usuario.',
+        confirmButtonText: 'OK',
+        heightAuto: false
+      });
+    } 
+  }
 }

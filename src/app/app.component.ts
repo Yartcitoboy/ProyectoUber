@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Page } from './interfaces/page';
+import { NavController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,9 @@ export class AppComponent {
   public tipoUsuario?: string;
   public emailUsuario?: string;
 
-  constructor() {}
+  constructor(private navCtrl: NavController) {}
+
+  
 
   ngOnInit() {
     const usuarioLogin = localStorage.getItem('usuarioLogin');
@@ -22,7 +26,7 @@ export class AppComponent {
       this.emailUsuario = user.email;
       this.configSideMenu();
     } else {
-
+      this.navCtrl.navigateRoot('/loguear');
     }
   }
 
@@ -35,15 +39,21 @@ export class AppComponent {
       ]
     } else if (this.tipoUsuario === 'pasajero') {
       this.appPages = [
-        {title: 'Dashboard', url:'/TipoUsers/pasajero-dashboard',icon:'home'},
-        {title: 'Perfil', url:'/perfil',icon:'settings'},
-        {title: 'Cerrar Sesión', url:'/loguear',icon:'log-out'},
+        { title: 'Inicio', url: '/TipoUsers/pasajero/dashboard', icon: 'home' }, 
+        { title: 'Billetera', url: '/TipoUsers/pasajero/billetera', icon: 'card' }, 
+        { title: 'Historial', url: '/TipoUsers/pasajero/historial', icon: 'time' },
+        { title: 'Notificaciones', url: '/TipoUsers/pasajero/notificaciones', icon: 'notifications' },
+        { title: 'Ajustes', url: '/TipoUsers/pasajero/ajustes', icon: 'settings' },
+        { title: 'Cerrar Sesión', url: '/loguear', icon: 'log-out' },
       ]
     } else if (this.tipoUsuario === 'conductor') {
       this.appPages = [
-        {title: 'Dashboard', url:'/TipoUsers/conductor-dashboard',icon:'home'},
-        {title: 'Perfil', url:'/perfil',icon:'settings'},
-        {title: 'Cerrar Sesión', url:'/loguear',icon:'log-out'},
+        { title: 'Inicio', url: '/conductor/dashboard', icon: 'home' }, 
+        { title: 'Billetera', url: '/conductor-billetera', icon: 'card' }, 
+        { title: 'Historial', url: '/conductor-historial', icon: 'time' },
+        { title: 'Notificaciones', url: '/conductor-notificaciones', icon: 'notifications' },
+        { title: 'Ajustes', url: '/conductor-ajustes', icon: 'settings' },
+        { title: 'Cerrar Sesión', url: '/loguear', icon: 'log-out' },
       ]
     } else {
       this.appPages = [

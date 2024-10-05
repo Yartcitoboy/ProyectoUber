@@ -9,7 +9,7 @@ export class UsuariosService {
   usuarios = [
     {'email': 'admin@admin.cl', 'pass': 'admin123', 'tipo': 'admin'},
     {'email': 'pasa@user.cl', 'pass': 'pasa123', 'tipo': 'pasajero'},
-    {'email': 'cond@user.cl', 'pass': 'cond123', 'tipo': 'conductor'},
+    // {'email': 'cond@user.cl', 'pass': 'cond123', 'tipo': 'conductor'},
     {'email': 'invi@invi.cl', 'pass': 'invi123', 'tipo': 'invitado'},
   ]
 

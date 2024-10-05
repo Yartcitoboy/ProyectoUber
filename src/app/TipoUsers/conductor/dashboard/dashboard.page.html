@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>{{ usuarioLogin }}</ion-title>
@@ -48,3 +49,24 @@
     </ion-tab-bar>
   </ion-tabs>
 </ion-content>
+=======
+<ion-content [fullscreen]="true">
+  <!-- Botón de menú fuera del ion-header -->
+  <ion-buttons class="menu-button">
+    <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+
+  <!-- Mapa -->
+  <div id="map" style="width: 100%; height: 100%; position: relative;"></div>
+
+  <!-- Botones en la parte inferior -->
+  <div class="button-container">
+    <ion-button expand="full" color="primary" routerLink="/detalle-conductor">
+      Crear Viaje
+    </ion-button>
+    <ion-button expand="full" color="danger">
+      Buscar Viaje
+    </ion-button>
+  </div>
+</ion-content>
+>>>>>>> rama_isa

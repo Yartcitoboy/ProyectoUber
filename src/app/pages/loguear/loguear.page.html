@@ -7,17 +7,21 @@
 
     <ion-card-content [formGroup]="loginForm">
       <ion-item>
+<<<<<<< HEAD
         <ion-input formControlName="email" type="email" label="Correo" labelPlacement="floating" placeholder="ejemplo@gmail.cl"></ion-input>
+=======
+        <ion-input formControlName="email" [(ngModel)]="emailValue" type="email" label="Correo" labelPlacement="floating" placeholder="ejemplp@gmail.cl"></ion-input>
+>>>>>>> rama_isa
       </ion-item>
       <ion-item>
-        <ion-input formControlName="pass" type="password" label="Contraseña" labelPlacement="floating" placeholder="********">
+        <ion-input formControlName="pass" [(ngModel)]="passValue" type="password" label="Contraseña" labelPlacement="floating" placeholder="********">
           <ion-input-password-toggle slot="end"></ion-input-password-toggle>
         </ion-input>
       </ion-item>
 
       <div class="btns">
         <ion-button color="dark" fill="solid" shape="round" (click)="login()">Ingresar</ion-button>
-        <ion-button color="dark" fill="solid" shape="round" (click)="recuperar()" >recuperar</ion-button>
+        <ion-button color="dark" fill="solid" shape="round" routerLink="/resetpass" >recuperar</ion-button>
       </div>
 
       <div class="tag">

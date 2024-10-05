@@ -7,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistorialPage implements OnInit {
   selectedSegment: string = 'default';
+  
 
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

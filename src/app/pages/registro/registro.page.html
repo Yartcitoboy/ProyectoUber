@@ -1,12 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaulHref="home"></ion-back-button>
-    </ion-buttons>
     <ion-title>Registro</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<<<<<<< HEAD
 <ion-content class="ion-padding" >
   <div class="intro-container">
     <h2>Bienvenido a TeLlevo</h2>
@@ -67,4 +65,39 @@
       </ion-content>
     </ng-template>
   </ion-modal>
+=======
+<ion-content>
+  <ion-card-content [formGroup]="loginForm">
+    <ion-item>
+      <ion-label position="floating">Correo Electrónico</ion-label>
+      <ion-input formControlName="email" [(ngModel)]="emailValue" type="email" required></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched">
+      Ingresa un correo válido.
+    </ion-text>
+
+    <!-- Campo de contraseña -->
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input formControlName="pass" [(ngModel)]="passValue" type="password" required></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="loginForm.controls['pass'].invalid && loginForm.controls['pass'].touched">
+      La contraseña debe tener al menos 6 caracteres.
+    </ion-text>
+
+    <!-- Selección de tipo de usuario -->
+    <ion-item>
+      <ion-select formControlName="tipo" [(ngModel)]="tipoValue" placeholder="Selecciona un tipo">
+        <ion-select-option value="conductor">Conductor</ion-select-option>
+        <ion-select-option value="pasajero">Pasajero</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-text color="danger" *ngIf="loginForm.controls['tipo'].invalid && loginForm.controls['tipo'].touched">
+      Debes seleccionar un tipo de usuario.
+    </ion-text>
+
+    <!-- Botón de registro -->
+    <ion-button expand="full" (click)="confirm()">Registrar</ion-button>
+  </ion-card-content>
+>>>>>>> rama_isa
 </ion-content>
