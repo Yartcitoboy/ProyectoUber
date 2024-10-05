@@ -12,6 +12,7 @@ export class DetalleConductorPage implements OnInit {
   direccionDestino: string = '';
   costo: string = '';
   cantidadPasajeros: string = '';
+  horario: string = ''; 
 
   constructor(
     private alertController: AlertController,
