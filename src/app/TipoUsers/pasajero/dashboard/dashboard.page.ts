@@ -18,11 +18,14 @@ export class DashboardPage implements OnInit {
   selectedSegment: string = 'default';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   public appPages: Page[] = [];
   public tipoUsuario?: string;
   public emailUsuario?: string;
 
   usuarioLogin?: string;
+=======
+>>>>>>> rama_isa
 =======
 >>>>>>> rama_isa
 
@@ -33,6 +36,7 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit() {
+<<<<<<< HEAD
 <<<<<<< HEAD
     this.menuController.enable(false);
     const usuarioLogin = localStorage.getItem('usuarioLogin');
@@ -47,6 +51,10 @@ export class DashboardPage implements OnInit {
     
     
 >>>>>>> rama_isa
+=======
+    
+    
+>>>>>>> rama_isa
     }
   
 
@@ -55,6 +63,11 @@ export class DashboardPage implements OnInit {
     this.navCtrl.navigateRoot('/pasajero-buscar-viaje');
   }
 
+<<<<<<< HEAD
+=======
+
+  
+>>>>>>> rama_isa
 
   
 

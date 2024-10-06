@@ -1,55 +1,10 @@
 <ion-header>
   <ion-toolbar>
-<<<<<<< HEAD
-    <ion-title>{{ usuarioLogin }}</ion-title>
-=======
-    <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>home</ion-title>
->>>>>>> rama_isa
+    <ion-title>Pasajero</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-<<<<<<< HEAD
-  <div class="container">
-    <ion-searchbar class="searchbar" placeholder="¿Dónde deseas ir?"></ion-searchbar>
-    <ion-card>
-      <ion-img class="background-img" src="assets/pok-wallpaper/mapa.jpeg" alt=""></ion-img>
-    </ion-card>
-  </div>
-  
-  <ion-card class="card-pasajero" color="light">
-    <ion-card-header>
-      <ion-card-title>A donde quieres ir?</ion-card-title>
-    </ion-card-header>
-  
-    <ion-card-content class="ion-card-center">
-      Ingresa una direccion hacia donde quieres ir.
-    </ion-card-content>
-  </ion-card>
-
-  <ion-item>
-    <ion-button slot="start">
-      <ion-icon slot="icon-only" name="navigate"></ion-icon>
-    </ion-button>
-    <ion-label>AV. Allende con Provivencia</ion-label>
-    <ion-button slot="end">
-      <ion-icon slot="icon-only" name="star"></ion-icon>
-    </ion-button>
-  </ion-item>
-
-  <ion-item>
-    <ion-button slot="start">
-      <ion-icon slot="icon-only" name="navigate"></ion-icon>
-    </ion-button>
-    <ion-label>Calle Jose perez #234</ion-label>
-    <ion-button slot="end">
-      <ion-icon slot="icon-only" name="star"></ion-icon>
-    </ion-button>
-  </ion-item>
-
   <ion-tabs>
     <ion-tab-bar>
       <ion-tab-button routerLink="/historial" tab="time">
@@ -66,53 +21,4 @@
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
-=======
-  <div>
-    <ion-card color="dark">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="auto">
-            <ion-avatar>
-              <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-            </ion-avatar>
-          </ion-col>
-          <ion-col>
-            <ion-card-header>
-              <ion-card-title>Bienvenido</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>pasajero</ion-card-content>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-  </div>
-  
-  <br>
-
-  <ion-card color="medium">
-    <ion-card-header>
-      <ion-card-subtitle>Sugerencias</ion-card-subtitle>
-    </ion-card-header>
-
-    <ion-card-content>
-      <div class="sugerencias">
-        <ion-button expand="default" class="yellow-button" (click)="irABuscarViaje()">
-          Buscar Viaje
-        </ion-button>
-        <ion-button expand="default" class="yellow-button">
-          Historial de Viajes
-        </ion-button>
-      </div>
-    </ion-card-content>
-  </ion-card>
-  <br>
-  <ion-card color="warning">
-  <ion-card-header>
-    <ion-card-title>Admin</ion-card-title>
-    <ion-card-subtitle>Estado de la app</ion-card-subtitle>
-  </ion-card-header>
-
-  <ion-card-content> El estado de la app funciona correctamente</ion-card-content>
-</ion-card>
->>>>>>> rama_isa
 </ion-content>
