@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .container {
     position: relative; 
   }
@@ -60,3 +61,20 @@
 .ion-card-center{
     text-align: center;
 }
+=======
+.sugerencias {
+    display: flex;
+    justify-content: space-between; /* Alinea los botones en una fila */
+    gap: 10px; /* Espacio entre los botones */
+  }
+
+  .yellow-button {
+    --background: #ffcc00; /* Color de fondo amarillo */
+    --color: rgb(0, 0, 0); /* Color del texto en blanco */
+  }
+
+ .menu-button{
+  position: absolute;
+  z-index: 20;
+ }
+>>>>>>> rama_isa

@@ -39,11 +39,11 @@ export class AppComponent {
       ]
     } else if (this.tipoUsuario === 'pasajero') {
       this.appPages = [
-        { title: 'Inicio', url: '/TipoUsers/pasajero/dashboard', icon: 'home' }, 
-        { title: 'Billetera', url: '/TipoUsers/pasajero/billetera', icon: 'card' }, 
-        { title: 'Historial', url: '/TipoUsers/pasajero/historial', icon: 'time' },
-        { title: 'Notificaciones', url: '/TipoUsers/pasajero/notificaciones', icon: 'notifications' },
-        { title: 'Ajustes', url: '/TipoUsers/pasajero/ajustes', icon: 'settings' },
+        { title: 'Inicio', url: '/pasajero/dashboard', icon: 'home' }, 
+        { title: 'Billetera', url: '/pasajero/billetera', icon: 'card' }, 
+        { title: 'Historial', url: '/pasajero/historial', icon: 'time' },
+        { title: 'Notificaciones', url: '/pasajero/notificaciones', icon: 'notifications' },
+        { title: 'Ajustes', url: '/pasajero/ajustes', icon: 'settings' },
         { title: 'Cerrar Sesión', url: '/loguear', icon: 'log-out' },
       ]
     } else if (this.tipoUsuario === 'conductor') {

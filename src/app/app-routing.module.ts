@@ -32,22 +32,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
   },
   {
-    path: 'programar-viaje',
-    loadChildren: () => import('./pages/programar-viaje/programar-viaje.module').then( m => m.ProgramarViajePageModule)
-  },
-  {
-    path: 'pedir-viaje',
-    loadChildren: () => import('./pages/pedir-viaje/pedir-viaje.module').then( m => m.PedirViajePageModule)
-  },
-  {
-    path: 'perfil',
-    loadChildren: () => import('./pages/menu/perfil/perfil.module').then( m => m.PerfilPageModule)
-  },
-  {
-    path: 'historial',
-    loadChildren: () => import('./pages/menu/historial/historial.module').then( m => m.HistorialPageModule)
-  },
-  {
     path: 'admin-dashboard',
     loadChildren: () => import('./TipoUsers/admin/dashboard/dashboard.module').then( m => m.DashboardPageModule)
   },
@@ -99,11 +83,21 @@ const routes: Routes = [
   {
     path: 'conductor-ajustes',
     loadChildren: () => import('./TipoUsers/conductor/menu/ajustes/ajustes.module').then( m => m.AjustesPageModule)
-  },  {
+  },
+  {
     path: 'qr',
     loadChildren: () => import('./TipoUsers/conductor/menu/qr/qr.module').then( m => m.QRPageModule)
   },
+  {
+    path: 'pasajero-perfil',
+    loadChildren: () => import('./TipoUsers/pasajero/menu/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
+    path: 'buscar-viaje',
+    loadChildren: () => import('./TipoUsers/pasajero/menu/buscar-viaje/buscar-viaje.module').then( m => m.BuscarViajePageModule)
+  },
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 const routes: Routes = [
   {
@@ -188,6 +182,8 @@ const routes: Routes = [
       }
     ]
   },
+=======
+>>>>>>> rama_isa
 ];
 
 @NgModule({
@@ -197,6 +193,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+<<<<<<< HEAD
 =======
 ];
 
@@ -207,4 +204,6 @@ export class AppRoutingModule { }
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+>>>>>>> rama_isa
+=======
 >>>>>>> rama_isa
