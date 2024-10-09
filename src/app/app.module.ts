@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { MapaComponent } from './mapa/mapa.component';
+import { GoogleMap } from '@capacitor/google-maps';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
@@ -21,7 +21,7 @@ import { environment } from 'src/environments/environment.prod';
 
 @NgModule({
   
-  declarations: [AppComponent, MapaComponent,],
+  declarations: [AppComponent, ],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
