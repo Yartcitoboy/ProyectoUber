@@ -22,7 +22,7 @@ export class DashboardPage implements OnInit {
 
   constructor(
     private menuController: MenuController,
-    private usuarioService: UsuariosService
+    private usuarioService: UsuariosService,
   ) {
     addIcons({ eye, lockClosed });
   }

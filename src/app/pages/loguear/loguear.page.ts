@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController, MenuController } from '@ionic/angular';
+import { LoadingController, MenuController } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import Swal from 'sweetalert2';
@@ -21,7 +21,6 @@ export class LoguearPage implements OnInit {
   constructor(
     private router: Router, 
     private loadingController: LoadingController, 
-    private alertController: AlertController, 
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private menuController: MenuController,

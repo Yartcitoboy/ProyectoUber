@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/usuario';
+import { AuthService } from 'src/app/services/firebase/auth.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
@@ -10,11 +13,13 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 })
 export class DashboardPage implements OnInit {
 
-  usuarios: Usuario[] = [];
+  usuarios: any = [];
 
   constructor(
     private menuController: MenuController,
-    private usuarioService: UsuariosService,
+    private firestore: AngularFirestore,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -23,7 +28,15 @@ export class DashboardPage implements OnInit {
   }
 
   config(){
-    this.usuarios = this.usuarioService.getUsuario();
+    this.firestore.collection('usuarios').valueChanges().subscribe(aux => {
+      this.usuarios = aux;
+    });
+  }
+
+  logout() {
+    // COLOCAR ALERTA DE ADVERTENCIA
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
 }
