@@ -1,0 +1,26 @@
+<!-- detalleviaje-conductor.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/conductor-dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalles del Viaje</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="viaje">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Ruta</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Desde:</strong> {{ viaje.direccionActual }}</p>
+      <p><strong>Hasta:</strong> {{ viaje.direccionDestino }}</p>
+      <p><strong>Costo:</strong> {{ viaje.costo }}</p>
+      <p><strong>Cantidad de Pasajeros:</strong> {{ viaje.cantidadPasajeros }}</p>
+      <p><strong>Horario:</strong> {{ viaje.horario }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+

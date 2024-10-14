@@ -11,60 +11,38 @@
     <ion-card-header>
       <ion-card-title>Crea tu ruta</ion-card-title>
     </ion-card-header>
-
     <ion-card-content>
       <ion-list>
-
         <ion-item>
           <ion-input labelPlacement="stacked" label="DireccionActual" placeholder="Ej DuocUc, Puente alto" [(ngModel)]="direccionActual" required>
             <ion-icon slot="start" name="map" aria-hidden="true"></ion-icon>
           </ion-input>
         </ion-item>
-
         <ion-item>
-          <ion-input labelPlacement="stacked" label="DireccionDestino" placeholder="Ej Av.San gabriel 334"  [(ngModel)]="direccionDestino" required>
+          <ion-input labelPlacement="stacked" label="DireccionDestino" placeholder="Ej Av.San gabriel 334" [(ngModel)]="direccionDestino" required>
             <ion-icon slot="start" name="map" aria-hidden="true"></ion-icon>
           </ion-input>
         </ion-item>
-
         <ion-item>
           <ion-label position="stacked">Horario</ion-label>
-          <div class="datetime-container">
-            <ion-icon slot="start" name="time" aria-hidden="true"></ion-icon>
-            <ion-datetime-button datetime="datetime"></ion-datetime-button>
-          </div>
-          <ion-modal [keepContentsMounted]="true">
-            <ng-template>
-              <ion-datetime id="datetime"></ion-datetime>
-            </ng-template>
-          </ion-modal>
+          <ion-datetime (ionChange)="onHorarioChange($event)"></ion-datetime>
         </ion-item>
-
         <ion-item>
-          <ion-input labelPlacement="stacked" label="Costo" placeholder="Ej.. $5.000" [(ngModel)]="costo" required>
+          <ion-input labelPlacement="stacked" label="Costo" type="number" placeholder="Ej.. $5.000" [(ngModel)]="costo" required>
             <ion-icon slot="start" name="cash" aria-hidden="true"></ion-icon>
           </ion-input>
         </ion-item>
-
         <ion-item>
           <ion-label position="stacked">Pasajeros</ion-label>
-          <div class="passenger-select-container">
-            <ion-icon slot="start" name="people" aria-hidden="true"></ion-icon>
-            <ion-select interface="action-sheet" placeholder="Cantidad de pasajeros" [(ngModel)]="cantidadPasajeros" required>
-              <ion-select-option value="pasajero1">1</ion-select-option>
-              <ion-select-option value="pasajero2">2</ion-select-option>
-              <ion-select-option value="pasajero3">3</ion-select-option>
-              <ion-select-option value="pasajero4">4</ion-select-option>
-            </ion-select>
-          </div>
+          <ion-select placeholder="Cantidad de pasajeros" [(ngModel)]="cantidadPasajeros" required>
+            <ion-select-option value="1">1</ion-select-option>
+            <ion-select-option value="2">2</ion-select-option>
+            <ion-select-option value="3">3</ion-select-option>
+            <ion-select-option value="4">4</ion-select-option>
+          </ion-select>
         </ion-item>
-        
         <ion-button [disabled]="!isFormValid()" (click)="showConfirmation()">Confirmar</ion-button>
       </ion-list>
-
-      
-
     </ion-card-content>
   </ion-card>
 </ion-content>
-

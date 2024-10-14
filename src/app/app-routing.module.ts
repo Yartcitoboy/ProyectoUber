@@ -85,10 +85,6 @@ const routes: Routes = [
     loadChildren: () => import('./TipoUsers/conductor/menu/ajustes/ajustes.module').then( m => m.AjustesPageModule)
   },
   {
-    path: 'qr',
-    loadChildren: () => import('./TipoUsers/conductor/menu/qr/qr.module').then( m => m.QRPageModule)
-  },
-  {
     path: 'pasajero-perfil',
     loadChildren: () => import('./TipoUsers/pasajero/menu/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
@@ -96,6 +92,18 @@ const routes: Routes = [
     path: 'buscar-viaje',
     loadChildren: () => import('./TipoUsers/pasajero/menu/buscar-viaje/buscar-viaje.module').then( m => m.BuscarViajePageModule)
   },
+  {
+    path: 'detalle-viaje',
+    loadChildren: () => import('./TipoUsers/pasajero/menu/detalle-viaje/detalle-viaje.module').then( m => m.DetalleViajePageModule)
+  },
+  {
+    path: 'detalleviaje-conductor',
+    loadChildren: () => import('./TipoUsers/conductor/detalleviaje-conductor/detalleviaje-conductor.module').then( m => m.DetalleviajeConductorPageModule)
+  },
+
+
+
+
 
 ];
 
