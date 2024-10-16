@@ -4,6 +4,7 @@ import { ViajeService } from 'src/app/services/firebase/viaje.service';
 import { Viaje } from 'src/app/interfaces/viaje';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detalle-conductor',
@@ -21,6 +22,7 @@ export class DetalleConductorPage implements OnInit {
   constructor(
     private alertController: AlertController,
     private navCtrl: NavController,
+    private router: Router,
     private viajeService: ViajeService,
     private firestore: AngularFirestore,
     private authService: AngularFireAuth
@@ -79,7 +81,15 @@ export class DetalleConductorPage implements OnInit {
       const errorAlert = await this.alertController.create({
         header: 'Error',
         message: 'Ya tienes un viaje activo. Por favor, completa ese viaje antes de crear uno nuevo.',
-        buttons: ['OK'],
+        buttons: [
+      {
+        text: 'OK',
+        handler: () => {
+          // Redirige a una página específica, por ejemplo, el menú del conductor
+          this.navCtrl.navigateForward('/menu-conductor');
+        }
+      }
+    ]
       });
       await errorAlert.present();
     } else {
@@ -94,6 +104,7 @@ export class DetalleConductorPage implements OnInit {
         conductorId: this.conductorId,
         estado: 'disponible',
       };
+      console.log('ID generado:', nuevoViaje.id);  // Para verificar el ID
 
       try {
         await this.viajeService.agregarViaje(nuevoViaje);
@@ -104,8 +115,8 @@ export class DetalleConductorPage implements OnInit {
             {
               text: 'Ver Detalles',
               handler: () => {
-                this.navCtrl.navigateForward(`/detalleviaje-conductor`, {
-                  queryParams: { viajeId: nuevoViaje.id }
+                this.router.navigate(['/detalleviaje-conductor'], {
+                  queryParams: { viajeId: nuevoViaje.id }  // Pasa el viajeId aquí
                 });
               },
             },

@@ -17,6 +17,11 @@ export class ViajeService {
   constructor(private firestore: AngularFirestore) { }
 
   async agregarViaje(viaje: Viaje): Promise<any> {
+    const conductorId = viaje.conductorId;
+    const hasActiveTrip = await this.verificarViajeActivo(conductorId);
+    if (hasActiveTrip) {
+      throw new Error('Ya tienes un viaje en curso');
+    }
     return this.firestore.collection('viajes').add(viaje);
   }
 
@@ -30,7 +35,7 @@ export class ViajeService {
 
   async verificarViajeActivo(conductorId: string) {
     const viajeActivo = await this.firestore.collection<Viaje>('viajes', ref => 
-      ref.where('conductorId', '==', conductorId).where('estado', '==', 'activo')
+      ref.where('conductorId', '==', conductorId).where('estado', '==', 'disponible')
     ).get().toPromise();
 
     return viajeActivo && viajeActivo.docs.length > 0;
@@ -50,9 +55,15 @@ export class ViajeService {
     return this.firestore.collection('viajes').doc(viajeId).update({ cantidadPasajeros: nuevosPasajeros });
   }
   
-  obtenerViajePorId(id: string): Observable<Viaje | undefined> {
-    return this.firestore.collection<Viaje>('viajes').doc(id).valueChanges();
+  obtenerViajePorId(viajeId: string): Observable<Viaje | undefined> {
+    return this.firestore.collection<Viaje>('viajes').doc(viajeId).valueChanges();
   }
+
+  obtenerTodosLosViajes(): Observable<Viaje[]> {
+    return this.firestore.collection<Viaje>('viajes').valueChanges();
+  }
+  
+  
   
   // Método para confirmar el viaje (actualizar estado)
   confirmarViaje(id: string): Promise<void> {
