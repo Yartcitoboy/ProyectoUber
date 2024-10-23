@@ -8,6 +8,10 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'carpeta/:id',
+    loadChildren: () => import('./carpeta/carpeta.module').then( m => m.CarpetaPageModule)
+  },
+  {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
@@ -100,6 +104,8 @@ const routes: Routes = [
     path: 'detalleviaje-conductor',
     loadChildren: () => import('./TipoUsers/conductor/detalleviaje-conductor/detalleviaje-conductor.module').then( m => m.DetalleviajeConductorPageModule)
   },
+  
+
 
 
 

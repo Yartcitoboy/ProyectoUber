@@ -15,9 +15,13 @@ export class RegistroPage implements OnInit {
   @ViewChild(IonModal) modal?: IonModal;
 
   loginForm: FormGroup;
+  nombreValue: string = '';
+  apellidoValue: string = '';
   emailValue: string = '';
   passValue: string = '';
   tipoValue: string ='';
+  matriculaValue: string = '';
+  mostrarMatricula: boolean = false;
 
   constructor(
     private router: Router,
@@ -29,9 +33,12 @@ export class RegistroPage implements OnInit {
   ) {
     // Creando el formulario con validaciones
     this.loginForm = this.formBuilder.group({
+      nombre: ['',[Validators.required]],
+      apellido: ['',[Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       pass: ['', [Validators.required, Validators.minLength(6)]],
-      tipo: ['', [Validators.required]]
+      tipo: ['', [Validators.required]],
+      matricula: ['']
     });  
   }
 
@@ -51,6 +58,17 @@ export class RegistroPage implements OnInit {
     }
   }
 
+  onTipoChange(event: any) {
+    const tipoSeleccionado = event.detail.value;
+    if (tipoSeleccionado === 'conductor') {
+      this.mostrarMatricula = true;
+      this.loginForm.get('matricula')?.setValidators([Validators.required]); // Hacer la matrícula requerida
+    } else {
+      this.mostrarMatricula = false;
+      this.loginForm.get('matricula')?.clearValidators(); // Quitar la validación si no es conductor
+    }
+    this.loginForm.get('matricula')?.updateValueAndValidity(); // Actualizar la validación
+  }
   // Método para confirmar el registro
   async confirm() {
     if (this.loginForm.invalid) {
@@ -70,7 +88,7 @@ export class RegistroPage implements OnInit {
       });
       await loading.present();
 
-      const { email, pass, tipo } = this.loginForm.value;
+      const { nombre, apellido, email, pass, tipo, matricula } = this.loginForm.value;
       // Registrar al usuario con AuthService
       const aux = await this.authService.registro(email, pass);
       const user = aux.user;
@@ -79,10 +97,15 @@ export class RegistroPage implements OnInit {
         // Guardar el usuario en Firestore
         await this.firestore.collection('usuarios').doc(user.uid).set({
           uid: user.uid,
+          nombre: nombre,
+          apellido: apellido,
           email: user.email,
           pass: pass,
-          tipo: tipo
+          tipo: tipo,
+          matricula: tipo === 'conductor' ? matricula : null
         });
+
+
 
         localStorage.setItem('usuarioLogin', JSON.stringify({
           tipo: tipo,
