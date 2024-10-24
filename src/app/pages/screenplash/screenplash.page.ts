@@ -23,7 +23,6 @@ export class ScreenplashPage implements OnInit {
   }
 
   async checkLogin() {
-    setTimeout(() => {
       this.authService.isLogged().subscribe(async(user)=>{
         if(user) {
           try {
@@ -48,7 +47,6 @@ export class ScreenplashPage implements OnInit {
           this.router.navigate(['login']);
         }
       });
-    }, 2000);
   }
 
   // async checkHuellaDigital() {

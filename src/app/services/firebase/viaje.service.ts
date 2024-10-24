@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { Viaje } from 'src/app/interfaces/viaje';
-import { map } from 'rxjs';
+import { map, catchError, from, throwError, of, tap } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -55,15 +55,26 @@ export class ViajeService {
     return this.firestore.collection('viajes').doc(viajeId).update({ cantidadPasajeros: nuevosPasajeros });
   }
   
-  obtenerViajePorId(viajeId: string): Observable<Viaje | undefined> {
-    return this.firestore.collection<Viaje>('viajes').doc(viajeId).valueChanges();
+  obtenerViajePorId(id: string): Observable<Viaje | undefined> {
+    console.log('Servicio: Intentando obtener viaje con ID:', id);
+    return this.firestore.doc<Viaje>(`viajes/${id}`).valueChanges().pipe(
+      tap(viaje => console.log('Servicio: Viaje obtenido:', viaje)),
+      catchError(error => {
+        console.error('Servicio: Error al obtener el viaje:', error);
+        return of(undefined);
+      })
+    );
   }
 
   obtenerTodosLosViajes(): Observable<Viaje[]> {
     return this.firestore.collection<Viaje>('viajes').valueChanges();
   }
   
-  
+  cancelarViaje(id: string): Observable<void> {
+    return from(this.firestore.collection('viajes').doc(id).update({ estado: 'cancelado' })).pipe(
+      catchError((error: any) => throwError(() => error))
+    );
+  }
   
   // Método para confirmar el viaje (actualizar estado)
   confirmarViaje(id: string): Promise<void> {

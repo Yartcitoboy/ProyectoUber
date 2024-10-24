@@ -35,4 +35,7 @@ export class AuthService {
       throw error;
     });
   }
+  getCurrentUser(): Promise<firebase.default.User | null> {
+    return this.angularFireAuth.currentUser;
+  }
 }

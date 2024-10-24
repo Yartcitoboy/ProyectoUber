@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Usuario } from 'src/app/interfaces/usuario';
-import { UsuariosService } from 'src/app/services/usuarios.service';
+import { UsuariosService } from 'src/app/services/firebase/usuarios.service';
 
 @Component({
   selector: 'app-detalle-admin',
@@ -19,16 +19,20 @@ export class DetalleAdminPage implements OnInit {
     private usuarioService: UsuariosService,
   ) { }
 
+  
   ngOnInit() {
     this.userEmail = this.activatedRouter.snapshot.paramMap.get('email');
-    if(this.userEmail) {
-      this.usuario = this.usuarioService.getUsuarioByEmail(this.userEmail);
-      if(this.usuario) {
-        this.userTipo = this.usuario.tipo;
-      }
+    if (this.userEmail) {
+      this.usuarioService.obtenerUsuarioPorEmail(this.userEmail).subscribe(
+        (usuario: Usuario | undefined) => {
+          this.usuario = usuario;
+          if (this.usuario) {
+            this.userTipo = this.usuario.tipo;
+          }
+        }
+      );
     }
   }
-
   
 
 }

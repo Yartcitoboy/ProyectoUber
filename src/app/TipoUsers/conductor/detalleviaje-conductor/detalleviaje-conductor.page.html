@@ -1,4 +1,3 @@
-<!-- detalleviaje-conductor.page.html -->
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -16,11 +15,19 @@
     <ion-card-content>
       <p><strong>Desde:</strong> {{ viaje.direccionActual }}</p>
       <p><strong>Hasta:</strong> {{ viaje.direccionDestino }}</p>
-      <p><strong>Costo:</strong> {{ viaje.costo }}</p>
+      <p><strong>Costo:</strong> {{ viaje.costo | currency:'CLP':'symbol-narrow':'1.0-0' }}</p>
       <p><strong>Cantidad de Pasajeros:</strong> {{ viaje.cantidadPasajeros }}</p>
-      <p><strong>Horario:</strong> {{ viaje.horario }}</p>
+      <p><strong>Horario:</strong> {{ viaje.horario | date:'short' }}</p>
+      <p><strong>Estado:</strong> {{ viaje.estado }}</p>
     </ion-card-content>
   </ion-card>
+
+  <ion-button expand="block" color="danger" >
+    Cancelar Viaje
+  </ion-button>
 </ion-content>
 
-
+<ion-content *ngIf="!viaje">
+  <ion-spinner></ion-spinner>
+  <p>Cargando detalles del viaje...</p>
+</ion-content>

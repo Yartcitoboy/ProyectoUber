@@ -101,7 +101,7 @@ const routes: Routes = [
     loadChildren: () => import('./TipoUsers/pasajero/menu/detalle-viaje/detalle-viaje.module').then( m => m.DetalleViajePageModule)
   },
   {
-    path: 'detalleviaje-conductor',
+    path: 'detalleviaje-conductor/:viajeId',
     loadChildren: () => import('./TipoUsers/conductor/detalleviaje-conductor/detalleviaje-conductor.module').then( m => m.DetalleviajeConductorPageModule)
   },
   

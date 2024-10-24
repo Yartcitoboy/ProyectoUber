@@ -19,6 +19,7 @@ export class DetalleConductorPage implements OnInit {
   horario: string = ''; 
   conductorId: string = '';
 
+
   constructor(
     private alertController: AlertController,
     private navCtrl: NavController,
@@ -115,9 +116,13 @@ export class DetalleConductorPage implements OnInit {
             {
               text: 'Ver Detalles',
               handler: () => {
-                this.router.navigate(['/detalleviaje-conductor'], {
-                  queryParams: { viajeId: nuevoViaje.id }  // Pasa el viajeId aquí
-                });
+                console.log('ID del viaje a navegar:', nuevoViaje.id);
+                if (nuevoViaje && nuevoViaje.id) {
+                  this.router.navigate(['/detalleviaje-conductor', nuevoViaje.id]);
+                } else {
+                  console.error('No se pudo obtener el ID del viaje');
+                  // Mostrar una alerta al usuario
+                }
               },
             },
           ],
@@ -132,5 +137,12 @@ export class DetalleConductorPage implements OnInit {
         await errorAlert.present();
       }
     }
+  }
+  limpiarFormulario() {
+    this.direccionActual = '';
+    this.direccionDestino = '';
+    this.costo = 0;
+    this.cantidadPasajeros = 0;
+    this.horario = '';
   }
 }

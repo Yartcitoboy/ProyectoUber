@@ -1,61 +1,66 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ViajeService } from 'src/app/services/firebase/viaje.service';
 import { Viaje } from 'src/app/interfaces/viaje';
-
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-detalleviaje-conductor',
   templateUrl: './detalleviaje-conductor.page.html',
   styleUrls: ['./detalleviaje-conductor.page.scss'],
 })
 export class DetalleviajeConductorPage implements OnInit {
-  viajeId: string = '';
   viaje: Viaje | undefined;
+  viajeId: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private viajeService: ViajeService,
-  ) { }
+    private alertController: AlertController,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.viajeId = params['viajeId'];  // Captura el viajeId
-      console.log('viajeId obtenido:', this.viajeId);  // Para verificar si se obtuvo correctamente
-
+    this.route.paramMap.subscribe(params => {
+      this.viajeId = params.get('viajeId');
+      console.log('ID del viaje recibido:', this.viajeId);  // Esto debería mostrar un ID real.
       if (this.viajeId) {
-        this.obtenerDetallesViaje();  // Llama a este método si el ID es válido
+        this.cargarDetallesViaje();
       } else {
-        console.error('No se ha proporcionado un viajeId.');  // Maneja el caso en que no se obtiene el ID
+        this.mostrarAlerta('Error', 'No se proporcionó ID de viaje');
       }
     });
+    
   }
-  
-  
-  
 
-  async obtenerDetallesViaje() {
-    try {
-      const viaje = await this.viajeService.obtenerViajePorId(this.viajeId).toPromise();
-      console.log('Detalles del viaje:', viaje); // Verifica si se obtienen los detalles
-      this.viaje = viaje;
-    } catch (error) {
-      console.error('Error al obtener los detalles del viaje:', error);
+  cargarDetallesViaje() {
+    if (this.viajeId) {
+      console.log('Intentando cargar viaje con ID:', this.viajeId);
+      this.viajeService.obtenerViajePorId(this.viajeId).subscribe({
+        next: (viaje) => {
+          console.log('Viaje recibido:', viaje);
+          if (viaje) {
+            this.viaje = viaje;
+          } else {
+            this.mostrarAlerta('Error', 'No se encontró el viaje especificado');
+          }
+        },
+        error: (error) => {
+          console.error('Error al cargar el viaje:', error);
+          this.mostrarAlerta('Error', 'Error al cargar el viaje: ' + error.message);
+        }
+      });
     }
   }
 
-  verDetallesViaje(viajeId: string) {
-    this.router.navigate(['/detalleviaje-conductor'], {
-      queryParams: { viajeId: viajeId }
+  async mostrarAlerta(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK']
     });
+    await alert.present();
   }
-  
-  
-  
 
-  confirmarViaje() {
-    if (this.viaje) {
-      this.viajeService.confirmarViaje(this.viaje.id);
-    }
-  }
+  
 }

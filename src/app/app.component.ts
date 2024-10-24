@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Page } from './interfaces/page';
 import { NavController } from '@ionic/angular';
+import { AuthService } from './services/firebase/auth.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 
 @Component({
@@ -14,20 +16,29 @@ export class AppComponent {
   public tipoUsuario?: string;
   public emailUsuario?: string;
 
-  constructor(private navCtrl: NavController) {}
+  constructor(private navCtrl: NavController, private authService: AuthService, private firestore: AngularFirestore) {}
 
   
 
   ngOnInit() {
-    const usuarioLogin = localStorage.getItem('usuarioLogin');
-    if (usuarioLogin) {
-      const user = JSON.parse(usuarioLogin);
-      this.tipoUsuario = user.tipo;
-      this.emailUsuario = user.email;
-      this.configSideMenu();
-    } else {
-      this.navCtrl.navigateRoot('/loguear');
-    }
+    this.authService.isLogged().subscribe((user: any) => { 
+      if (user) {
+        this.emailUsuario = user.email;
+        this.obtenerTipoUsuario(user.uid);
+      } else {
+        this.navCtrl.navigateRoot('/loguear');
+      }
+    });
+  }
+
+  async obtenerTipoUsuario(uid: string) {
+    this.firestore.collection('usuarios').doc(uid).get().toPromise()
+      .then((doc) => {
+        if (doc && doc.exists) {
+          this.tipoUsuario = (doc.data() as { tipo: string })?.tipo;
+          this.configSideMenu();
+        }
+      });
   }
 
   configSideMenu() {
