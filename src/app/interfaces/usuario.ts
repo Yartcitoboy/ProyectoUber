@@ -4,5 +4,5 @@ export interface Usuario{
     email: string;
     pass: string;
     tipo: string;
-    activo: boolean;
+    estadoCuenta: boolean;
 }

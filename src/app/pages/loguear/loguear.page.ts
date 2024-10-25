@@ -6,7 +6,7 @@ import { LoadingController, MenuController } from '@ionic/angular';
 import { Usuario } from 'src/app/interfaces/usuario';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import Swal from 'sweetalert2';
-
+import { MensajeService } from 'src/app/services/mensaje.service';
 @Component({
   selector: 'app-loguear',
   templateUrl: './loguear.page.html',
@@ -25,6 +25,7 @@ export class LoguearPage implements OnInit {
     private authService: AuthService,
     private menuController: MenuController,
     private firestore: AngularFirestore,
+    private mensajeService: MensajeService
   ) { 
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -37,55 +38,92 @@ export class LoguearPage implements OnInit {
   }
 
   async login() {
-    try{
-      
+    try {
       const loading = await this.loadingController.create({
         message: 'Cargando.....',
         duration: 2000
       });
-  
+
+      await loading.present();
+
       const email = this.emailValue;
       const pass = this.passValue;
-  
-      const aux = await this.authService.loguear(email as string, pass as string);
-  
-      if (aux.user) {
-  
-        const usuarioLogeado = await this.firestore.collection('usuarios').doc(aux.user.uid).get().toPromise()
-        const usuarioData = usuarioLogeado?.data() as Usuario;
-  
+
+      const result = await this.authService.loguear(email as string, pass as string);
+
+      await loading.dismiss()
+
+      if (result && result.user) {
+        this.mensajeService.mostrarMensaje('Inicio de sesión exitoso');
+        const userDoc = await this.firestore.collection('usuarios').doc(result.user.uid).get().toPromise();
+        const userData = userDoc?.data() as Usuario;
+
+        if (!userData || userData.estadoCuenta === false) {
+          await loading.dismiss();
+          await this.authService.logout();
+          Swal.fire({
+            icon: 'error',
+            title: 'Cuenta desactivada',
+            text: 'Tu cuenta ha sido desactivada. Por favor, contacta al administrador.',
+            confirmButtonText: 'OK',
+            heightAuto: false
+          });
+           // Cerrar sesión si la cuenta está desactivada
+          return;
+        }
+
         localStorage.setItem('usuarioLogin', JSON.stringify({
           email: email as string,
-          tipo: usuarioData.tipo
+          tipo: userData.tipo
         }));
-        await loading.present();
-        
-        setTimeout(async () => {
-          await loading.dismiss();
-  
-          if (usuarioData.tipo === 'admin') {
+
+        await loading.dismiss();
+
+        // Redirigir según el tipo de usuario
+        switch (userData.tipo) {
+          case 'admin':
             this.router.navigate(['/usuarios']);
-          } else if (usuarioData.tipo === 'pasajero') {
+            break;
+          case 'pasajero':
             this.router.navigate(['./pasajero-dashboard']);  
-          } else {
+            break;
+          case 'conductor':
             this.router.navigate(['./conductor-dashboard']);
-          }
-        }, 2000);
-  
-      } 
-    } catch (error) {
+            break;
+          default:
+            console.error('Tipo de usuario no reconocido');
+            break;
+        }
+      } else {
+        await loading.dismiss();
         Swal.fire({
-          icon:'error',
-          title:'Error',
-          text: 'Hubo un error al iniciar sesión.',
+          icon: 'error',
+          title: 'Error de autenticación',
+          text: 'Credenciales incorrectas. Por favor, intenta de nuevo.',
           confirmButtonText: 'OK',
           heightAuto: false
         });
-        this.emailValue = '';
-        this.passValue = '';
       }
-    }
+    } catch (error) {
+      console.error('Error en login:', error);
+      await this.loadingController.dismiss();
 
-    
-    
+      if (error instanceof Error) {
+        if (error.message === 'Cuenta desactivada') {
+          await Swal.fire({
+            icon: 'error',
+            title: 'Cuenta desactivada',
+            text: 'Tu cuenta ha sido desactivada. Por favor, contacta al administrador.',
+            confirmButtonText: 'OK',
+            heightAuto: false
+          });
+        } else {
+          this.mensajeService.mostrarMensaje('Ocurrió un error inesperado. Por favor, intenta de nuevo.');
+        }
+      } else {
+        this.mensajeService.mostrarMensaje('Ocurrió un error inesperado. Por favor, intenta de nuevo.');
+      }
+      console.error('Error en login:', error);
+    }
   }
+}

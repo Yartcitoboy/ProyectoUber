@@ -4,7 +4,7 @@ import { Usuario } from 'src/app/interfaces/usuario';
 import { UsuariosService } from 'src/app/services/firebase/usuarios.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AlertController } from '@ionic/angular';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-detalle-admin',
   templateUrl: './detalle-admin.page.html',
@@ -13,7 +13,7 @@ import { AlertController } from '@ionic/angular';
 export class DetalleAdminPage implements OnInit {
 
   userEmail?: string | null;
-  usuario?: Usuario;
+  usuario?: Usuario | null;
   userTipo?: string | null;
   nombreUsuario?: string | null;
   apellidoUsuario?: string | null;  
@@ -25,34 +25,32 @@ export class DetalleAdminPage implements OnInit {
     private usuarioService: UsuariosService,
     private firestore: AngularFirestore,
     private alertController: AlertController,
+    private userService: UsuariosService
   ) { }
 
   
   ngOnInit() {
-    console.log('ngOnInit iniciado');
     this.userEmail = this.activatedRouter.snapshot.paramMap.get('email');
-    console.log('Email obtenido:', this.userEmail);
-    
     if (this.userEmail) {
-      console.log('Intentando obtener usuario con email:', this.userEmail);
-      this.usuarioService.obtenerUsuarioPorEmail(this.userEmail).subscribe(
-        (usuario: Usuario | undefined) => {
-          console.log('Usuario obtenido:', usuario);
-          this.usuario = usuario;
-          if (this.usuario) {
-            this.userTipo = this.usuario.tipo;
-            console.log('Tipo de usuario:', this.userTipo);
-          } else {
-            console.log('Usuario no encontrado');
-          }
-        },
-        (error) => {
-          console.error('Error al obtener usuario:', error);
-        }
-      );
-    } else {
-      console.log('No se proporcionó email');
+      this.cargarUsuario(this.userEmail);
     }
+  }
+
+  cargarUsuario(email: string) {
+    this.usuarioService.obtenerUsuarioPorEmail(email).subscribe(
+      (usuario: Usuario | undefined) => {
+        if (usuario) {
+          this.usuario = usuario;
+          // Asegurarse de que activo tenga un valor booleano por defecto
+          this.usuario.estadoCuenta = usuario.estadoCuenta ?? true;
+        } else {
+          console.log('Usuario no encontrado');
+        }
+      },
+      (error) => {
+        console.error('Error al obtener usuario:', error);
+      }
+    );
   }
 
 ///////////////////
@@ -132,22 +130,58 @@ async obtenerDatosUsuario(uid: string) {
   }
 
   async desactivarUsuario(email: string) {
-  const usuarioRef = this.firestore.collection('usuarios', ref => ref.where('email', '==', email));
-  const querySnapshot = await usuarioRef.get().toPromise();
-  if (querySnapshot && querySnapshot.docs.length > 0) {
-    const doc = querySnapshot.docs[0];
-    await doc.ref.update({ activo: false });
+    const alert = await this.alertController.create({
+      header: 'Confirmar desactivación',
+      message: '¿Está seguro que desea desactivar este usuario? No podrá ingresar a la aplicación hasta que sea reactivado.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Desactivar',
+          handler: async () => {
+            const usuarioRef = this.firestore.collection('usuarios', ref => ref.where('email', '==', email));
+            const querySnapshot = await usuarioRef.get().toPromise();
+            if (querySnapshot && querySnapshot.docs.length > 0) {
+              const doc = querySnapshot.docs[0];
+              await doc.ref.update({ estadoCuenta: false });
+              console.log('Usuario desactivado');
+              this.config(); // Actualizar la lista de usuarios
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
-}
-
-async reactivarUsuario(email: string) {
-  const usuarioRef = this.firestore.collection('usuarios', ref => ref.where('email', '==', email));
-  const querySnapshot = await usuarioRef.get().toPromise();
-  if (querySnapshot && querySnapshot.docs.length > 0) {
-    const doc = querySnapshot.docs[0];
-    await doc.ref.update({ activo: true });
+  
+  async reactivarUsuario(email: string) {
+    const alert = await this.alertController.create({
+      header: 'Confirmar reactivación',
+      message: '¿Está seguro que desea reactivar este usuario? Podrá ingresar nuevamente a la aplicación.',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Reactivar',
+          handler: async () => {
+            const usuarioRef = this.firestore.collection('usuarios', ref => ref.where('email', '==', email));
+            const querySnapshot = await usuarioRef.get().toPromise();
+            if (querySnapshot && querySnapshot.docs.length > 0) {
+              const doc = querySnapshot.docs[0];
+              await doc.ref.update({ estadoCuenta: true });
+              console.log('Usuario reactivado');
+              this.config(); // Actualizar la lista de usuarios
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
-}
 
   verUsuario(usuario: any) {
     console.log('Ver Usuario:', usuario);
@@ -158,8 +192,25 @@ async reactivarUsuario(email: string) {
     });
   }
 
-  async toggleUsuarioActivo(email: string, activo: boolean) {
-    // Implementa la lógica para activar/desactivar el usuario
+  async toggleUsuarioActivo(email: string, nuevoEstado: boolean) {
+    try {
+      await this.usuarioService.cambiarEstadoCuenta(email, nuevoEstado);
+      Swal.fire({
+        icon: 'success',
+        title: 'Estado de cuenta actualizado',
+        text: `La cuenta ha sido ${nuevoEstado ? 'activada' : 'desactivada'} exitosamente.`,
+        confirmButtonText: 'OK',
+        heightAuto: false
+      });
+    } catch (error) {
+      console.error('Error al cambiar el estado de la cuenta:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo actualizar el estado de la cuenta. Por favor, intenta de nuevo.',
+        confirmButtonText: 'OK',
+        heightAuto: false
+      });
+    }
   }
-
 }

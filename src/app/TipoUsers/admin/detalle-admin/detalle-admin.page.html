@@ -15,8 +15,11 @@
 
     
     <ion-item>
-      <ion-label>Activo:</ion-label>
-      <ion-toggle [(ngModel)]="usuario.activo" (ionChange)="toggleUsuarioActivo(usuario.email, usuario.activo)"></ion-toggle>
+      <ion-label>Estado de la cuenta</ion-label>
+      <ion-select [(ngModel)]="usuario.estadoCuenta" (ionChange)="toggleUsuarioActivo(usuario.email, usuario.estadoCuenta)">
+        <ion-select-option [value]="true">Activo</ion-select-option>
+        <ion-select-option [value]="false">Desactivado</ion-select-option>
+      </ion-select>
     </ion-item>
     
     <ion-button expand="block" (click)="editarUsuario(usuario)">Editar Usuario</ion-button>

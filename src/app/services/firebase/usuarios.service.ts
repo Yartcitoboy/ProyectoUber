@@ -3,7 +3,7 @@ import { Usuario } from '../../interfaces/usuario';
 import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
-
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class UsuariosService {
   apellido?: string;
   tipo?: string;
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore, private authService: AuthService) { }
 
   obtenerUsuarioPorEmail(email: string): Observable<Usuario | undefined> {
     return this.firestore.collection<Usuario>('usuarios', ref => ref.where('email', '==', email))
@@ -43,6 +43,15 @@ export class UsuariosService {
   // Eliminar usuario
   eliminarUsuario(id: string): Promise<void> {
     return this.firestore.collection('usuarios').doc(id).delete();
+  }
+
+  async cambiarEstadoCuenta(email: string, nuevoEstado: boolean): Promise<void> {
+    const userQuery = await this.firestore.collection('usuarios', ref => ref.where('email', '==', email)).get().toPromise();
+    if (!userQuery?.docs.length) {
+      throw new Error('Usuario no encontrado');
+    }
+    const userDoc = userQuery.docs[0];
+    return userDoc.ref.update({ estadoCuenta: nuevoEstado });
   }
   
 }
