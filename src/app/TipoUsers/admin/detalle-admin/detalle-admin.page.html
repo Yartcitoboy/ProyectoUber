@@ -1,19 +1,30 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button defaultHref="/admin-dashboard"></ion-back-button>
     </ion-buttons>
-    <ion-title>detalle-admin</ion-title>
+    <ion-title>Detalle de Usuario</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title> {{ userEmail }} </ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <h2>Tipo Usuario: {{ userTipo }} </h2>
-    </ion-card-content>
-  </ion-card>
+<ion-content class="ion-padding">
+  <div *ngIf="usuario">
+    <h2>{{ usuario.nombre }} {{ usuario.apellido }}</h2>
+    <p>Email: {{ usuario.email }}</p>
+    <p>Tipo de usuario: {{ usuario.tipo }}</p>
+
+    
+    <ion-item>
+      <ion-label>Activo:</ion-label>
+      <ion-toggle [(ngModel)]="usuario.activo" (ionChange)="toggleUsuarioActivo(usuario.email, usuario.activo)"></ion-toggle>
+    </ion-item>
+    
+    <ion-button expand="block" (click)="editarUsuario(usuario)">Editar Usuario</ion-button>
+  </div>
+  
+  <div *ngIf="!usuario">
+    <p>No se encontró información del usuario.</p>
+  </div>
 </ion-content>
+
+

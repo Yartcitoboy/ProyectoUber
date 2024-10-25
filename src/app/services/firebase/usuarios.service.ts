@@ -16,10 +16,6 @@ export class UsuariosService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  obtenerUsuarioPorUid(uid: string): Observable<Usuario | undefined> {
-    return this.firestore.collection<Usuario>('usuarios').doc(uid).valueChanges();
-  }
-
   obtenerUsuarioPorEmail(email: string): Observable<Usuario | undefined> {
     return this.firestore.collection<Usuario>('usuarios', ref => ref.where('email', '==', email))
       .valueChanges()
@@ -27,16 +23,26 @@ export class UsuariosService {
         map(usuarios => usuarios[0])
       );
   }
-  addUsuario(usuario: Usuario) {
-    return this.firestore.collection('usuarios').add(usuario);
+  
+  // Leer usuarios
+  obtenerUsuarios(): Observable<Usuario[]> {
+    return this.firestore.collection('usuarios').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as Usuario;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
   }
 
-  deleteUsuario(id: string) {
+  // Actualizar usuario
+  actualizarUsuario(id: string, usuario: Partial<Usuario>): Promise<void> {
+    return this.firestore.collection('usuarios').doc(id).update(usuario);
+  }
+
+  // Eliminar usuario
+  eliminarUsuario(id: string): Promise<void> {
     return this.firestore.collection('usuarios').doc(id).delete();
-  }
-
-  updateUsuario(usuario: Usuario) {
-    
   }
   
 }

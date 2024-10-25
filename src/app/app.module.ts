@@ -19,9 +19,10 @@ import { environment } from 'src/environments/environment.prod';
 
 
 
+
 @NgModule({
   
-  declarations: [AppComponent, ],
+  declarations: [AppComponent,],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
