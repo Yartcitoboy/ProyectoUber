@@ -68,4 +68,6 @@ export class DashboardPage implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
   }
+
+  
 }

@@ -5,6 +5,7 @@ import { UsuariosService } from 'src/app/services/firebase/usuarios.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AlertController } from '@ionic/angular';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-detalle-admin',
   templateUrl: './detalle-admin.page.html',
@@ -12,11 +13,13 @@ import Swal from 'sweetalert2';
 })
 export class DetalleAdminPage implements OnInit {
 
-  userEmail?: string | null;
+  uid?: string | null;
   usuario?: Usuario | null;
-  userTipo?: string | null;
   nombreUsuario?: string | null;
   apellidoUsuario?: string | null;  
+  userEmail?: string | null;
+  password?: string | null;
+  userTipo?: string | null;
 
   usuarios: any = [];
   usuarioEditado: any = {};
@@ -25,15 +28,20 @@ export class DetalleAdminPage implements OnInit {
     private usuarioService: UsuariosService,
     private firestore: AngularFirestore,
     private alertController: AlertController,
-    private userService: UsuariosService
+    private userService: UsuariosService,
+    private router: Router
   ) { }
 
   
   ngOnInit() {
-    this.userEmail = this.activatedRouter.snapshot.paramMap.get('email');
-    if (this.userEmail) {
-      this.cargarUsuario(this.userEmail);
+    this.uid = this.activatedRouter.snapshot.paramMap.get('uid');
+    if (this.uid) {
+      this.cargarUsuario(this.uid);
     }
+  }
+
+  editarUsuario(uid: string) {
+    this.router.navigate(['/edit-user', uid]);
   }
 
   cargarUsuario(email: string) {
@@ -84,50 +92,7 @@ async obtenerDatosUsuario(uid: string) {
     }
   }
 
-  async editarUsuario(usuario: any) {
-    this.usuarioEditado = { ...usuario }; // Copiar los datos del usuario a editar
-    const alert = await this.alertController.create({
-      header: 'Editar Usuario',
-      inputs: [
-        {
-          name: 'nombre',
-          type: 'text',
-          placeholder: 'Nombre',
-          value: this.usuarioEditado.nombre,
-        },
-        {
-          name: 'apellido',
-          type: 'text',
-          placeholder: 'Apellido',
-          value: this.usuarioEditado.apellido,
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-        },
-        {
-          text: 'Guardar',
-          handler: (data) => {
-            this.guardarCambios(data);
-          },
-        },
-      ],
-    });
-
-    await alert.present();
-  }
-
-  async guardarCambios(data: any) {
-    const usuarioRef = this.firestore.collection('usuarios').doc(this.usuarioEditado.id);
-    await usuarioRef.update({
-      nombre: data.nombre,
-      apellido: data.apellido,
-    });
-    this.config(); // Actualizar la lista de usuarios
-  }
+  
 
   async desactivarUsuario(email: string) {
     const alert = await this.alertController.create({
@@ -183,9 +148,9 @@ async obtenerDatosUsuario(uid: string) {
     await alert.present();
   }
 
-  verUsuario(usuario: any) {
-    console.log('Ver Usuario:', usuario);
-  }
+  // verUsuario(usuario: any) {
+  //   console.log('Ver Usuario:', usuario);
+  // }
   config() {
     this.firestore.collection('usuarios').valueChanges().subscribe(aux => {
       this.usuarios = aux;

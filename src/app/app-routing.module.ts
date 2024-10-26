@@ -67,7 +67,7 @@ const routes: Routes = [
         loadChildren: () => import('./TipoUsers/admin/dashboard/dashboard.module').then( m => m.DashboardPageModule)
       },
       {
-        path: ':email',
+        path: ':uid',
         loadChildren: () => import('./TipoUsers/admin/detalle-admin/detalle-admin.module').then( m => m.DetalleAdminPageModule)
       }
     ]
@@ -104,6 +104,11 @@ const routes: Routes = [
     path: 'detalleviaje-conductor/:viajeId',
     loadChildren: () => import('./TipoUsers/conductor/detalleviaje-conductor/detalleviaje-conductor.module').then( m => m.DetalleviajeConductorPageModule)
   },
+  {
+    path: 'edit-user/:uid',
+    loadChildren: () => import('./TipoUsers/admin/edit-user/edit-user.module').then( m => m.EditUserPageModule)
+  },
+
   
 
 
