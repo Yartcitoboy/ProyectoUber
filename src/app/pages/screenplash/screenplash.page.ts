@@ -17,12 +17,11 @@ export class ScreenplashPage implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.router.navigate(['login']);
+      this.checkLogin();
     }, 2000);
-    this.checkLogin();
   }
 
-  async checkLogin() {
+  checkLogin() {
       this.authService.isLogged().subscribe(async(user)=>{
         if(user) {
           try {
@@ -33,18 +32,20 @@ export class ScreenplashPage implements OnInit {
             .doc(user.uid).get().toPromise();
             const userData = usuario?.data() as Usuario;
     
-            if (userData.tipo === 'admin') {
-              this.router.navigate(['/usuarios']);
-            } else if (userData.tipo === 'pasajero') {
-              this.router.navigate(['./pasajero-dashboard']);  
-            } else {
-              this.router.navigate(['./conductor-dashboard']);
+            if(userData) {
+              if(userData.tipo === 'admin') {
+                this.router.navigate(['/admin-dashboard']);
+              } else if ( userData.tipo === 'pasajero') {
+                this.router.navigate(['/pasajero-dashboard']);
+              } else {
+                this.router.navigate(['/conductor-dashboard']);
+              }
             }
           } catch (error) {
-            this.router.navigate(['login']);
+            this.router.navigate(['loguear']);
           }  
         } else {
-          this.router.navigate(['login']);
+          this.router.navigate(['loguear']);
         }
       });
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { MenuController, NavController, AlertController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 
 @Component({
@@ -22,7 +22,6 @@ export class DashboardPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private navCtrl: NavController,
-    private alertController: AlertController
   ) {}
 
   ngOnInit() {
