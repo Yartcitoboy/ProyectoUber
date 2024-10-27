@@ -26,7 +26,7 @@ export class ScreenplashPage implements OnInit {
         if(user) {
           try {
             // VERIFICAMO CON LA HUELLA
-            // await this.checkHuellaDigital();
+            await this.checkHuellaDigital();
     
             const usuario = await this.firestore.collection('usuarios')
             .doc(user.uid).get().toPromise();
@@ -50,17 +50,17 @@ export class ScreenplashPage implements OnInit {
       });
   }
 
-  // async checkHuellaDigital() {
-  //   try {
-  //     await NativeBiometric.verifyIdentity({
-  //       reason: 'Por favor, autentícate para continuar',
-  //       title: 'Autentición Biométrica',
-  //       subtitle: 'Usa tu huella digítal o Face ID',
-  //       description: 'Coloca tu huella en el sensor para ingresar.'
-  //     });
-  //   } catch (error) {
-  //     throw error; 
-  //   }
-  // }
+  async checkHuellaDigital() {
+    try {
+      await NativeBiometric.verifyIdentity({
+        reason: 'Por favor, autentícate para continuar',
+        title: 'Autentición Biométrica',
+        subtitle: 'Usa tu huella digítal o Face ID',
+        description: 'Coloca tu huella en el sensor para ingresar.'
+      });
+    } catch (error) {
+      throw error; 
+    }
+  }
 
 }
