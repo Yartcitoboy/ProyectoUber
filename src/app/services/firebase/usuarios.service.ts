@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +14,8 @@ export class UsuariosService {
   tipo?: string;
 
   constructor(private firestore: AngularFirestore, private authService: AuthService) { }
+
+  
 
   obtenerUsuarioPorEmail(email: string): Observable<Usuario | undefined> {
     return this.firestore.collection<Usuario>('usuarios', ref => ref.where('email', '==', email))

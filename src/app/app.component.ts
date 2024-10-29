@@ -60,7 +60,7 @@ export class AppComponent {
     } else if (this.tipoUsuario === 'conductor') {
       this.appPages = [
         { title: 'Inicio', url: '/conductor/dashboard', icon: 'home' }, 
-        { title: 'Billetera', url: '/conductor-billetera', icon: 'card' }, 
+        { title: 'Perfil', url: '/conductor-perfil', icon: 'people' }, 
         { title: 'Historial', url: '/conductor-historial', icon: 'time' },
         { title: 'Notificaciones', url: '/conductor-notificaciones', icon: 'notifications' },
         { title: 'Ajustes', url: '/conductor-ajustes', icon: 'settings' },

@@ -3,15 +3,19 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { Usuario } from 'src/app/interfaces/usuario';
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private angularFireAuth: AngularFireAuth, private firestore: AngularFirestore) {
+  constructor(
+    private angularFireAuth: AngularFireAuth,
+    private firestore: AngularFirestore,
+
+  ) {
   }
 
+  
   async loguear(email: string, password: string) {
     try {
       const result = await this.angularFireAuth.signInWithEmailAndPassword(email, password);
@@ -58,4 +62,5 @@ export class AuthService {
   getCurrentUser(): Promise<firebase.default.User | null> {
     return this.angularFireAuth.currentUser;
   }
+
 }

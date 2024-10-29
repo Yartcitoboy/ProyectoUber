@@ -7,7 +7,7 @@ import { NavController } from '@ionic/angular';
 import { IonMenu } from '@ionic/angular';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,9 +27,16 @@ export class DashboardPage implements OnInit {
     private menuController: MenuController ,
     private navCtrl: NavController,
     private authService: AuthService,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private router: Router
   ) { 
     addIcons({ person, time, home})
+  }
+
+  logout() {
+    // TODO: ALERTA FUNCIONANDO
+    this.authService.logout();
+    this.router.navigate(['/loguear']);
   }
 
   ngOnInit() {

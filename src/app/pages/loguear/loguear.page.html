@@ -19,23 +19,11 @@
         <ion-button color="dark" fill="solid" shape="round" (click)="login()">Ingresar</ion-button>
         <ion-button color="dark" fill="solid" shape="round" routerLink="/resetpass" >recuperar</ion-button>
       </div>
-
-      <div class="tag">
-        <span>Iniciar Sesión con</span>
-      </div>
-
-      <div class="social-icon">
-        <ion-button class="btn-social" fill="clear">
-          <ion-img src="/assets/icon/google.png"></ion-img>
-        </ion-button>
-        <ion-button class="btn-social" fill="clear">
-          <ion-img src="/assets/icon/facebook.png"></ion-img>
-        </ion-button>
-        <ion-button class="btn-social" fill="clear">
-          <ion-img src="/assets/icon/apple.png"></ion-img>
-        </ion-button>
-      </div>
-
+      <br>
+      <ion-button color="dark" fill="solid" shape="round" (click)="createRandomUsers() " id="open-toast" expand="block">Crear Cuentas</ion-button>
+      <ion-toast trigger="open-toast" message="Por favor espera mientras se crean 10 usuarios." [duration]="20000"></ion-toast>
+      <br>
+      <br>
       <div class="tag-2">
         <span>No tienes una cuenta?</span><button routerLink="/registro">Registrate</button>
       </div>

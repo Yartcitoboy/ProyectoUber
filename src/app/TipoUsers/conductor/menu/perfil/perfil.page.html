@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- ... existing code ... -->
+  <div class="profile-image-container">
+    <ion-avatar (click)="seleccionarFoto()">
+      <img [src]="usuarios?.foto || 'assets/avatar-default.svg'" alt="Foto de perfil"/>
+    </ion-avatar>
+    <ion-button fill="clear" size="small" (click)="seleccionarFoto()">
+      <ion-icon name="camera-outline"></ion-icon>
+      Cambiar foto
+    </ion-button>
+  </div>
+  <!-- ... rest of profile content ... -->
+</ion-content>
+

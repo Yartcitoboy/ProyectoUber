@@ -89,6 +89,10 @@ const routes: Routes = [
     loadChildren: () => import('./TipoUsers/conductor/menu/ajustes/ajustes.module').then( m => m.AjustesPageModule)
   },
   {
+    path: 'conductor-perfil',
+    loadChildren: () => import('./TipoUsers/conductor/menu/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
     path: 'pasajero-perfil',
     loadChildren: () => import('./TipoUsers/pasajero/menu/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
@@ -108,6 +112,7 @@ const routes: Routes = [
     path: 'edit-user/:uid',
     loadChildren: () => import('./TipoUsers/admin/edit-user/edit-user.module').then( m => m.EditUserPageModule)
   },
+
 
   
 
