@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ModalController } from '@ionic/angular';
 import { Viaje } from 'src/app/interfaces/viaje';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-modal-detalles',
   template: `
@@ -27,11 +27,15 @@ import { Viaje } from 'src/app/interfaces/viaje';
       <p><strong></strong> {{ costo }}</p>
       <p><strong>Cantidad de Pasajeros:</strong> {{ cantidadPasajeros }}</p>
       <p><strong>Horario:</strong> {{ horario }}</p>
-      <ion-button style="padding-top: 10px" expand="full" color="primary" (click)="reservarViaje()">
-        Reservar Viaje
+      <ion-button style="padding-top: 10px" expand="full" color="danger" (click)="reservarViaje()">
+      
+      <qr-code value="Hello world!" 
+         size="140" 
+         errorCorrectionLevel="M" />
       </ion-button>
     </ion-card-content>
   </ion-card>
+  
 </ion-content>
 
 
@@ -46,7 +50,7 @@ export class ModalDetallesComponent {
     @Input() viajeId?: string;
     @Input() pasajerosReservados: string[] = []; 
 
-  constructor(private modalController: ModalController, private firestore: AngularFirestore) { }
+  constructor(private modalController: ModalController, private firestore: AngularFirestore, private router: Router) { }
 
   cerrarModal() {
     this.modalController.dismiss();
@@ -85,6 +89,10 @@ export class ModalDetallesComponent {
       }
     });
     return await modal.present();
+  }
+
+  reservarViaje1() {
+    this.router.navigate(['/detalle-viaje']);
   }
   
 }

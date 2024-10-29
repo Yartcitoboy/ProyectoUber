@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/interfaces/usuario';
@@ -21,33 +20,45 @@ export class ScreenplashPage implements OnInit {
     }, 2000);
   }
 
-  checkLogin() {
-      this.authService.isLogged().subscribe(async(user)=>{
-        if(user) {
-          try {
-            // VERIFICAMO CON LA HUELLA
-            await this.checkHuellaDigital();
-    
-            const usuario = await this.firestore.collection('usuarios')
-            .doc(user.uid).get().toPromise();
-            const userData = usuario?.data() as Usuario;
-    
-            if(userData) {
-              if(userData.tipo === 'admin') {
-                this.router.navigate(['/admin-dashboard']);
-              } else if ( userData.tipo === 'pasajero') {
-                this.router.navigate(['/pasajero-dashboard']);
-              } else {
-                this.router.navigate(['/conductor-dashboard']);
-              }
-            }
-          } catch (error) {
-            this.router.navigate(['loguear']);
-          }  
-        } else {
+  async checkLogin() {
+    this.authService.isLogged().subscribe(async (user) => {
+      if (!user) {
+        this.router.navigate(['loguear']);
+        return;
+      }
+
+      try {
+        const userDoc = await this.firestore
+          .collection('usuarios')
+          .doc(user.uid)
+          .get()
+          .toPromise();
+
+        const userData = userDoc?.data() as any;
+
+        if (!userData) {
           this.router.navigate(['loguear']);
+          return;
         }
-      });
+
+        switch (userData.tipo) {
+          case 'admin':
+            this.router.navigate(['/admin-dashboard']);
+            break;
+          case 'pasajero':
+            this.router.navigate(['/pasajero-dashboard']);
+            break;
+          case 'conductor':
+            this.router.navigate(['/conductor-dashboard']);
+            break;
+          default:
+            this.router.navigate(['loguear']);
+        }
+      } catch (error) {
+        console.error('Error al verificar usuario:', error);
+        this.router.navigate(['loguear']);
+      }
+    });
   }
 
   async checkHuellaDigital() {

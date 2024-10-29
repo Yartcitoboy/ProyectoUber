@@ -10,7 +10,11 @@ import { AuthService } from 'src/app/services/firebase/auth.service';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
+  tipoSeleccionado = 'conductor';
+  usuariosFiltrados: any[] = [];
+
   usuarios: any = [];
+  
   nombreUsuario: string = '';
   apellidoUsuario: string = '';
   emailUsuario: string = '';
@@ -23,6 +27,12 @@ export class DashboardPage implements OnInit {
     private router: Router,
     private navCtrl: NavController,
   ) {}
+
+  segmentChanged(event: any) {
+    this.usuariosFiltrados = this.usuarios.filter((usuario: any) => 
+      usuario.tipo === this.tipoSeleccionado
+    );
+  }
 
   ngOnInit() {
     this.menuController.enable(true);

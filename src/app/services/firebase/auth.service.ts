@@ -9,7 +9,8 @@ import { Usuario } from 'src/app/interfaces/usuario';
 })
 export class AuthService {
 
-  constructor(private angularFireAuth: AngularFireAuth, private firestore: AngularFirestore) { }
+  constructor(private angularFireAuth: AngularFireAuth, private firestore: AngularFirestore) {
+  }
 
   async loguear(email: string, password: string) {
     try {
@@ -18,13 +19,12 @@ export class AuthService {
       const userDoc = await this.firestore.collection('usuarios').doc(result.user?.uid).get().toPromise();
       const userData = userDoc?.data() as Usuario;
       if (userData && userData.estadoCuenta === false) {
-        await this.logout(); // Cerrar sesión si la cuenta está desactivada
+        await this.logout(); 
         throw new Error('Cuenta desactivada');
       }
       return result;
     } catch (error) {
-      console.error('Error en loguear:', error);
-      throw error; // Re-lanzar el error para que pueda ser manejado en el componente
+      throw error; 
     }
   }
 
@@ -36,8 +36,13 @@ export class AuthService {
     return this.angularFireAuth.createUserWithEmailAndPassword(email,pass);
   }
 
-  logout() {
-    return this.angularFireAuth.signOut();
+  async logout() {
+    try {
+      await this.angularFireAuth.signOut();
+    } catch (error) {
+      console.error('Error en logout:', error);
+      throw error;
+    }
   }
 
   recoveryPassword(email: string) {
