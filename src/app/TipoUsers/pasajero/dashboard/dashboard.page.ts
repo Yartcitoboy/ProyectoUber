@@ -22,6 +22,7 @@ export class DashboardPage implements OnInit {
   public apellidoUsuario?: string;
   public tipoUsuario?: string;
 
+  usuarioLogin?: string;
 
   constructor(
     private menuController: MenuController ,
