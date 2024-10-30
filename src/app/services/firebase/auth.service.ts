@@ -63,4 +63,8 @@ export class AuthService {
     return this.angularFireAuth.currentUser;
   }
 
+  obtenerInfoUsuario(userId: string) {
+    return this.firestore.collection('usuarios').doc(userId).valueChanges();
+  }
+
 }
