@@ -4,8 +4,14 @@
       <ion-back-button defaultHref="/conductor-dashboard"></ion-back-button>
     </ion-buttons>
     <ion-title>Detalles del Viaje</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/qr" size="small" fill="clear" color="dark">
+        <ion-icon slot="icon-only" name="qr-code-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content *ngIf="viaje">
   <ion-card>
