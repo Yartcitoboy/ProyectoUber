@@ -5,7 +5,9 @@ import { IonicModule } from '@ionic/angular';
 import { BuscarViajePageRoutingModule } from './buscar-viaje-routing.module';
 import { BuscarViajePage } from './buscar-viaje.page';
 import { ModalDetallesComponent } from './modal-detalles.component'; // Importar el modal
+
 import { QrCodeModule } from 'ng-qrcode';
+import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -14,6 +16,6 @@ import { QrCodeModule } from 'ng-qrcode';
     BuscarViajePageRoutingModule,
     QrCodeModule
   ],
-  declarations: [BuscarViajePage, ModalDetallesComponent], // Declarar el modal aquí
+  declarations: [BuscarViajePage, ModalDetallesComponent, BarcodeScanningModalComponent], // Declarar el modal aquí
 })
 export class BuscarViajePageModule {}
