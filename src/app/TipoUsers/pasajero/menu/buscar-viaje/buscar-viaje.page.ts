@@ -82,6 +82,7 @@ export class BuscarViajePage implements OnInit {
       component: BarcodeScanningModalComponent,
       cssClass: 'barcode-scanner-modal',
       showBackdrop: false,
+      backdropDismiss: false,
       componentProps: {
         formats: [],
         LensFacing: LensFacing.Back

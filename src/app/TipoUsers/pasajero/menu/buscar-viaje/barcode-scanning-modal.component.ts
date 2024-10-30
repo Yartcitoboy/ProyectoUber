@@ -31,39 +31,46 @@ import {
         </ion-toolbar>
       </ion-header>
   
-      <ion-content>
-        <div #square class="square"></div>
-        <ion-fab
-          *ngIf="isTorchAvailable"
-          slot="fixed"
-          horizontal="end"
-          vertical="bottom"
-        >
-          <ion-fab-button (click)="toggleTorch()">
-            <ion-icon name="flashlight"></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
+      <ion-content [style]="{ '--background': 'transparent' }">
+        <div class="scanner-container">
+          <div #square class="square"></div>
+          <ion-fab
+            *ngIf="isTorchAvailable"
+            slot="fixed"
+            horizontal="end"
+            vertical="bottom"
+          >
+            <ion-fab-button (click)="toggleTorch()">
+              <ion-icon name="flashlight"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </div>
       </ion-content>
     `,
-    styles: [
-      `
-        ion-content {
-          --background: transparent;
-        }
+    styles: [`
+      .scanner-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: transparent;
+        z-index: 1;
+      }
   
-        .square {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          border-radius: 16px;
-          width: 200px;
-          height: 200px;
-          border: 6px solid white;
-          box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.3);
-        }
-      `,
-    ],
+      .square {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 16px;
+        width: 200px;
+        height: 200px;
+        border: 6px solid white;
+        box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.3);
+        z-index: 2;
+      }
+    `]
   })
   export class BarcodeScanningModalComponent
     implements OnInit, AfterViewInit, OnDestroy {
