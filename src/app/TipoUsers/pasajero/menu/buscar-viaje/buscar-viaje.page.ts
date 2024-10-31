@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+<<<<<<< HEAD
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import { ModalController, Platform } from '@ionic/angular';
 import { ViajeService } from 'src/app/services/firebase/viaje.service';
@@ -6,6 +7,11 @@ import { Viaje } from 'src/app/interfaces/viaje';
 import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
 import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { Router } from '@angular/router';
+=======
+import { ViajeService } from 'src/app/services/firebase/viaje.service';
+import { Viaje } from 'src/app/interfaces/viaje';
+import { ModalController } from '@ionic/angular';
+>>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
 import { ModalDetallesComponent } from './modal-detalles.component'; // Asegúrate de importar el modal
 
 @Component({
@@ -15,9 +21,12 @@ import { ModalDetallesComponent } from './modal-detalles.component'; // Asegúra
 })
 export class BuscarViajePage implements OnInit {
 
+<<<<<<< HEAD
   qrValue = '';
   resultadoQR = '';
 
+=======
+>>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
   viajes: Viaje[] = [];
   viajesFiltrados: Viaje[] = [];
   segment: string = 'disponibles'; // Estado inicial del segmento
@@ -25,9 +34,12 @@ export class BuscarViajePage implements OnInit {
   constructor(
     private viajeService: ViajeService,
     private modalController: ModalController, // Modal Controller de Ionic
+<<<<<<< HEAD
     private authService: AuthService,
     private platform: Platform,
     private router: Router
+=======
+>>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
   ) { }
 
   ngOnInit() {
@@ -35,6 +47,7 @@ export class BuscarViajePage implements OnInit {
       this.viajes = viajes; // Filtra viajes disponibles
       this.filtrarViajes(); // Filtra los viajes al inicio
     });
+<<<<<<< HEAD
 
     if (this.platform.is('capacitor')){
       BarcodeScanner.isSupported().then()
@@ -45,6 +58,8 @@ export class BuscarViajePage implements OnInit {
     this.authService.isLogged().subscribe((user: any) => {
       this.qrValue = user.uid;
     });
+=======
+>>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
   }
 
   cambiarSegmento(event: any) {
@@ -76,6 +91,7 @@ export class BuscarViajePage implements OnInit {
       this.viajesFiltrados = this.viajes.filter(viaje => viaje.cantidadPasajeros <= 0);
     }
   }
+<<<<<<< HEAD
 
   async openCamera() {
     const modal = await this.modalController.create({
@@ -105,4 +121,6 @@ export class BuscarViajePage implements OnInit {
       }, 1000);
     }
   }
+=======
+>>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
 }
