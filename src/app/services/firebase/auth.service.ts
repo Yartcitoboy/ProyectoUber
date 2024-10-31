@@ -59,7 +59,6 @@ export class AuthService {
       throw error;
     });
   }
-<<<<<<< HEAD
   getCurrentUser(): Promise<any> {
     return new Promise((resolve, reject) => {
       const user = this.angularFireAuth.currentUser;
@@ -74,10 +73,6 @@ export class AuthService {
 
   obtenerInfoUsuario(userId: string) {
     return this.firestore.collection('usuarios').doc(userId).valueChanges();
-=======
-  getCurrentUser(): Promise<firebase.default.User | null> {
-    return this.angularFireAuth.currentUser;
->>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
   }
 
 }

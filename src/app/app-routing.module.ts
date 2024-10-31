@@ -117,10 +117,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/qr/qr.module').then( m => m.QrPageModule)
   },
   {
-    path: 'scanner',
-    loadChildren: () => import('./pages/scanner/scanner.module').then( m => m.ScannerPageModule)
-  },
-  {
     path: 'prueba-qr/:uid',
     loadChildren: () => import('./pages/prueba-qr/prueba-qr.module').then( m => m.PruebaQRPageModule)
   },

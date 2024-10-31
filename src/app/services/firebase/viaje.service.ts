@@ -44,7 +44,6 @@ export class ViajeService {
   obtenerViajePorConductor(conductorId: string): Observable<Viaje | null> {
     return this.firestore.collection<Viaje>('viajes', ref => ref
       .where('conductorId', '==', conductorId)
-<<<<<<< HEAD
       .where('estado', '==', 'disponible')
       .limit(1))
       .snapshotChanges()
@@ -57,12 +56,6 @@ export class ViajeService {
           }
           return null;
         })
-=======
-      .orderBy('fecha', 'desc') // Ordena por fecha para obtener el más reciente
-      .limit(1))
-      .valueChanges().pipe(
-        map(viajes => (viajes.length > 0 ? viajes[0] : null))
->>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
       );
   }
   
@@ -71,7 +64,6 @@ export class ViajeService {
   }
   
   obtenerViajePorId(id: string): Observable<Viaje | undefined> {
-<<<<<<< HEAD
     console.log('Obteniendo viaje con ID:', id);
     return this.firestore.doc<Viaje>(`viajes/${id}`).snapshotChanges().pipe(
       map(doc => {
@@ -87,13 +79,6 @@ export class ViajeService {
       }),
       catchError(error => {
         console.error('Error al obtener el viaje:', error);
-=======
-    console.log('Servicio: Intentando obtener viaje con ID:', id);
-    return this.firestore.doc<Viaje>(`viajes/${id}`).valueChanges().pipe(
-      tap(viaje => console.log('Servicio: Viaje obtenido:', viaje)),
-      catchError(error => {
-        console.error('Servicio: Error al obtener el viaje:', error);
->>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
         return of(undefined);
       })
     );
@@ -103,7 +88,6 @@ export class ViajeService {
     return this.firestore.collection<Viaje>('viajes').valueChanges();
   }
   
-<<<<<<< HEAD
   async cancelarViaje(id: string) {
     try {
       await this.firestore.collection('viajes').doc(id).delete();
@@ -113,25 +97,16 @@ export class ViajeService {
       console.error('Error al eliminar el viaje:', error);
       throw error;
     }
-=======
-  cancelarViaje(id: string): Observable<void> {
-    return from(this.firestore.collection('viajes').doc(id).update({ estado: 'cancelado' })).pipe(
-      catchError((error: any) => throwError(() => error))
-    );
->>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
   }
   
   // Método para confirmar el viaje (actualizar estado)
   confirmarViaje(id: string): Promise<void> {
     return this.firestore.collection('viajes').doc(id).update({ estado: 'activo' });
   }
-<<<<<<< HEAD
 
   eliminarViaje(viajeId: string): Promise<void> {
   return this.firestore.collection('viajes').doc(viajeId).delete();
 }
 
   
-=======
->>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
 }

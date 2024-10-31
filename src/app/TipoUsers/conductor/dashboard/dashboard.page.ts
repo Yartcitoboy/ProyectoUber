@@ -6,11 +6,8 @@ import { GoogleMap } from '@capacitor/google-maps';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-<<<<<<< HEAD
 import { Router } from '@angular/router';
 import { ViajeService } from 'src/app/services/firebase/viaje.service';
-=======
->>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -20,11 +17,8 @@ export class DashboardPage implements OnInit {
   @ViewChild(IonMenu) menu?: IonMenu;
   selectedSegment: string = 'default';
 
-<<<<<<< HEAD
   viajeId?: string;
 
-=======
->>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
   // private map?: GoogleMap;
   public emailUsuario?: string;
   public tipoUsuario?: string;
@@ -37,11 +31,9 @@ export class DashboardPage implements OnInit {
     private firestore: AngularFirestore,
     private authService: AuthService,
     private navCtrl: NavController,
-<<<<<<< HEAD
     private router: Router,
     private viajeService: ViajeService
-=======
->>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
+
   ) {
   }
 
@@ -93,7 +85,6 @@ export class DashboardPage implements OnInit {
       this.apellidoUsuario = 'al cargar datos';
     }
   }
-<<<<<<< HEAD
 
   verDetalleViaje(viajeId: string) {
     this.router.navigate(['/detalleviaje-conductor', viajeId]);
@@ -132,8 +123,6 @@ export class DashboardPage implements OnInit {
       alert('Ocurrió un error al verificar el viaje');
     }
   }
-=======
->>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
 };
 
 

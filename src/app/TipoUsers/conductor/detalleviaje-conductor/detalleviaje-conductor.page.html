@@ -13,7 +13,6 @@
 </ion-header>
 
 
-<<<<<<< HEAD
 <ion-content *ngIf="!viajeSeleccionado" class="ion-padding ion-text-center">
   <ion-card>
     <ion-card-header>
@@ -70,29 +69,4 @@
       </ion-button>
     </ion-card-content>
   </ion-card>
-=======
-<ion-content *ngIf="viaje">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Ruta</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p><strong>Desde:</strong> {{ viaje.direccionActual }}</p>
-      <p><strong>Hasta:</strong> {{ viaje.direccionDestino }}</p>
-      <p><strong>Costo:</strong> {{ viaje.costo | currency:'CLP':'symbol-narrow':'1.0-0' }}</p>
-      <p><strong>Cantidad de Pasajeros:</strong> {{ viaje.cantidadPasajeros }}</p>
-      <p><strong>Horario:</strong> {{ viaje.horario | date:'short' }}</p>
-      <p><strong>Estado:</strong> {{ viaje.estado }}</p>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-button expand="block" color="danger" >
-    Cancelar Viaje
-  </ion-button>
-</ion-content>
-
-<ion-content *ngIf="!viaje">
-  <ion-spinner></ion-spinner>
-  <p>Cargando detalles del viaje...</p>
->>>>>>> a449e4e8a02de6f63a61efe092c7d8a13c86c7ce
 </ion-content>
