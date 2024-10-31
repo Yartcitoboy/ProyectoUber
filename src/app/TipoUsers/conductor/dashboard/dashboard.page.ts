@@ -6,6 +6,8 @@ import { GoogleMap } from '@capacitor/google-maps';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
+import { ViajeService } from 'src/app/services/firebase/viaje.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -14,6 +16,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 export class DashboardPage implements OnInit {
   @ViewChild(IonMenu) menu?: IonMenu;
   selectedSegment: string = 'default';
+
+  viajeId?: string;
 
   // private map?: GoogleMap;
   public emailUsuario?: string;
@@ -27,6 +31,8 @@ export class DashboardPage implements OnInit {
     private firestore: AngularFirestore,
     private authService: AuthService,
     private navCtrl: NavController,
+    private router: Router,
+    private viajeService: ViajeService
   ) {
   }
 
@@ -76,6 +82,44 @@ export class DashboardPage implements OnInit {
     } catch (error) {
       this.nombreUsuario = 'Error';
       this.apellidoUsuario = 'al cargar datos';
+    }
+  }
+
+  verDetalleViaje(viajeId: string) {
+    this.router.navigate(['/detalleviaje-conductor', viajeId]);
+  }
+
+  async verViaje() {
+    try {
+      console.log('Iniciando verViaje()');
+      const user = await this.authService.getCurrentUser();
+      console.log('Usuario actual:', user);
+      
+      if (user) {
+        this.viajeService.obtenerViajePorConductor(user.uid).subscribe(
+          viaje => {
+            console.log('Viaje obtenido:', viaje);
+            if (viaje && viaje.id) {
+              console.log('Navegando a detalles del viaje:', viaje.id);
+              this.router.navigate(['/detalleviaje-conductor', viaje.id]);
+            } else {
+              console.log('No se encontró ningún viaje activo');
+              // Mostrar alerta al usuario
+              alert('No tienes viajes activos en este momento');
+            }
+          },
+          error => {
+            console.error('Error al obtener el viaje:', error);
+            alert('Error al obtener el viaje');
+          }
+        );
+      } else {
+        console.log('No hay usuario autenticado');
+        alert('Por favor, inicia sesión nuevamente');
+      }
+    } catch (error) {
+      console.error('Error en verViaje():', error);
+      alert('Ocurrió un error al verificar el viaje');
     }
   }
 };

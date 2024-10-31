@@ -1,0 +1,323 @@
+[33mcommit f5fc99b49f8a9674b584345753c1970750d6ad37[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mrama_isa[m[33m)[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Thu Oct 31 18:38:21 2024 -0230
+
+    a
+
+ .gitattributes                                     |  1 [32m+[m
+ .../conductor/dashboard/dashboard.page.html        |  2 [32m+[m[31m-[m
+ .../conductor/dashboard/dashboard.page.ts          | 44 [32m+++++++++++++[m
+ .../detalleviaje-conductor.page.html               | 75 [32m+++++++[m[31m---------------[m
+ .../detalleviaje-conductor.page.ts                 | 57 [32m++++++++++[m[31m------[m
+ src/app/interfaces/viaje.ts                        |  2 [32m+[m[31m-[m
+ src/app/services/firebase/auth.service.ts          | 12 [32m+++[m[31m-[m
+ src/app/services/firebase/viaje.service.ts         | 51 [32m+++++++++++[m[31m----[m
+ 8 files changed, 157 insertions(+), 87 deletions(-)
+
+[33mcommit 7f7d3c1d1694be3b9b6448f12a604e792c9f19ee[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Wed Oct 30 04:26:35 2024 -0230
+
+    Eliminando archivo zip grande
+
+ .gitignore | 2 [32m++[m
+ 1 file changed, 2 insertions(+)
+
+[33mcommit 70063f5e578af9f6660cd1d180ff3a2810d5aa47[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Wed Oct 30 04:23:47 2024 -0230
+
+    lfs
+
+ .gitattributes | 1 [32m+[m
+ 1 file changed, 1 insertion(+)
+
+[33mcommit 153138e4c584b203adb232bc6608b9bbd611365b[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Wed Oct 30 04:21:16 2024 -0230
+
+    VerViaje good
+
+ .../detalleviaje-conductor.page.html               | 88 [32m++++++++++++++++++[m[31m----[m
+ .../detalleviaje-conductor.page.ts                 | 60 [32m+++++[m[31m----------[m
+ src/app/services/firebase/auth.service.ts          |  4 [32m+[m
+ 3 files changed, 96 insertions(+), 56 deletions(-)
+
+[33mcommit 45a83872616877c879915a355666df0c0ab6a955[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Wed Oct 30 02:27:51 2024 -0230
+
+    cambios camara
+
+ git_filter_repo.py                                 |  0
+ .../barcode-scanning-modal.component.ts            | 69 [32m++++++++++++[m[31m----------[m
+ .../menu/buscar-viaje/buscar-viaje.page.scss       | 37 [32m+++++[m[31m-------[m
+ .../menu/buscar-viaje/buscar-viaje.page.ts         |  1 [32m+[m
+ 4 files changed, 55 insertions(+), 52 deletions(-)
+
+[33mcommit 23d6d57c5f1733d5247c413b5a67be5c35f51fd0[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Wed Oct 30 01:08:29 2024 -0230
+
+    a
+
+ android.zip | Bin [31m144947553[m -> [32m0[m bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+[33mcommit ebe17e9184afe10c46eccf12f4672a523801cd14[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Wed Oct 30 01:06:25 2024 -0230
+
+    cambiosParaLaLiz
+
+ android.zip                                        | Bin [31m92974864[m -> [32m144947553[m bytes
+ .../pasajero/dashboard/dashboard.page.html         |   1 [31m-[m
+ .../barcode-scanning-modal.component.ts            |   0
+ .../menu/buscar-viaje/buscar-viaje.module.ts       |   4 [32m+[m[31m-[m
+ .../menu/buscar-viaje/buscar-viaje.page.html       |   6 [32m+++[m
+ .../menu/buscar-viaje/buscar-viaje.page.scss       |  28 [32m+++++++++++[m
+ .../menu/buscar-viaje/buscar-viaje.page.ts         |  50 [32m++++++++++++++++++[m[31m-[m
+ src/app/pages/scanner/scanner.module.ts            |   7 [32m++[m[31m-[m
+ src/app/pages/scanner/scanner.page.html            |   7 [32m+[m[31m--[m
+ src/app/pages/scanner/scanner.page.scss            |  28 [31m-----------[m
+ src/app/pages/scanner/scanner.page.ts              |  53 [32m+++[m[31m------------------[m
+ 11 files changed, 96 insertions(+), 88 deletions(-)
+
+[33mcommit b270b28524dec3a47fe415b83e02f49bb2ac1000[m
+Merge: e80cca1 9de9c6e
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Tue Oct 29 22:40:37 2024 -0230
+
+    conflicto rama_isa
+
+[33mcommit e80cca14af33cc82f690264d35ee04560524182e[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Tue Oct 29 22:31:24 2024 -0230
+
+    qr-scanner-randoUser
+
+ android/app/capacitor.build.gradle                 |   1 [32m+[m
+ android/app/src/main/AndroidManifest.xml           |   4 [32m+[m
+ android/capacitor.settings.gradle                  |   3 [32m+[m
+ package-lock.json                                  | 162 [32m+++++++++++++++++++[m
+ package.json                                       |   2 [32m+[m
+ .../detalleviaje-conductor.page.html               |   6 [32m+[m
+ .../conductor/menu/ajustes/ajustes.module.ts       |   1 [32m+[m
+ .../conductor/menu/ajustes/ajustes.page.html       |   2 [32m+[m
+ src/app/app-routing.module.ts                      |  13 [32m++[m
+ .../pages/prueba-qr/prueba-qr-routing.module.ts    |  17 [32m++[m
+ src/app/pages/prueba-qr/prueba-qr.module.ts        |  20 [32m+++[m
+ src/app/pages/prueba-qr/prueba-qr.page.html        |   9 [32m++[m
+ src/app/pages/prueba-qr/prueba-qr.page.scss        |   0
+ src/app/pages/prueba-qr/prueba-qr.page.spec.ts     |  17 [32m++[m
+ src/app/pages/prueba-qr/prueba-qr.page.ts          |  20 [32m+++[m
+ src/app/pages/qr/qr-routing.module.ts              |  17 [32m++[m
+ src/app/pages/qr/qr.module.ts                      |  22 [32m+++[m
+ src/app/pages/qr/qr.page.html                      |  12 [32m++[m
+ src/app/pages/qr/qr.page.scss                      |   0
+ src/app/pages/qr/qr.page.spec.ts                   |  17 [32m++[m
+ src/app/pages/qr/qr.page.ts                        |  19 [32m+++[m
+ .../scanner/barcode-scanning-modal.component.ts    | 179 [32m+++++++++++++++++++++[m
+ src/app/pages/scanner/scanner-routing.module.ts    |  17 [32m++[m
+ src/app/pages/scanner/scanner.module.ts            |  23 [32m+++[m
+ src/app/pages/scanner/scanner.page.html            |  14 [32m++[m
+ src/app/pages/scanner/scanner.page.scss            |  28 [32m++++[m
+ src/app/pages/scanner/scanner.page.spec.ts         |  17 [32m++[m
+ src/app/pages/scanner/scanner.page.ts              |  65 [32m++++++++[m
+ 28 files changed, 707 insertions(+)
+
+[33mcommit 09b11a7efa43f06c3386c6f144de7b456a3c8400[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Tue Oct 29 19:54:42 2024 -0230
+
+    randomUser
+
+ android/app/capacitor.build.gradle                 |   1 [32m+[m
+ android/app/src/main/AndroidManifest.xml           |   2 [32m+[m
+ android/capacitor.settings.gradle                  |   3 [32m+[m
+ package-lock.json                                  |  10 [32m++[m
+ package.json                                       |   1 [32m+[m
+ .../conductor/menu/perfil/perfil-routing.module.ts |  17 [32m++++[m
+ .../conductor/menu/perfil/perfil.module.ts         |  20 [32m++++[m
+ .../conductor/menu/perfil/perfil.page.html         |  20 [32m++++[m
+ .../conductor/menu/perfil/perfil.page.scss         |  13 [32m+++[m
+ .../conductor/menu/perfil/perfil.page.spec.ts      |  17 [32m++++[m
+ .../TipoUsers/conductor/menu/perfil/perfil.page.ts |  85 [32m+++++++++++++++++[m
+ .../pasajero/dashboard/dashboard.page.html         |   1 [32m+[m
+ .../TipoUsers/pasajero/dashboard/dashboard.page.ts |  11 [32m++[m[31m-[m
+ .../pasajero/menu/perfil/perfil.page.html          |  31 [32m++++[m[31m---[m
+ .../pasajero/menu/perfil/perfil.page.scss          |  13 [31m---[m
+ .../TipoUsers/pasajero/menu/perfil/perfil.page.ts  |  71 [32m++[m[31m------------[m
+ src/app/app-routing.module.ts                      |   5 [32m+[m
+ src/app/app.component.ts                           |   2 [32m+[m[31m-[m
+ src/app/interfaces/usuario.ts                      |   1 [32m+[m
+ src/app/pages/loguear/loguear.page.html            |  22 [32m+[m[31m----[m
+ src/app/pages/loguear/loguear.page.scss            |   3 [32m+[m[31m-[m
+ src/app/pages/loguear/loguear.page.ts              | 103 [32m+++++++++++++++++++[m[31m--[m
+ src/app/services/firebase/auth.service.ts          |   9 [32m+[m[31m-[m
+ src/app/services/firebase/usuarios.service.ts      |   3 [32m+[m[31m-[m
+ 24 files changed, 342 insertions(+), 122 deletions(-)
+
+[33mcommit ffe9aa5049de73f99ac3cec5cadf3450be78d082[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Mon Oct 28 22:18:26 2024 -0230
+
+    mejora admin
+
+ package-lock.json                                  | 197 [32m++++++++++++++++++++[m[31m-[m
+ package.json                                       |   1 [32m+[m
+ .../TipoUsers/admin/dashboard/dashboard.page.html  |  31 [32m+++[m[31m-[m
+ .../TipoUsers/admin/dashboard/dashboard.page.ts    |  10 [32m++[m
+ .../menu/buscar-viaje/buscar-viaje.module.ts       |   5 [32m+[m[31m-[m
+ .../menu/buscar-viaje/modal-detalles.component.ts  |  16 [32m+[m[31m-[m
+ .../pasajero/menu/perfil/perfil.page.html          |  31 [32m++[m[31m--[m
+ .../pasajero/menu/perfil/perfil.page.scss          |  13 [32m++[m
+ .../TipoUsers/pasajero/menu/perfil/perfil.page.ts  |  67 [32m++++++[m[31m-[m
+ src/app/app.module.ts                              |   1 [31m-[m
+ src/app/pages/screenplash/screenplash.page.ts      |  63 [32m++++[m[31m---[m
+ src/app/services/firebase/auth.service.ts          |  17 [32m+[m[31m-[m
+ 12 files changed, 383 insertions(+), 69 deletions(-)
+
+[33mcommit 9de9c6ea45f8fd44c2446b8016a9846265a30f73[m
+Author: Is4 <135250653+Yartcitoboy@users.noreply.github.com>
+Date:   Mon Oct 28 13:24:16 2024 -0300
+
+     README antes de iniciar server.md
+
+ README.md | 9 [32m+++++++++[m
+ 1 file changed, 9 insertions(+)
+
+[33mcommit 1ba5a23e36dafd30f3c42bf7a99a24f3431176aa[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Sat Oct 26 22:18:20 2024 -0230
+
+    huellaDigital
+
+ android.zip                                   | Bin [31m0[m -> [32m92974864[m bytes
+ android/app/capacitor.build.gradle            |   1 [32m+[m
+ android/app/src/main/AndroidManifest.xml      |   3 [32m+++[m
+ android/capacitor.settings.gradle             |   3 [32m+++[m
+ android/variables.gradle                      |   2 [32m+[m[31m-[m
+ src/app/pages/screenplash/screenplash.page.ts |  26 [32m+++++++++++++[m[31m-------------[m
+ 6 files changed, 21 insertions(+), 14 deletions(-)
+
+[33mcommit 24c55c9c10adba983ba7c5ede9551d7d108d94d9[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Fri Oct 25 23:55:54 2024 -0230
+
+    crud admin
+
+ .../TipoUsers/admin/dashboard/dashboard.page.ts    |  2 [32m+[m
+ .../admin/detalle-admin/detalle-admin.page.html    |  2 [32m+[m[31m-[m
+ .../admin/detalle-admin/detalle-admin.page.ts      | 71 [32m++++++[m[31m----------------[m
+ .../admin/edit-user/edit-user-routing.module.ts    | 17 [32m++++++[m
+ .../TipoUsers/admin/edit-user/edit-user.module.ts  | 21 [32m+++++++[m
+ .../TipoUsers/admin/edit-user/edit-user.page.html  | 40 [32m++++++++++++[m
+ .../TipoUsers/admin/edit-user/edit-user.page.scss  |  0
+ .../admin/edit-user/edit-user.page.spec.ts         | 17 [32m++++++[m
+ .../TipoUsers/admin/edit-user/edit-user.page.ts    | 66 [32m++++++++++++++++++++[m
+ src/app/app-routing.module.ts                      |  7 [32m++[m[31m-[m
+ src/app/interfaces/usuario.ts                      |  1 [32m+[m
+ 11 files changed, 189 insertions(+), 55 deletions(-)
+
+[33mcommit a4ae1ba68a4060bbdb5c7027edcf530ff2d5ce66[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Fri Oct 25 22:32:14 2024 -0230
+
+    Screnplash
+
+ .../TipoUsers/admin/dashboard/dashboard.page.ts    |  3 [32m+[m[31m--[m
+ src/app/pages/screenplash/screenplash.page.ts      | 23 [32m+++++++++++[m[31m-----------[m
+ 2 files changed, 13 insertions(+), 13 deletions(-)
+
+[33mcommit 955551ac80b272e63119188270ad3164a19a649d[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Fri Oct 25 02:41:43 2024 -0230
+
+    EstadoCuenta
+
+ .../admin/detalle-admin/detalle-admin.page.html    |   7 [32m+[m[31m-[m
+ .../admin/detalle-admin/detalle-admin.page.ts      | 129 [32m++++++++++++++[m[31m-------[m
+ src/app/interfaces/usuario.ts                      |   2 [32m+[m[31m-[m
+ src/app/pages/loguear/loguear.page.ts              | 106 [32m+++++++++++[m[31m------[m
+ src/app/services/firebase/auth.service.ts          |  21 [32m+++[m[31m-[m
+ src/app/services/firebase/mensajes.service.ts      |  27 [32m+++++[m
+ src/app/services/firebase/usuarios.service.ts      |  13 [32m++[m[31m-[m
+ src/app/services/mensaje.service.ts                |  14 [32m+++[m
+ 8 files changed, 238 insertions(+), 81 deletions(-)
+
+[33mcommit 4586362b0c192324a679ce6063e7998717797f26[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Thu Oct 24 23:56:54 2024 -0230
+
+    admin
+
+ .../TipoUsers/admin/dashboard/dashboard.page.scss  |   3 [32m+[m
+ .../TipoUsers/admin/dashboard/dashboard.page.ts    |  48 [32m++++++[m[31m--[m
+ .../admin/detalle-admin/detalle-admin.page.html    |  33 [32m++++[m[31m--[m
+ .../admin/detalle-admin/detalle-admin.page.ts      | 129 [32m++++++++++++++++++++[m[31m-[m
+ src/app/app.module.ts                              |   3 [32m+[m[31m-[m
+ src/app/interfaces/usuario.ts                      |   1 [32m+[m
+ src/app/services/firebase/usuarios.service.ts      |  26 [32m+++[m[31m--[m
+ 7 files changed, 211 insertions(+), 32 deletions(-)
+
+[33mcommit 5ab83c2a1bf42cf4d44fccb5ba50c2bbab03640e[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Wed Oct 23 23:52:41 2024 -0230
+
+    Arreglo dashboard
+
+ .../TipoUsers/admin/dashboard/dashboard.page.ts    |  2 [32m+[m[31m-[m
+ .../admin/detalle-admin/detalle-admin.page.ts      | 18 [32m+++[m[31m--[m
+ .../conductor/dashboard/dashboard.page.html        | 80 [32m++++++++++++++[m[31m-----[m
+ .../conductor/dashboard/dashboard.page.scss        | 60 [32m++++++++[m[31m-------[m
+ .../conductor/dashboard/dashboard.page.ts          | 89 [32m++++++++++++++++[m[31m------[m
+ .../detalle-conductor/detalle-conductor.page.ts    | 18 [32m++++[m[31m-[m
+ .../detalleviaje-conductor.page.html               | 15 [32m+++[m[31m-[m
+ .../detalleviaje-conductor.page.ts                 | 69 [32m+++++++++[m[31m--------[m
+ .../TipoUsers/pasajero/dashboard/dashboard.page.ts | 67 [32m++++++++++++++[m[31m--[m
+ src/app/app-routing.module.ts                      |  2 [32m+[m[31m-[m
+ src/app/app.component.html                         |  1 [31m-[m
+ src/app/app.component.scss                         |  4 [32m+[m
+ src/app/app.component.ts                           | 31 [32m+++++[m[31m---[m
+ src/app/interfaces/usuario.ts                      |  2 [32m+[m
+ src/app/pages/screenplash/screenplash.page.ts      |  2 [31m-[m
+ src/app/services/firebase/auth.service.ts          |  3 [32m+[m
+ src/app/services/firebase/usuarios.service.ts      | 35 [32m++++++++[m[31m-[m
+ src/app/services/firebase/viaje.service.ts         | 19 [32m++++[m[31m-[m
+ src/app/services/usuarios.service.ts               | 37 [31m---------[m
+ 19 files changed, 375 insertions(+), 179 deletions(-)
+
+[33mcommit 6cc40b76070d7cfb8aec12ebc8bf4b84732263e8[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Wed Oct 23 00:06:26 2024 -0230
+
+    login
+
+ package-lock.json                             | 19 [32m++++++++++[m
+ package.json                                  |  1 [32m+[m
+ src/app/app-routing.module.ts                 |  6 [32m++++[m
+ src/app/carpeta/carpeta-routing.module.ts     | 17 [32m+++++++++[m
+ src/app/carpeta/carpeta.module.ts             | 20 [32m+++++++++++[m
+ src/app/carpeta/carpeta.page.html             | 21 [32m+++++++++++[m
+ src/app/carpeta/carpeta.page.scss             |  0
+ src/app/carpeta/carpeta.page.spec.ts          | 17 [32m+++++++++[m
+ src/app/carpeta/carpeta.page.ts               | 19 [32m++++++++++[m
+ src/app/pages/registro/registro.page.html     | 27 [32m+++++++++++++++[m
+ src/app/pages/registro/registro.page.ts       | 29 [32m++++++++++++++[m[31m--[m
+ src/app/pages/screenplash/screenplash.page.ts | 50 [32m++++++++++++++++++++++++++[m[31m-[m
+ 12 files changed, 222 insertions(+), 4 deletions(-)
+
+[33mcommit d75b3672b34710dada7a8ea77179ecc1ab15b1a4[m
+Author: Is4 <is.riquelmet@duocuc.cl>
+Date:   Wed Oct 16 01:47:00 2024 -0230
+
+    viaje no repetir
+
+ et --hard 1382046                                  | 40 [32m++++++++++++++++++++++[m
+ .../detalle-conductor/detalle-conductor.page.ts    | 17 [32m+++++++[m[31m--[m
+ .../detalleviaje-conductor.page.ts                 | 34 [32m+++++++++++++++[m[31m---[m
+ src/app/services/firebase/viaje.service.ts         | 17 [32m+++++++[m[31m--[m
+ 4 files changed, 98 insertions(+), 10 deletions(-)
+
+[33mcommit 138204607ca259e7d180d9868c3fef9924bee

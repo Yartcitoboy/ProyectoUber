@@ -1,5 +1,5 @@
 export interface Viaje{
-    id: string;
+    id?: string;
     direccionActual: string ;
     direccionDestino: string ;
     costo: number ;

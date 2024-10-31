@@ -59,9 +59,17 @@ export class AuthService {
       throw error;
     });
   }
-  getCurrentUser(): Promise<firebase.default.User | null> {
-    return this.angularFireAuth.currentUser;
+  getCurrentUser(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const user = this.angularFireAuth.currentUser;
+      if (user) {
+        resolve(user);
+      } else {
+        reject('No hay usuario autenticado');
+      }
+    });
   }
+  
 
   obtenerInfoUsuario(userId: string) {
     return this.firestore.collection('usuarios').doc(userId).valueChanges();

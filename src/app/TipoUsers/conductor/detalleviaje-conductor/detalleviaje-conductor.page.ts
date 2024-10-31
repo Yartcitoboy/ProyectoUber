@@ -2,41 +2,56 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ViajeService } from 'src/app/services/firebase/viaje.service';
 import { Viaje } from 'src/app/interfaces/viaje';
-import { AlertController } from '@ionic/angular';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/firebase/auth.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { NavController } from '@ionic/angular';
+
 @Component({
   selector: 'app-detalleviaje-conductor',
   templateUrl: './detalleviaje-conductor.page.html',
   styleUrls: ['./detalleviaje-conductor.page.scss'],
 })
 export class DetalleviajeConductorPage implements OnInit {
-  viaje: any; // o define una interfaz Viaje más específica
-  conductorInfo: any;
+  viajeSeleccionado: Viaje | undefined;
+  viajeId: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private viajeService: ViajeService,
-    private authService: AuthService
-  ) {}
+    private navCtrl: NavController
+  ) { }
 
   ngOnInit() {
-    // Obtener el ID del viaje de los parámetros de la ruta
+    console.log('Iniciando DetalleviajeConductorPage');
     this.route.params.subscribe(params => {
-      const viajeId = params['id'];
+      this.viajeId = params['viajeId'];
+      console.log('ID del viaje recibido:', this.viajeId);
       
-      // Obtener los detalles del viaje
-      this.viajeService.obtenerViajes().subscribe((viajes: any) => {
-        this.viaje = viajes.find((v: any) => v.id === viajeId);
-        
-        // Obtener información del conductor si es necesario
-        if (this.viaje.conductorId) {
-          this.authService.obtenerInfoUsuario(this.viaje.conductorId).subscribe((conductor: any) => {
-            this.conductorInfo = conductor;
-          });
-        }
-      });
+      if (this.viajeId) {
+        this.cargarDetallesViaje();
+      } else {
+        console.error('No se recibió ID del viaje');
+      }
     });
+  }
+
+  cargarDetallesViaje() {
+    this.viajeService.obtenerViajePorId(this.viajeId).subscribe(
+      viaje => {
+        console.log('Viaje obtenido:', viaje);
+        this.viajeSeleccionado = viaje;
+      },
+      error => {
+        console.error('Error al cargar el viaje:', error);
+      }
+    );
+  }
+
+  async cancelarViaje() {
+    try {
+      await this.viajeService.cancelarViaje(this.viajeId);
+      console.log('Viaje cancelado exitosamente');
+      this.navCtrl.navigateBack('/conductor-dashboard');
+    } catch (error) {
+      console.error('Error al cancelar el viaje:', error);
+    }
   }
 }

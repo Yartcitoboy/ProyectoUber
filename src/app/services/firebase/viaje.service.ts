@@ -44,10 +44,18 @@ export class ViajeService {
   obtenerViajePorConductor(conductorId: string): Observable<Viaje | null> {
     return this.firestore.collection<Viaje>('viajes', ref => ref
       .where('conductorId', '==', conductorId)
-      .orderBy('fecha', 'desc') // Ordena por fecha para obtener el más reciente
+      .where('estado', '==', 'disponible')
       .limit(1))
-      .valueChanges().pipe(
-        map(viajes => (viajes.length > 0 ? viajes[0] : null))
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+          if (actions.length > 0) {
+            const data = actions[0].payload.doc.data() as Viaje;
+            const id = actions[0].payload.doc.id;
+            return { ...data, id };
+          }
+          return null;
+        })
       );
   }
   
@@ -56,11 +64,21 @@ export class ViajeService {
   }
   
   obtenerViajePorId(id: string): Observable<Viaje | undefined> {
-    console.log('Servicio: Intentando obtener viaje con ID:', id);
-    return this.firestore.doc<Viaje>(`viajes/${id}`).valueChanges().pipe(
-      tap(viaje => console.log('Servicio: Viaje obtenido:', viaje)),
+    console.log('Obteniendo viaje con ID:', id);
+    return this.firestore.doc<Viaje>(`viajes/${id}`).snapshotChanges().pipe(
+      map(doc => {
+        if (doc.payload.exists) {
+          const data = doc.payload.data() as Viaje;
+          const id = doc.payload.id;
+          console.log('Datos del viaje obtenidos:', { ...data, id });
+          return { ...data, id };
+        } else {
+          console.log('No se encontró el viaje');
+          return undefined;
+        }
+      }),
       catchError(error => {
-        console.error('Servicio: Error al obtener el viaje:', error);
+        console.error('Error al obtener el viaje:', error);
         return of(undefined);
       })
     );
@@ -70,14 +88,25 @@ export class ViajeService {
     return this.firestore.collection<Viaje>('viajes').valueChanges();
   }
   
-  cancelarViaje(id: string): Observable<void> {
-    return from(this.firestore.collection('viajes').doc(id).update({ estado: 'cancelado' })).pipe(
-      catchError((error: any) => throwError(() => error))
-    );
+  async cancelarViaje(id: string) {
+    try {
+      await this.firestore.collection('viajes').doc(id).delete();
+      console.log('Viaje eliminado correctamente');
+      return true;
+    } catch (error) {
+      console.error('Error al eliminar el viaje:', error);
+      throw error;
+    }
   }
   
   // Método para confirmar el viaje (actualizar estado)
   confirmarViaje(id: string): Promise<void> {
     return this.firestore.collection('viajes').doc(id).update({ estado: 'activo' });
   }
+
+  eliminarViaje(viajeId: string): Promise<void> {
+  return this.firestore.collection('viajes').doc(viajeId).delete();
+}
+
+  
 }
