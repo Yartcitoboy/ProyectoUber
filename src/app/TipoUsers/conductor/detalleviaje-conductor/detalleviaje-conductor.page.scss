@@ -3,3 +3,22 @@ ion-content {
     color: black; // Asegúrate de que el texto sea visible.
   }
   
+.map-container {
+  width: 100%;
+  height: 50vh; // Altura del 50% de la ventana
+  margin-bottom: 16px;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+}
+
+ion-button {
+  margin: 10px 20px;
+}
+
+ion-card {
+  margin: 16px;
+}
+  

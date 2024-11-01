@@ -1,0 +1,18 @@
+#indicators {
+    padding: 16px;
+    height: 40%;
+    width: 100%;
+    overflow-y: auto;
+    display: block;
+  }
+
+  #map {
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 150ms ease-in;
+    display: block;
+    &.show-map {
+      opacity: 1;
+    }
+  }

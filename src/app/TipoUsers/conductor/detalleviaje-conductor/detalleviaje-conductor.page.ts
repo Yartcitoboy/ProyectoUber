@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ViajeService } from 'src/app/services/firebase/viaje.service';
 import { Viaje } from 'src/app/interfaces/viaje';
 import { NavController } from '@ionic/angular';
@@ -13,10 +13,13 @@ export class DetalleviajeConductorPage implements OnInit {
   viajeSeleccionado: Viaje | undefined;
   viajeId: string = '';
 
+  
+
   constructor(
     private route: ActivatedRoute,
     private viajeService: ViajeService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -24,13 +27,14 @@ export class DetalleviajeConductorPage implements OnInit {
     this.route.params.subscribe(params => {
       this.viajeId = params['viajeId'];
       console.log('ID del viaje recibido:', this.viajeId);
-      
+
       if (this.viajeId) {
         this.cargarDetallesViaje();
       } else {
         console.error('No se recibió ID del viaje');
       }
     });
+    
   }
 
   cargarDetallesViaje() {
@@ -54,4 +58,10 @@ export class DetalleviajeConductorPage implements OnInit {
       console.error('Error al cancelar el viaje:', error);
     }
   }
+
+  async comenzarViaje() {
+    this.router.navigate(['/info-viaje']);
+  }
+
+  
 }
