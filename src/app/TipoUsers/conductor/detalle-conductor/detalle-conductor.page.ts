@@ -145,4 +145,8 @@ export class DetalleConductorPage implements OnInit {
     this.cantidadPasajeros = 0;
     this.horario = '';
   }
+
+  pruebas(){
+    this.router.navigate(['/pruebas']);
+}
 }

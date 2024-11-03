@@ -123,6 +123,10 @@ const routes: Routes = [
     path: 'info-viaje',
     loadChildren: () => import('./info-viaje/info-viaje.module').then( m => m.InfoViajePageModule)
   },
+  {
+    path: 'pruebas',
+    loadChildren: () => import('./pruebas/pruebas.module').then( m => m.PruebasPageModule)
+  },
 
 
 

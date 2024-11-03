@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Crear Viaje</ion-title>
+  </ion-toolbar>
+  
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="¿Desde dónde sales?"
+      (ionInput)="onOriginSearchChange($event)"
+      [value]="origin?.address || ''">
+    </ion-searchbar>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="¿Hacia dónde vas?"
+      (ionInput)="onDestinationSearchChange($event)"
+      [value]="destination?.address || ''">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Sugerencias para origen -->
+  <ion-list *ngIf="originPlaces.length > 0">
+    <ion-item *ngFor="let place of originPlaces" (click)="selectOrigin(place)">
+      <ion-icon name="location-outline" slot="start"></ion-icon>
+      <ion-label>
+        {{ place.title }}
+        <p>{{ place.address }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Sugerencias para destino -->
+  <ion-list *ngIf="destinationPlaces.length > 0">
+    <ion-item *ngFor="let place of destinationPlaces" (click)="selectDestination(place)">
+      <ion-icon name="location-outline" slot="start"></ion-icon>
+      <ion-label>
+        {{ place.title }}
+        <p>{{ place.address }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Mapa -->
+  <div id="map" style="width: 100%; height: 70%;"></div>
+</ion-content>

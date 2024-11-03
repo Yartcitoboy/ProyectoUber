@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-info-viaje',
   templateUrl: './info-viaje.page.html',
@@ -14,9 +14,15 @@ export class InfoViajePage implements OnInit {
   origin = { lat: -33.610606, lng: -70.585359 };
   destination = { lat: -33.598308671641426, lng:  -70.57875488593972 };
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.origin = { lat: params['originLat'], lng: params['originLng'] };
+      this.destination = { lat: params['destLat'], lng: params['destLng'] };
+    });
     this.loadMap();
   }
 
