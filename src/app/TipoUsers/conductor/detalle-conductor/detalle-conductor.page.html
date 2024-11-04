@@ -3,54 +3,106 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/conductor-dashboard"></ion-back-button>
     </ion-buttons>
+    <ion-title>Crear Viaje</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-card color="warning">
-    <ion-card-header>
-      <ion-card-title>Crea tu ruta</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-input labelPlacement="stacked" label="DireccionActual" placeholder="Ej DuocUc, Puente alto" [(ngModel)]="direccionActual" required>
-            <ion-icon slot="start" name="map" aria-hidden="true"></ion-icon>
+<ion-content class="custom-background">
+  <div class="main-container">
+    <!-- Contenedor del mapa con búsquedas superpuestas -->
+    <div class="map-search-container">
+      <!-- Búsquedas flotantes -->
+      <div class="floating-search-section">
+        <div class="search-container">
+          <ion-searchbar
+            placeholder="¿Desde dónde sales?"
+            (ionInput)="onOriginSearchChange($event)"
+            [value]="origin?.address || direccionActual"
+            class="custom-searchbar">
+          </ion-searchbar>
+          
+          <ion-list *ngIf="originPlaces.length > 0" class="suggestions-list">
+            <ion-item *ngFor="let place of originPlaces" (click)="selectOrigin(place)">
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ place.title }}</h3>
+                <p>{{ place.address }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <div class="search-container">
+          <ion-searchbar
+            placeholder="¿Hacia dónde vas?"
+            (ionInput)="onDestinationSearchChange($event)"
+            [value]="destination?.address || direccionDestino"
+            class="custom-searchbar">
+          </ion-searchbar>
+          
+          <ion-list *ngIf="destinationPlaces.length > 0" class="suggestions-list">
+            <ion-item *ngFor="let place of destinationPlaces" (click)="selectDestination(place)">
+              <ion-icon name="location-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ place.title }}</h3>
+                <p>{{ place.address }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+
+      <!-- Mapa -->
+      <div id="map"></div>
+    </div>
+
+    <!-- Card de detalles -->
+    <ion-card class="details-card">
+      <ion-card-content>
+        <ion-item lines="none" class="custom-datetime">
+          <ion-icon name="calendar-outline" slot="start" class="time-icon"></ion-icon>
+          <ion-label>
+            <h2>Fecha y hora</h2>
+            <ion-datetime
+              displayFormat="DD/MM/YYYY HH:mm"
+              [(ngModel)]="horario"
+              [min]="minDate"
+              class="custom-datetime"
+              locale="es-ES"
+              hourCycle="h23">
+            </ion-datetime>
+          </ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+          <ion-label position="floating">Costo</ion-label>
+          <ion-input 
+            type="number" 
+            placeholder="Ej: $5.000" 
+            [(ngModel)]="costo">
           </ion-input>
         </ion-item>
-        <ion-item>
-          <ion-input labelPlacement="stacked" label="DireccionDestino" placeholder="Ej Av.San gabriel 334" [(ngModel)]="direccionDestino" required>
-            <ion-icon slot="start" name="map" aria-hidden="true"></ion-icon>
-          </ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Horario</ion-label>
-          <ion-datetime (ionChange)="onHorarioChange($event)"></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-input labelPlacement="stacked" label="Costo" type="number" placeholder="Ej.. $5.000" [(ngModel)]="costo" required>
-            <ion-icon slot="start" name="cash" aria-hidden="true"></ion-icon>
-          </ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Pasajeros</ion-label>
-          <ion-select placeholder="Cantidad de pasajeros" [(ngModel)]="cantidadPasajeros" required>
+
+        <ion-item lines="none">
+          <ion-label position="floating">Pasajeros</ion-label>
+          <ion-select 
+            [(ngModel)]="cantidadPasajeros"
+            placeholder="Selecciona cantidad">
             <ion-select-option value="1">1</ion-select-option>
             <ion-select-option value="2">2</ion-select-option>
             <ion-select-option value="3">3</ion-select-option>
             <ion-select-option value="4">4</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-button [disabled]="!isFormValid()" (click)="showConfirmation()">Confirmar</ion-button>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
 
-  <ion-card>
-    
-  
-    <ion-card-content>
-      <button (click)="pruebas()">Ir a pruebas</button>
-    </ion-card-content>
-  </ion-card>
+        <ion-button 
+          expand="block" 
+          class="confirm-button"
+          [disabled]="!isFormValid()" 
+          (click)="showConfirmation()">
+          Confirmar Viaje
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

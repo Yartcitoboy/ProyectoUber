@@ -5,6 +5,8 @@ import { Viaje } from 'src/app/interfaces/viaje';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+declare var google: any;
 
 @Component({
   selector: 'app-detalle-conductor',
@@ -19,6 +21,17 @@ export class DetalleConductorPage implements OnInit {
   horario: string = ''; 
   conductorId: string = '';
 
+  map: any;
+  originPlaces: any[] = [];
+  destinationPlaces: any[] = [];
+  origin: any = null;
+  destination: any = null;
+  googleAutocomplete = new google.maps.places.AutocompleteService();
+
+  private directionsService: any;
+  private directionsRenderer: any;
+
+  minDate = new Date().toISOString();
 
   constructor(
     private alertController: AlertController,
@@ -35,6 +48,134 @@ export class DetalleConductorPage implements OnInit {
           this.conductorId = user.uid;
       }
     });
+    this.initMap();
+  }
+
+  private initMap() {
+    const mapElement = document.getElementById('map');
+    const defaultLocation = { lat: -33.4489, lng: -70.6693 };
+    
+    const styles = [
+      {
+        "featureType": "administrative",
+        "elementType": "all",
+        "stylers": [{ "visibility": "on" }]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [{ "visibility": "off" }]
+      }
+    ];
+    
+    this.map = new google.maps.Map(mapElement, {
+      center: defaultLocation,
+      zoom: 12,
+      disableDefaultUI: true,
+      zoomControl: false,
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: false,
+      styles: styles
+    });
+
+    this.directionsService = new google.maps.DirectionsService();
+    this.directionsRenderer = new google.maps.DirectionsRenderer({
+      suppressMarkers: false,
+      map: this.map
+    });
+  }
+
+  async onOriginSearchChange(event: any) {
+    const searchTerm = event.detail.value;
+    if (searchTerm && searchTerm.length > 0) {
+      try {
+        const predictions = await new Promise<any[]>((resolve, reject) => {
+          this.googleAutocomplete.getPlacePredictions(
+            { input: searchTerm },
+            (predictions: any, status: any) => {
+              if (status === 'OK') {
+                resolve(predictions);
+              } else {
+                reject(status);
+              }
+            }
+          );
+        });
+        
+        this.originPlaces = predictions.map((place: any) => ({
+          title: place.structured_formatting.main_text,
+          address: place.description,
+          placeId: place.place_id
+        }));
+      } catch (error) {
+        console.error('Error getting place predictions:', error);
+        this.originPlaces = [];
+      }
+    } else {
+      this.originPlaces = [];
+    }
+  }
+
+  async onDestinationSearchChange(event: any) {
+    const searchTerm = event.detail.value;
+    if (searchTerm && searchTerm.length > 0) {
+      try {
+        const predictions = await new Promise<any[]>((resolve, reject) => {
+          this.googleAutocomplete.getPlacePredictions(
+            { input: searchTerm },
+            (predictions: any, status: any) => {
+              if (status === 'OK') {
+                resolve(predictions);
+              } else {
+                reject(status);
+              }
+            }
+          );
+        });
+        
+        this.destinationPlaces = predictions.map((place: any) => ({
+          title: place.structured_formatting.main_text,
+          address: place.description,
+          placeId: place.place_id
+        }));
+      } catch (error) {
+        console.error('Error getting place predictions:', error);
+        this.destinationPlaces = [];
+      }
+    } else {
+      this.destinationPlaces = [];
+    }
+  }
+
+  selectOrigin(place: any) {
+    this.origin = place;
+    this.direccionActual = place.address;
+    this.originPlaces = [];
+    this.updateMapMarkers();
+  }
+
+  selectDestination(place: any) {
+    this.destination = place;
+    this.direccionDestino = place.address;
+    this.destinationPlaces = [];
+    this.updateMapMarkers();
+  }
+
+  private updateMapMarkers() {
+    if (this.origin && this.destination) {
+      this.directionsService.route({
+        origin: this.origin.address,
+        destination: this.destination.address,
+        travelMode: google.maps.TravelMode.DRIVING
+      }, (response: any, status: any) => {
+        if (status === 'OK') {
+          this.directionsRenderer.setDirections(response);
+        } else {
+          console.error('Error al trazar la ruta:', status);
+        }
+      });
+    }
   }
 
   isFormValid(): boolean {

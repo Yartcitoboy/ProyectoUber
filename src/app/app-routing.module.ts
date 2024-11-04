@@ -119,14 +119,8 @@ const routes: Routes = [
   {
     path: 'prueba-qr/:uid',
     loadChildren: () => import('./pages/prueba-qr/prueba-qr.module').then( m => m.PruebaQRPageModule)
-  },  {
-    path: 'info-viaje',
-    loadChildren: () => import('./info-viaje/info-viaje.module').then( m => m.InfoViajePageModule)
   },
-  {
-    path: 'pruebas',
-    loadChildren: () => import('./pruebas/pruebas.module').then( m => m.PruebasPageModule)
-  },
+  
 
 
 

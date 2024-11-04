@@ -45,4 +45,369 @@
     width: 100%;
   }
 
+  .ios {
+    ion-searchbar {
+      padding: 8px 12px;
+    }
+  }
+
+  #map {
+    display: block;
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+  }
+
+  ion-list {
+    position: absolute;
+    width: 100%;
+    z-index: 999;
+    background: white;
+  }
+
+  ion-content {
+    --background: #f4f4f4;
+  }
+
+  ion-card {
+    margin: 16px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  ion-card-header {
+    padding: 16px;
+  }
+
+  ion-card-title {
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+
+  .custom-searchbar {
+    --box-shadow: none;
+    --background: #ffffff;
+    --border-radius: 8px;
+    margin: 8px 0;
+  }
+
+  .map-container {
+    width: 100%;
+    height: 200px;
+    margin: 16px 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .suggestions-list {
+    position: absolute;
+    width: 92%;
+    z-index: 999;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 4px 16px;
+  }
+
+  ion-datetime {
+    width: 100%;
+  }
+
+  ion-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --background: transparent;
+    
+    ion-label {
+      font-weight: 500;
+    }
+  }
+
+  ion-button {
+    margin: 16px 0;
+    --border-radius: 8px;
+    height: 48px;
+    font-weight: 600;
+  }
+
+  ion-select {
+    width: 100%;
+  }
+
+  // Estilo para los inputs
+  ion-input, ion-select {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --padding-top: 12px;
+    --padding-bottom: 12px;
+    --background: #ffffff;
+    border-radius: 8px;
+    margin: 4px 0;
+  }
+
+  // Ajustes específicos para iOS
+  .ios {
+    ion-searchbar {
+      padding: 8px 0;
+    }
+  }
+
+  .form-container {
+    padding: 16px;
+  }
+
+  .search-container {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .custom-searchbar {
+    --background: #ffffff;
+    --box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    --border-radius: 8px;
+    padding: 0;
+  }
+
+  .suggestions-list {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-top: 4px;
+
+    ion-item {
+      --padding-start: 16px;
+      --padding-end: 16px;
+      
+      h3 {
+        margin: 8px 0 4px 0;
+        font-weight: 500;
+      }
+      
+      p {
+        margin: 0 0 8px 0;
+        font-size: 0.9em;
+        color: #666;
+      }
+    }
+  }
+
+  .map-container {
+    width: 100%;
+    height: 200px;
+    margin: 16px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  .details-form {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
+    ion-item {
+      --padding-start: 0;
+      --inner-padding-end: 0;
+      --background: transparent;
+      margin-bottom: 16px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .submit-button {
+    margin-top: 24px;
+    --border-radius: 8px;
+    height: 48px;
+  }
+
+  // Asegurarse que las sugerencias aparezcan sobre otros elementos
+  ion-list.suggestions-list {
+    margin: 0;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .custom-background {
+    --background: #1A1A1A;
+  }
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .search-section {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+  }
+
+  .custom-searchbar {
+    --background: #FFFFFF;
+    --color: #1A1A1A;
+    --placeholder-color: #666;
+    --border-radius: 8px;
+    --box-shadow: none;
+  }
+
+  .suggestions-list {
+    background: #FFFFFF;
+    border-radius: 8px;
+    margin-top: 5px;
+  }
+
+  .map-container {
+    height: 200px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .details-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    margin: 0;
+
+    ion-item {
+      --background: transparent;
+      --border-color: rgba(26, 26, 26, 0.1);
+      margin-bottom: 10px;
+    }
+
+    ion-label {
+      color: #1A1A1A;
+    }
+
+    ion-input, ion-select, ion-datetime {
+      --color: #1A1A1A;
+    }
+  }
+
+  .confirm-button {
+    --background: #FFB800;
+    --color: #1A1A1A;
+    --border-radius: 8px;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+
+  ion-toolbar {
+    --background: #FFB800;
+    --color: #1A1A1A;
+  }
+
+  ion-back-button {
+    --color: #1A1A1A;
+  }
+
+  .map-search-container {
+    position: relative;
+    width: 100%;
+    height: 400px; // Altura del mapa
+  }
+
+  .floating-search-section {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: transparent;
+  }
+
+  .search-container {
+    margin-bottom: 10px;
+  }
+
+  .custom-searchbar {
+    --background: #FFFFFF;
+    --color: #1A1A1A;
+    --placeholder-color: #666;
+    --border-radius: 8px;
+    --box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  #map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .suggestions-list {
+    background: #FFFFFF;
+    border-radius: 8px;
+    margin-top: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  #map {
+    .gmnoprint, .gm-style-cc {
+      display: none !important;
+    }
+  }
+
+  /* Oculta el logo de Google y los enlaces de términos */
+  a[href^="http://maps.google.com/maps"], 
+  a[href^="https://maps.google.com/maps"], 
+  .gmnoprint a, 
+  .gmnoprint span, 
+  .gm-style-cc {
+    display: none !important;
+  }
+
+  .custom-datetime {
+    --padding-start: 0;
+    
+    ion-icon {
+      color: #FFB800;
+      font-size: 20px;
+    }
+
+    ion-label {
+      h2 {
+        font-size: 16px;
+        color: #1A1A1A;
+        margin-bottom: 5px;
+      }
+    }
+
+    ion-datetime {
+      --background: transparent;
+      --placeholder-color: #666;
+      font-size: 14px;
+      padding: 0;
+      
+      &::part(native) {
+        padding: 0;
+      }
+    }
+  }
+
+  // Estilos para el modal del datetime cuando se abre
+  ::ng-deep .datetime-modal {
+    --height: 80%;
+    --background: #FFFFFF;
+    
+    .calendar-body {
+      --background: #FFFFFF;
+    }
+    
+    .datetime-buttons {
+      background: #FFB800;
+    }
+  }
   

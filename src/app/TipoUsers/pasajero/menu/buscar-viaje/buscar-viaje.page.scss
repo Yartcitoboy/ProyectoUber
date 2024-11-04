@@ -9,15 +9,38 @@
   ion-toolbar {
     --background: transparent !important;
   }
+
+  &::part(content) {
+    background: transparent !important;
+  }
+
+  .modal-wrapper {
+    background: transparent !important;
+  }
+
+  ion-backdrop {
+    background: transparent !important;
+  }
 }
 
 // Modificar la regla para el body
 body.barcode-scanning-active {
-  visibility: hidden;
-  opacity: 0;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  background: transparent !important;
   
   .barcode-scanning-modal {
-    visibility: visible;
-    opacity: 1;
+    visibility: visible !important;
+    opacity: 1 !important;
+    background: transparent !important;
   }
+}
+
+:host ::ng-deep .modal-wrapper {
+  background: transparent !important;
+}
+
+:host ::ng-deep ion-modal {
+  --background: transparent !important;
+  --ion-background-color: transparent !important;
 }
