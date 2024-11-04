@@ -80,28 +80,26 @@ export class BuscarViajePage implements OnInit {
   async openCamera() {
     const modal = await this.modalController.create({
       component: BarcodeScanningModalComponent,
-      cssClass: 'barcode-scanner-modal',
+      cssClass: 'barcode-scanning-modal',
       showBackdrop: false,
       backdropDismiss: false,
       componentProps: {
         formats: [],
-        LensFacing: LensFacing.Back
-      }
+        lensFacing: LensFacing.Back
+      },
+      mode: 'ios'
     });
 
+    document.body.classList.add('barcode-scanning-active');
     await modal.present();
 
-    // DESPUES DE LEER EL QR
     const { data } = await modal.onDidDismiss();
+    document.body.classList.remove('barcode-scanning-active');
 
-    // SI SE OBTIENE INFORMACION EN DATA
     if (data?.barcode?.displayValue) {
-      // COLOCAR LA LOGICA DE SU PROYECTO
-      // EN MI CASO LO MANDARE A OTRA PAGINA
       this.resultadoQR = data.barcode.displayValue;
-      
-      setTimeout(()=>{
-        this.router.navigate(['/prueba-qr', this.resultadoQR])
+      setTimeout(() => {
+        this.router.navigate(['/prueba-qr', this.resultadoQR]);
       }, 1000);
     }
   }

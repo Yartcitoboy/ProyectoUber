@@ -1,2 +1,21 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+body.barcode-scanning-active {
+  --background: transparent;
+  background: transparent;
+  visibility: visible !important;
+
+  ion-modal.barcode-scanning-modal {
+    --background: transparent;
+    --ion-background-color: transparent;
+    
+    &::part(content) {
+      --background: transparent;
+      background: transparent;
+    }
+  }
+
+  ion-content,
+  ion-toolbar {
+    --background: transparent !important;
+    background: transparent !important;
+  }
+}

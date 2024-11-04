@@ -22,33 +22,51 @@ import {
     selector: 'app-barcode-scanning',
     template: `
       <ion-header class="ion-no-border">
-        <ion-toolbar color="tertiary">
+        <ion-toolbar>
           <ion-buttons slot="end">
             <ion-button (click)="closeModal()">
-              <ion-icon name="close"></ion-icon>
+              <ion-icon name="close" color="light"></ion-icon>
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
   
       <ion-content>
-        <div #square class="square"></div>
-        <ion-fab
-          *ngIf="isTorchAvailable"
-          slot="fixed"
-          horizontal="end"
-          vertical="bottom"
-        >
-          <ion-fab-button (click)="toggleTorch()">
-            <ion-icon name="flashlight"></ion-icon>
-          </ion-fab-button>
-        </ion-fab>
+        <div class="scanner-view">
+          <div #square class="square"></div>
+          <ion-fab
+            *ngIf="isTorchAvailable"
+            slot="fixed"
+            horizontal="end"
+            vertical="bottom"
+          >
+            <ion-fab-button (click)="toggleTorch()">
+              <ion-icon name="flashlight"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
+        </div>
       </ion-content>
     `,
     styles: [
       `
+        :host {
+          --background: transparent;
+          background: transparent;
+        }
+  
         ion-content {
           --background: transparent;
+          background: transparent;
+        }
+  
+        .scanner-view {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: transparent;
+          z-index: 1;
         }
   
         .square {
@@ -60,7 +78,7 @@ import {
           width: 200px;
           height: 200px;
           border: 6px solid white;
-          box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.5);
         }
       `,
     ],
