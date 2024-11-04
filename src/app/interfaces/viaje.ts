@@ -5,7 +5,7 @@ export interface Viaje{
     costo: number ;
     cantidadPasajeros: number;
     horario: string ; 
-    pasajerosReservados: any[]; // IDs de pasajeros que han reservado
-    estado: string; // Estado del viaje
+    pasajerosReservados: string[]; 
+    estado: string; 
     conductorId: string;
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 import { Viaje } from 'src/app/interfaces/viaje';
 import { map, catchError, from, throwError, of, tap } from 'rxjs';
@@ -14,7 +15,7 @@ export class ViajeService {
   costo?: number;
   cantidadPasajeros?: number;
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore, private auth: AngularFireAuth) { }
 
   async agregarViaje(viaje: Viaje): Promise<any> {
     const conductorId = viaje.conductorId;
@@ -30,7 +31,16 @@ export class ViajeService {
   }
   
   obtenerViajes(): Observable<Viaje[]> {
-    return this.firestore.collection<Viaje>('viajes').valueChanges();
+    return this.firestore.collection<Viaje>('viajes')
+      .snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Viaje;
+          const id = a.payload.doc.id;
+          console.log('Viaje obtenido:', { ...data, id }); // Debug log
+          return { ...data, id };
+        }))
+      );
   }
 
   async verificarViajeActivo(conductorId: string) {
@@ -108,5 +118,75 @@ export class ViajeService {
   return this.firestore.collection('viajes').doc(viajeId).delete();
 }
 
+async reservarViaje(viajeId: string): Promise<boolean> {
+  try {
+    console.log('Iniciando reserva para viaje ID:', viajeId);
+
+    // Verificar que el ID sea válido
+    if (!viajeId || viajeId.trim() === '') {
+      throw new Error('ID de viaje no válido');
+    }
+
+    const user = await this.auth.currentUser;
+    if (!user) {
+      throw new Error('No hay usuario autenticado');
+    }
+
+    // Obtener referencia al documento
+    const viajeRef = this.firestore.collection('viajes').doc(viajeId);
+    
+    // Obtener el documento
+    const viajeDoc = await viajeRef.get().toPromise();
+    
+    if (!viajeDoc?.exists) {
+      console.error('Viaje no encontrado con ID:', viajeId);
+      throw new Error('El viaje no existe');
+    }
+
+    const viajeData = viajeDoc.data() as Viaje;
+    console.log('Datos del viaje encontrado:', viajeData);
+
+    // Verificaciones
+    if (!viajeData.pasajerosReservados) {
+      viajeData.pasajerosReservados = [];
+    }
+
+    if (viajeData.cantidadPasajeros <= 0) {
+      throw new Error('No hay asientos disponibles');
+    }
+
+    if (viajeData.pasajerosReservados.includes(user.uid)) {
+      throw new Error('Ya has reservado este viaje');
+    }
+
+    // Preparar actualización
+    const actualizacion = {
+      cantidadPasajeros: viajeData.cantidadPasajeros - 1,
+      pasajerosReservados: [...viajeData.pasajerosReservados, user.uid],
+      estado: viajeData.cantidadPasajeros - 1 === 0 ? 'no disponible' : 'disponible'
+    };
+
+    console.log('Actualizando viaje con:', actualizacion);
+
+    // Realizar actualización
+    await viajeRef.update(actualizacion);
+    console.log('Viaje actualizado exitosamente');
+
+    return true;
+  } catch (error) {
+    console.error('Error al reservar viaje:', error);
+    throw error;
+  }
+}
+
+// Agregar este método al servicio para debug
+async verificarExistenciaViaje(viajeId: string) {
+  const doc = await this.firestore.collection('viajes').doc(viajeId).get().toPromise();
+  console.log('Verificación de viaje:', {
+    id: viajeId,
+    existe: doc?.exists,
+    data: doc?.data()
+  });
+}
   
 }

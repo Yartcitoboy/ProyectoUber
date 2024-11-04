@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ModalController } from '@ionic/angular';
 import { Viaje } from 'src/app/interfaces/viaje';
 import { Router } from '@angular/router';
+import { ViajeService } from 'src/app/services/firebase/viaje.service';
 @Component({
   selector: 'app-modal-detalles',
   template: `
@@ -41,7 +42,7 @@ import { Router } from '@angular/router';
 
   `
 })
-export class ModalDetallesComponent {
+export class ModalDetallesComponent implements OnInit {
     @Input() direccionActual?: string;
     @Input() direccionDestino?: string;
     @Input() costo?: number;
@@ -50,29 +51,40 @@ export class ModalDetallesComponent {
     @Input() viajeId?: string;
     @Input() pasajerosReservados: string[] = []; 
 
-  constructor(private modalController: ModalController, private firestore: AngularFirestore, private router: Router) { }
+  constructor(
+    private modalController: ModalController, 
+    private firestore: AngularFirestore, 
+    private router: Router,
+    private viajeService: ViajeService
+  ) { }
+
+  ngOnInit() {
+    console.log('Modal inicializado con viajeId:', this.viajeId);
+  }
 
   cerrarModal() {
     this.modalController.dismiss();
   }
 
   async reservarViaje() {
-    if (this.cantidadPasajeros) {
-      const viajeRef = this.firestore.collection('viajes').doc(this.viajeId);
-      const asientosDisponibles = this.cantidadPasajeros - 1;
+    console.log('Iniciando proceso de reserva...'); // Debug log
+    
+    if (!this.viajeId) {
+      console.error('No hay ID de viaje');
+      return;
+    }
 
-      if (asientosDisponibles >= 0) {
-        await viajeRef.update({ cantidadPasajeros: asientosDisponibles, pasajerosReservados: this.pasajerosReservados });
+    try {
+      console.log('Intentando reservar viaje con ID:', this.viajeId); // Debug log
+      const resultado = await this.viajeService.reservarViaje(this.viajeId);
+      console.log('Resultado de la reserva:', resultado);
+      if (resultado) {
+        console.log('Viaje reservado exitosamente');
+        this.cerrarModal();
       }
-
-      // Actualiza la lista de pasajeros reservados
-      this.pasajerosReservados.push('nuevoPasajeroId'); // Aquí debes usar el ID del pasajero
-
-      if (asientosDisponibles === 0) {
-        await viajeRef.update({ estado: 'no disponible' });
-      }
-
-      this.cerrarModal();
+    } catch (error) {
+      console.error('Error al reservar:', error);
+      // Aquí podrías mostrar un AlertController con el error
     }
   }
 

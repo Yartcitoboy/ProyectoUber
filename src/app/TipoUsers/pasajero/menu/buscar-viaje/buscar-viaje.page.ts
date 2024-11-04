@@ -54,18 +54,20 @@ export class BuscarViajePage implements OnInit {
 
   // Mostrar modal con los detalles del viaje
   async mostrarDetalles(viaje: Viaje) {
+    console.log('Viaje seleccionado:', viaje); // Debug log
+    
     const modal = await this.modalController.create({
       component: ModalDetallesComponent,
       componentProps: {
+        viajeId: viaje.id, // Asegúrate de que viaje.id existe
         direccionActual: viaje.direccionActual,
         direccionDestino: viaje.direccionDestino,
         costo: viaje.costo,
         cantidadPasajeros: viaje.cantidadPasajeros,
-        horario: viaje.horario,
-        viajeId: viaje.id,
-        pasajerosReservados: viaje.pasajerosReservados || []
+        horario: viaje.horario
       }
     });
+
     return await modal.present();
   }
 
