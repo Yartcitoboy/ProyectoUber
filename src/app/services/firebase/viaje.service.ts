@@ -23,7 +23,15 @@ export class ViajeService {
     if (hasActiveTrip) {
       throw new Error('Ya tienes un viaje en curso');
     }
-    return this.firestore.collection('viajes').add(viaje);
+    
+    // Asegurarnos de que el viaje tenga un array de pasajeros vacío al crearse
+    const nuevoViaje = {
+      ...viaje,
+      pasajerosReservados: [],
+      estado: 'disponible'
+    };
+    
+    return this.firestore.collection('viajes').add(nuevoViaje);
   }
 
   actualizarViaje(viajeId: string, actualizaciones: Partial<Viaje>): Promise<void> {
@@ -120,61 +128,45 @@ export class ViajeService {
 
 async reservarViaje(viajeId: string): Promise<boolean> {
   try {
-    console.log('Iniciando reserva para viaje ID:', viajeId);
-
-    // Verificar que el ID sea válido
-    if (!viajeId || viajeId.trim() === '') {
-      throw new Error('ID de viaje no válido');
-    }
-
     const user = await this.auth.currentUser;
     if (!user) {
       throw new Error('No hay usuario autenticado');
     }
 
-    // Obtener referencia al documento
-    const viajeRef = this.firestore.collection('viajes').doc(viajeId);
-    
-    // Obtener el documento
-    const viajeDoc = await viajeRef.get().toPromise();
-    
-    if (!viajeDoc?.exists) {
-      console.error('Viaje no encontrado con ID:', viajeId);
-      throw new Error('El viaje no existe');
-    }
+    return this.firestore.firestore.runTransaction(async (transaction) => {
+      const viajeRef = this.firestore.collection('viajes').doc(viajeId).ref;
+      const viajeDoc = await transaction.get(viajeRef);
 
-    const viajeData = viajeDoc.data() as Viaje;
-    console.log('Datos del viaje encontrado:', viajeData);
+      if (!viajeDoc.exists) {
+        throw new Error('El viaje no existe');
+      }
 
-    // Verificaciones
-    if (!viajeData.pasajerosReservados) {
-      viajeData.pasajerosReservados = [];
-    }
+      const viajeData = viajeDoc.data() as Viaje;
+      
+      // Verificaciones
+      if (viajeData.cantidadPasajeros <= 0) {
+        throw new Error('No hay asientos disponibles');
+      }
 
-    if (viajeData.cantidadPasajeros <= 0) {
-      throw new Error('No hay asientos disponibles');
-    }
+      if (viajeData.pasajerosReservados?.includes(user.uid)) {
+        throw new Error('Ya has reservado este viaje');
+      }
 
-    if (viajeData.pasajerosReservados.includes(user.uid)) {
-      throw new Error('Ya has reservado este viaje');
-    }
+      // Actualizar el documento
+      const nuevosReservados = [...(viajeData.pasajerosReservados || []), user.uid];
+      const nuevaCantidad = viajeData.cantidadPasajeros - 1;
 
-    // Preparar actualización
-    const actualizacion = {
-      cantidadPasajeros: viajeData.cantidadPasajeros - 1,
-      pasajerosReservados: [...viajeData.pasajerosReservados, user.uid],
-      estado: viajeData.cantidadPasajeros - 1 === 0 ? 'no disponible' : 'disponible'
-    };
+      transaction.update(viajeRef, {
+        cantidadPasajeros: nuevaCantidad,
+        pasajerosReservados: nuevosReservados,
+        estado: nuevaCantidad === 0 ? 'completo' : 'disponible'
+      });
 
-    console.log('Actualizando viaje con:', actualizacion);
+      return true;
+    });
 
-    // Realizar actualización
-    await viajeRef.update(actualizacion);
-    console.log('Viaje actualizado exitosamente');
-
-    return true;
   } catch (error) {
-    console.error('Error al reservar viaje:', error);
+    console.error('Error al reservar:', error);
     throw error;
   }
 }

@@ -8,6 +8,8 @@ import { AuthService } from 'src/app/services/firebase/auth.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { ViajeService } from 'src/app/services/firebase/viaje.service';
+import { AlertController } from '@ionic/angular';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -32,8 +34,8 @@ export class DashboardPage implements OnInit {
     private authService: AuthService,
     private navCtrl: NavController,
     private router: Router,
-    private viajeService: ViajeService
-
+    private viajeService: ViajeService,
+    private alertController: AlertController
   ) {
   }
 
@@ -92,36 +94,44 @@ export class DashboardPage implements OnInit {
 
   async verViaje() {
     try {
-      console.log('Iniciando verViaje()');
-      const user = await this.authService.getCurrentUser();
-      console.log('Usuario actual:', user);
-      
-      if (user) {
-        this.viajeService.obtenerViajePorConductor(user.uid).subscribe(
-          viaje => {
-            console.log('Viaje obtenido:', viaje);
-            if (viaje && viaje.id) {
-              console.log('Navegando a detalles del viaje:', viaje.id);
-              this.router.navigate(['/detalleviaje-conductor', viaje.id]);
-            } else {
-              console.log('No se encontró ningún viaje activo');
-              // Mostrar alerta al usuario
-              alert('No tienes viajes activos en este momento');
-            }
-          },
-          error => {
-            console.error('Error al obtener el viaje:', error);
-            alert('Error al obtener el viaje');
-          }
-        );
-      } else {
-        console.log('No hay usuario autenticado');
-        alert('Por favor, inicia sesión nuevamente');
+      const user = await this.fireAuth.currentUser;
+      if (!user) {
+        throw new Error('No hay usuario autenticado');
       }
+
+      this.viajeService.obtenerViajePorConductor(user.uid).subscribe(
+        viaje => {
+          if (viaje) {
+            // Si existe un viaje, navegar a los detalles
+            this.router.navigate(['/detalleviaje-conductor', viaje.id]);
+          } else {
+            // Si no existe viaje, mostrar alerta
+            this.mostrarAlertaSinViaje();
+          }
+        },
+        error => {
+          console.error('Error al obtener viaje:', error);
+          this.mostrarAlertaSinViaje();
+        }
+      );
     } catch (error) {
-      console.error('Error en verViaje():', error);
-      alert('Ocurrió un error al verificar el viaje');
+      console.error('Error:', error);
+      this.mostrarAlertaSinViaje();
     }
+  }
+
+  private async mostrarAlertaSinViaje() {
+    const alert = await this.alertController.create({
+      header: 'Sin viajes',
+      message: 'No tienes ningún viaje creado actualmente',
+      buttons: [{
+        text: 'OK',
+        handler: () => {
+          this.router.navigate(['/dashboard']);
+        }
+      }]
+    });
+    await alert.present();
   }
 };
 

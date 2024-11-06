@@ -31,7 +31,7 @@ export class RegistroPage implements OnInit {
     private authService: AuthService,
     private firestore: AngularFirestore
   ) {
-    // Creando el formulario con validaciones
+    
     this.loginForm = this.formBuilder.group({
       nombre: ['',[Validators.required]],
       apellido: ['',[Validators.required]],
@@ -46,12 +46,12 @@ export class RegistroPage implements OnInit {
     this.menuController.enable(false);
   }
 
-  // Cancelar el modal
+  
   cancel() {
     this.modal?.dismiss(null, 'cancel');
   }
 
-  // Manejar el cierre del modal
+  
   onWillDismiss(event: Event) {
     const ev = event as CustomEvent;
     if (ev.detail.role === 'confirm') {
@@ -62,14 +62,14 @@ export class RegistroPage implements OnInit {
     const tipoSeleccionado = event.detail.value;
     if (tipoSeleccionado === 'conductor') {
       this.mostrarMatricula = true;
-      this.loginForm.get('matricula')?.setValidators([Validators.required]); // Hacer la matrícula requerida
+      this.loginForm.get('matricula')?.setValidators([Validators.required]); 
     } else {
       this.mostrarMatricula = false;
-      this.loginForm.get('matricula')?.clearValidators(); // Quitar la validación si no es conductor
+      this.loginForm.get('matricula')?.clearValidators(); 
     }
-    this.loginForm.get('matricula')?.updateValueAndValidity(); // Actualizar la validación
+    this.loginForm.get('matricula')?.updateValueAndValidity(); 
   }
-  // Método para confirmar el registro
+
   async confirm() {
     if (this.loginForm.invalid) {
       Swal.fire({
@@ -89,12 +89,12 @@ export class RegistroPage implements OnInit {
       await loading.present();
 
       const { nombre, apellido, email, pass, tipo, matricula } = this.loginForm.value;
-      // Registrar al usuario con AuthService
+
       const aux = await this.authService.registro(email, pass);
       const user = aux.user;
   
       if (user) { 
-        // Guardar el usuario en Firestore
+
         await this.firestore.collection('usuarios').doc(user.uid).set({
           uid: user.uid,
           nombre: nombre,
@@ -125,7 +125,7 @@ export class RegistroPage implements OnInit {
       } 
     } catch (error) {
       console.error('Error durante el registro:', error);
-      // Mostrar mensaje de error si algo falla
+
       Swal.fire({
         icon: 'error',
         title: 'Error',

@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { Usuario } from 'src/app/interfaces/usuario';
-import { NativeBiometric } from 'capacitor-native-biometric';
-import { AuthService } from 'src/app/services/firebase/auth.service';
 
 @Component({
   selector: 'app-screenplash',
@@ -12,66 +8,34 @@ import { AuthService } from 'src/app/services/firebase/auth.service';
 })
 export class ScreenplashPage implements OnInit {
 
-  constructor(private router: Router, private authService: AuthService, private firestore: AngularFirestore) { }
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.checkLogin();
-    }, 2000);
+    this.animateAndNavigate();
   }
 
-  async checkLogin() {
-    this.authService.isLogged().subscribe(async (user) => {
-      if (!user) {
-        this.router.navigate(['loguear']);
-        return;
-      }
+  async animateAndNavigate() {
+    // Esperar 2 segundos para mostrar el splash
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
-      try {
-        const userDoc = await this.firestore
-          .collection('usuarios')
-          .doc(user.uid)
-          .get()
-          .toPromise();
+    // Obtener elementos para animar
+    const container = document.querySelector('.center-content');
+    const logo = document.querySelector('.logo-container img');
+    const spinner = document.querySelector('ion-spinner');
 
-        const userData = userDoc?.data() as any;
+    // Agregar animaciones de salida
+    logo?.classList.remove('animate__bounceIn');
+    logo?.classList.add('animate__animated', 'animate__fadeOutUp');
+    spinner?.classList.add('animate__animated', 'animate__fadeOut');
+    container?.classList.remove('animate__fadeIn');
+    container?.classList.add('animate__animated', 'animate__fadeOut');
 
-        if (!userData) {
-          this.router.navigate(['loguear']);
-          return;
-        }
+    // Esperar a que termine la animación antes de navegar
+    await new Promise(resolve => setTimeout(resolve, 800));
 
-        switch (userData.tipo) {
-          case 'admin':
-            this.router.navigate(['/admin-dashboard']);
-            break;
-          case 'pasajero':
-            this.router.navigate(['/pasajero-dashboard']);
-            break;
-          case 'conductor':
-            this.router.navigate(['/conductor-dashboard']);
-            break;
-          default:
-            this.router.navigate(['loguear']);
-        }
-      } catch (error) {
-        console.error('Error al verificar usuario:', error);
-        this.router.navigate(['loguear']);
-      }
+    // Navegar al login
+    await this.router.navigate(['/loguear'], {
+      skipLocationChange: true
     });
   }
-
-  async checkHuellaDigital() {
-    try {
-      await NativeBiometric.verifyIdentity({
-        reason: 'Por favor, autentícate para continuar',
-        title: 'Autentición Biométrica',
-        subtitle: 'Usa tu huella digítal o Face ID',
-        description: 'Coloca tu huella en el sensor para ingresar.'
-      });
-    } catch (error) {
-      throw error; 
-    }
-  }
-
 }

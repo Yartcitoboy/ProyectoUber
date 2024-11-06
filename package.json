@@ -37,6 +37,7 @@
     "@ionic-native/core": "^5.36.0",
     "@ionic/angular": "^8.0.0",
     "angularx-qrcode": "^18.0.2",
+    "animate.css": "^4.1.1",
     "capacitor-native-biometric": "^4.2.2",
     "firebase": "^10.13.2",
     "ionicons": "^7.0.0",

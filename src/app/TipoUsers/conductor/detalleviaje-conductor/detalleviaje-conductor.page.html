@@ -65,8 +65,25 @@
 
         <ion-item>
           <ion-label>
-            <h2>Cantidad de Pasajeros</h2>
-            <p>{{ viajeSeleccionado.cantidadPasajeros || 0 }}</p>
+            <h2>Capacidad del Viaje</h2>
+            <p>{{ viajeSeleccionado.pasajerosReservados.length }}/{{ viajeSeleccionado.cantidadPasajeros || 0 }} asientos ocupados</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h2>Pasajeros Reservados</h2>
+            <p>{{ viajeSeleccionado.pasajerosReservados.length }} pasajeros</p>
+          </ion-label>
+        </ion-item>
+
+        <!-- Lista de pasajeros reservados -->
+        <ion-item *ngIf="viajeSeleccionado.pasajerosReservados.length > 0">
+          <ion-label>
+            <h2>Lista de Reservas</h2>
+            <p *ngFor="let pasajero of viajeSeleccionado.pasajerosReservados">
+              Pasajero ID: {{ pasajero }}
+            </p>
           </ion-label>
         </ion-item>
       </ion-list>

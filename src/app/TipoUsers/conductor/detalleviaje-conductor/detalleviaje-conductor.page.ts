@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViajeService } from 'src/app/services/firebase/viaje.service';
 import { Viaje } from 'src/app/interfaces/viaje';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-detalleviaje-conductor',
@@ -19,7 +19,8 @@ export class DetalleviajeConductorPage implements OnInit {
     private route: ActivatedRoute,
     private viajeService: ViajeService,
     private navCtrl: NavController,
-    private router: Router
+    private router: Router,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -40,8 +41,14 @@ export class DetalleviajeConductorPage implements OnInit {
   cargarDetallesViaje() {
     this.viajeService.obtenerViajePorId(this.viajeId).subscribe(
       viaje => {
-        console.log('Viaje obtenido:', viaje);
-        this.viajeSeleccionado = viaje;
+        if (viaje) {
+          this.viajeSeleccionado = viaje;
+          console.log('Detalles del viaje:', {
+            asientosDisponibles: viaje.cantidadPasajeros,
+            pasajerosReservados: viaje.pasajerosReservados,
+            totalReservas: viaje.pasajerosReservados?.length || 0
+          });
+        }
       },
       error => {
         console.error('Error al cargar el viaje:', error);
@@ -60,7 +67,19 @@ export class DetalleviajeConductorPage implements OnInit {
   }
 
   async comenzarViaje() {
-    this.router.navigate(['/info-viaje']);
+    const alert = await this.alertController.create({
+      header: 'Información',
+      message: 'Función en desarrollo',
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+
+  // Método para obtener el total de asientos originales
+  getTotalAsientosOriginales(): number {
+    if (!this.viajeSeleccionado) return 0;
+    return this.viajeSeleccionado.cantidadPasajeros + 
+           (this.viajeSeleccionado.pasajerosReservados?.length || 0);
   }
 
   

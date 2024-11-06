@@ -1,6 +1,6 @@
-import { Interpolation } from '@angular/compiler';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/firebase/auth.service';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -8,72 +8,52 @@ import Swal from 'sweetalert2';
   templateUrl: './resetpass.page.html',
   styleUrls: ['./resetpass.page.scss'],
 })
-export class ResetpassPage implements OnInit {
-
-  email: string ='';
+export class ResetpassPage {
+  email: string = '';
+  isLoading: boolean = false;
 
   constructor(
-    private authService: AuthService
-  ) {  
-  }
-
-  ngOnInit() {
-    
-  }
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   async recoveryEmail() {
-    try {
-      let timerInterval: any;
-      Swal.fire({
-        title: "Procesando",
-        html: "Enviando correo...",
-        timer: 1000,
-        timerProgressBar: true,
-        heightAuto: false,
-        didOpen: () => {
-          Swal.showLoading();
-          const timer = Swal.getPopup()!.querySelector("b");
-          timerInterval = setInterval(() => {
-            timer!.textContent = `${Swal.getTimerLeft()}`;
-          }, 100);
-        },
-        willClose: () => {
-          clearInterval(timerInterval);
-        }
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          this.authService.recoveryPassword(this.email);
-          Swal.fire({
-            icon:'success',
-            title:'Correo enviado',
-            text: 'Se ha enviado un correo para reetablecer tu contraseña!',
-            confirmButtonText: 'OK',
-            heightAuto: false
-          });
-        }
+    if (!this.email || !this.email.trim()) {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, ingresa un correo electrónico',
+        heightAuto: false
       });
+      return;
+    }
 
+    this.isLoading = true;
 
-
-
-
-
-
-
+    try {
+      await this.authService.recoveryPassword(this.email.trim());
       
-    } catch (error) {
-      Swal.fire({
-        icon:'error',
-        title:'Error',
-        text: 'Hubo un problema al enviar el correo!',
+      await Swal.fire({
+        icon: 'success',
+        title: 'Correo enviado',
+        text: 'Se ha enviado un correo para restablecer tu contraseña. Por favor, revisa tu bandeja de entrada y spam.',
         confirmButtonText: 'OK',
         heightAuto: false
       });
+      
+      this.router.navigate(['/loguear']);
+      
+    } catch (error: any) {
+      console.error('Error en recuperación:', error);
+      await Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.message || 'Hubo un problema al enviar el correo',
+        confirmButtonText: 'OK',
+        heightAuto: false
+      });
+    } finally {
+      this.isLoading = true;
     }
   }
-
-  
-
-
 }

@@ -1,46 +1,194 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { Viaje } from 'src/app/interfaces/viaje';
 import { Router } from '@angular/router';
 import { ViajeService } from 'src/app/services/firebase/viaje.service';
 @Component({
   selector: 'app-modal-detalles',
   template: `
+    <ion-header class="ion-no-border">
+      <ion-toolbar color="dark-custom">
+        <ion-title class="ion-text-center">
+          <strong>Detalles del Viaje</strong>
+        </ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarModal()" color="light">
+            <ion-icon name="close-outline" size="large"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
 
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Detalles del Viaje</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="cerrarModal()">Cerrar</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+    <ion-content class="ion-padding custom-content">
+      <ion-card class="custom-card">
+        <ion-card-header>
+          <ion-card-title class="ion-text-center title-with-icon">
+            <ion-icon name="map-outline" class="icon-large"></ion-icon>
+            Información de Ruta
+          </ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-list lines="none">
+            <ion-item class="custom-item">
+              <ion-icon name="location-outline" slot="start" color="warning"></ion-icon>
+              <ion-label>
+                <h2 class="item-title">Origen</h2>
+                <p class="item-content">{{ direccionActual }}</p>
+              </ion-label>
+            </ion-item>
 
-<ion-content>
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Ruta</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-    <p><strong></strong> {{ direccionActual }}</p>
-    <p><strong></strong> {{ direccionDestino }}</p>
-      <p><strong></strong> {{ costo }}</p>
-      <p><strong>Cantidad de Pasajeros:</strong> {{ cantidadPasajeros }}</p>
-      <p><strong>Horario:</strong> {{ horario }}</p>
-      <ion-button style="padding-top: 10px" expand="full" color="danger" (click)="reservarViaje()">
-      
-      <qr-code value="Hello world!" 
-         size="140" 
-         errorCorrectionLevel="M" />
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
-  
-</ion-content>
+            <ion-item class="custom-item">
+              <ion-icon name="navigate-outline" slot="start" color="warning"></ion-icon>
+              <ion-label>
+                <h2 class="item-title">Destino</h2>
+                <p class="item-content">{{ direccionDestino }}</p>
+              </ion-label>
+            </ion-item>
 
+            <ion-item class="custom-item">
+              <ion-icon name="cash-outline" slot="start" color="warning"></ion-icon>
+              <ion-label>
+                <h2 class="item-title">Costo del Viaje</h2>
+                <p class="item-content">$ {{ costo }}</p>
+              </ion-label>
+            </ion-item>
 
-  `
+            <ion-item class="custom-item">
+              <ion-icon name="people-outline" slot="start" color="warning"></ion-icon>
+              <ion-label>
+                <h2 class="item-title">Pasajeros</h2>
+                <p class="item-content">{{ cantidadPasajeros }} personas</p>
+              </ion-label>
+            </ion-item>
+
+            <ion-item class="custom-item">
+              <ion-icon name="time-outline" slot="start" color="warning"></ion-icon>
+              <ion-label>
+                <h2 class="item-title">Horario</h2>
+                <p class="item-content">{{ horario }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+
+          <div class="button-container">
+
+            <ion-button expand="block" 
+                      class="custom-button"
+                      (click)="reservarViaje()">
+              <ion-icon name="car-outline" slot="start"></ion-icon>
+              Reservar Viaje
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-content>
+  `,
+  styles: [`
+    :host {
+      --ion-color-dark-custom: #1A1A1A;
+      --ion-color-warning: #FFB800;
+    }
+
+    .custom-content {
+      --background: #1A1A1A;
+    }
+
+    .custom-card {
+      margin: 8px;
+      border-radius: 20px;
+      background: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .icon-large {
+      font-size: 28px;
+      vertical-align: middle;
+      margin-right: 8px;
+      color: #FFB800;
+    }
+
+    .title-with-icon {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #1A1A1A;
+      padding: 16px 0;
+    }
+
+    .custom-item {
+      --background: transparent;
+      --padding-start: 16px;
+      --padding-end: 16px;
+      --padding-top: 12px;
+      --padding-bottom: 12px;
+      margin-bottom: 8px;
+    }
+
+    .item-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 4px;
+    }
+
+    .item-content {
+      font-size: 1rem;
+      color: #1A1A1A;
+      opacity: 0.8;
+    }
+
+    ion-icon[slot="start"] {
+      font-size: 24px;
+      margin-right: 16px;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 24px 0 12px;
+    }
+
+    .custom-button {
+      margin: 0;
+      --background: #FFB800;
+      --color: #1A1A1A;
+      --border-radius: 12px;
+      --padding-top: 16px;
+      --padding-bottom: 16px;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .map-button {
+      --background: #1A1A1A;
+      --color: #FFFFFF;
+    }
+
+    @media (max-width: 360px) {
+      .custom-card {
+        margin: 4px;
+      }
+
+      .item-title {
+        font-size: 1rem;
+      }
+
+      .item-content {
+        font-size: 0.9rem;
+      }
+
+      ion-icon[slot="start"] {
+        font-size: 20px;
+        margin-right: 12px;
+      }
+
+      .button-container {
+        gap: 8px;
+      }
+    }
+  `]
 })
 export class ModalDetallesComponent implements OnInit {
     @Input() direccionActual?: string;
@@ -53,6 +201,7 @@ export class ModalDetallesComponent implements OnInit {
 
   constructor(
     private modalController: ModalController, 
+    private alertController: AlertController,
     private firestore: AngularFirestore, 
     private router: Router,
     private viajeService: ViajeService
@@ -67,24 +216,29 @@ export class ModalDetallesComponent implements OnInit {
   }
 
   async reservarViaje() {
-    console.log('Iniciando proceso de reserva...'); // Debug log
-    
-    if (!this.viajeId) {
-      console.error('No hay ID de viaje');
-      return;
-    }
-
     try {
-      console.log('Intentando reservar viaje con ID:', this.viajeId); // Debug log
+      if (!this.viajeId) {
+        throw new Error('ID de viaje no válido');
+      }
+
       const resultado = await this.viajeService.reservarViaje(this.viajeId);
-      console.log('Resultado de la reserva:', resultado);
+      
       if (resultado) {
-        console.log('Viaje reservado exitosamente');
+        const alert = await this.alertController.create({
+          header: 'Éxito',
+          message: 'Viaje reservado correctamente',
+          buttons: ['OK']
+        });
+        await alert.present();
         this.cerrarModal();
       }
-    } catch (error) {
-      console.error('Error al reservar:', error);
-      // Aquí podrías mostrar un AlertController con el error
+    } catch (error: any) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: error.message || 'Error al reservar el viaje',
+        buttons: ['OK']
+      });
+      await alert.present();
     }
   }
 
@@ -102,6 +256,7 @@ export class ModalDetallesComponent implements OnInit {
     });
     return await modal.present();
   }
+
 
   reservarViaje1() {
     this.router.navigate(['/detalle-viaje']);

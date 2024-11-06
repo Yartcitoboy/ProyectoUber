@@ -70,7 +70,7 @@ export class LoguearPage implements OnInit {
             confirmButtonText: 'OK',
             heightAuto: false
           });
-          // Cerrar sesión si la cuenta está desactivada
+          
           return;
         }
 
@@ -81,7 +81,7 @@ export class LoguearPage implements OnInit {
 
         await loading.dismiss();
 
-        // Redirigir según el tipo de usuario
+        
         switch (userData.tipo) {
           case 'admin':
             this.router.navigate(['/usuarios']);
@@ -135,22 +135,24 @@ export class LoguearPage implements OnInit {
     try {
       console.log('Iniciando creación de usuarios...');
       
-      // Obtener usuarios aleatorios
       const randomUsers = await this.getRandomUsers();
       console.log('Usuarios obtenidos de la API:', randomUsers);
       
+      const totalUsers = randomUsers.length;
+      const halfUsers = Math.floor(totalUsers / 2);
+      let usersCreated = [];  // Array para almacenar la información
 
       for (let i = 0; i < randomUsers.length; i++) {
         const randomUser = randomUsers[i];
-        const userType = i < 5 ? 'conductor' : 'pasajero';
+        const userType = i < halfUsers ? 'conductor' : 'pasajero';
         const defaultPassword = '123456';
+        const customEmail = `${randomUser.name.first}.${randomUser.name.last}@${userType}.cl`.toLowerCase();
 
         try {
-          console.log(`Creando usuario ${i + 1}:`, randomUser.email);
+          console.log(`Creando usuario ${i + 1}:`, customEmail);
           
-          // Crear usuario en Authentication
           const userCredential = await this.fireAuth.createUserWithEmailAndPassword(
-            randomUser.email,
+            customEmail,
             defaultPassword
           );
 
@@ -159,27 +161,35 @@ export class LoguearPage implements OnInit {
               uid: userCredential.user.uid,
               nombre: randomUser.name.first,
               apellido: randomUser.name.last,
-              email: randomUser.email,
+              email: customEmail,
+              password: defaultPassword,  // Agregamos la contraseña
               tipo: userType,
               estadoCuenta: true,
               matricula: userType === 'conductor' ? `MAT${Math.floor(Math.random() * 1000)}` : null,
             };
 
-            // Guardar en Firestore
             await this.firestore.collection('usuarios').doc(userCredential.user.uid).set(userData);
+            usersCreated.push(userData);  // Guardamos la información del usuario
             console.log(`Usuario ${i + 1} creado exitosamente:`, userData);
-            
           }
         } catch (error: any) {
           console.error(`Error al crear usuario ${i + 1}:`, error.message);
-          // Continuar con el siguiente usuario si hay error
           continue;
         }
       }
 
+      // Mostramos la información de todos los usuarios creados
       await Swal.fire({
         title: '¡Usuarios Creados!',
-        text: 'Proceso completado',
+        html: `
+          <div style="text-align: left">
+            ${usersCreated.map(user => `
+              <p><strong>Email:</strong> ${user.email}<br>
+              <strong>Contraseña:</strong> ${user.password}<br>
+              <strong>Tipo:</strong> ${user.tipo}</p>
+            `).join('')}
+          </div>
+        `,
         icon: 'success',
         confirmButtonText: 'OK',
         heightAuto: false
@@ -199,7 +209,9 @@ export class LoguearPage implements OnInit {
 
   private async getRandomUsers() {
     try {
-      const response = await fetch('https://randomuser.me/api/?results=10');
+      
+      const cantidad = 10; 
+      const response = await fetch(`https://randomuser.me/api/?results=${cantidad}`);
       if (!response.ok) {
         throw new Error('Error al obtener usuarios de la API');
       }
