@@ -62,7 +62,6 @@ export class ViajeService {
   obtenerViajePorConductor(conductorId: string): Observable<Viaje | null> {
     return this.firestore.collection<Viaje>('viajes', ref => ref
       .where('conductorId', '==', conductorId)
-      .where('estado', '==', 'disponible')
       .limit(1))
       .snapshotChanges()
       .pipe(
