@@ -191,18 +191,18 @@ import { ViajeService } from 'src/app/services/firebase/viaje.service';
   `]
 })
 export class ModalDetallesComponent implements OnInit {
-    @Input() direccionActual?: string;
-    @Input() direccionDestino?: string;
-    @Input() costo?: number;
-    @Input() cantidadPasajeros?: number;
-    @Input() horario?: string;
-    @Input() viajeId?: string;
-    @Input() pasajerosReservados: string[] = []; 
+  @Input() direccionActual?: string;
+  @Input() direccionDestino?: string;
+  @Input() costo?: number;
+  @Input() cantidadPasajeros?: number;
+  @Input() horario?: string;
+  @Input() viajeId?: string;
+  @Input() pasajerosReservados: string[] = [];
 
   constructor(
-    private modalController: ModalController, 
+    private modalController: ModalController,
     private alertController: AlertController,
-    private firestore: AngularFirestore, 
+    private firestore: AngularFirestore,
     private router: Router,
     private viajeService: ViajeService
   ) { }
@@ -222,12 +222,17 @@ export class ModalDetallesComponent implements OnInit {
       }
 
       const resultado = await this.viajeService.reservarViaje(this.viajeId);
-      
+
       if (resultado) {
         const alert = await this.alertController.create({
           header: 'Éxito',
           message: 'Viaje reservado correctamente',
-          buttons: ['OK']
+          buttons: [{
+            text: 'OK',
+            handler: () => {
+              this.router.navigate(['/detalle-viaje']);
+            }
+          }]
         });
         await alert.present();
         this.cerrarModal();
@@ -261,5 +266,5 @@ export class ModalDetallesComponent implements OnInit {
   reservarViaje1() {
     this.router.navigate(['/detalle-viaje']);
   }
-  
+
 }

@@ -5,7 +5,6 @@ import { Viaje } from 'src/app/interfaces/viaje';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 declare var google: any;
 
 @Component({
@@ -83,6 +82,7 @@ export class DetalleConductorPage implements OnInit {
     this.directionsRenderer = new google.maps.DirectionsRenderer({
       suppressMarkers: false,
       map: this.map
+      
     });
   }
 
@@ -92,7 +92,7 @@ export class DetalleConductorPage implements OnInit {
       try {
         const predictions = await new Promise<any[]>((resolve, reject) => {
           this.googleAutocomplete.getPlacePredictions(
-            { input: searchTerm },
+            { input: searchTerm, componentRestrictions: { country: 'CL' } },
             (predictions: any, status: any) => {
               if (status === 'OK') {
                 resolve(predictions);
@@ -114,6 +114,7 @@ export class DetalleConductorPage implements OnInit {
       }
     } else {
       this.originPlaces = [];
+      this.clearRoute();
     }
   }
 
@@ -123,13 +124,15 @@ export class DetalleConductorPage implements OnInit {
       try {
         const predictions = await new Promise<any[]>((resolve, reject) => {
           this.googleAutocomplete.getPlacePredictions(
-            { input: searchTerm },
+            { input: searchTerm, componentRestrictions: { country: 'CL' } },
             (predictions: any, status: any) => {
               if (status === 'OK') {
                 resolve(predictions);
               } else {
                 reject(status);
               }
+            
+            
             }
           );
         });
@@ -145,6 +148,7 @@ export class DetalleConductorPage implements OnInit {
       }
     } else {
       this.destinationPlaces = [];
+      this.clearRoute();
     }
   }
 
@@ -289,5 +293,11 @@ export class DetalleConductorPage implements OnInit {
 
   pruebas(){
     this.router.navigate(['/pruebas']);
+}
+
+private clearRoute() {
+    this.directionsRenderer.set('directions', null); // Elimina la ruta del mapa
+    this.origin = null; // Limpia el origen
+    this.destination = null; // Limpia el destino
 }
 }

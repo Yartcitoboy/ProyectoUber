@@ -28,7 +28,6 @@ export class DetalleAdminPage implements OnInit {
     private usuarioService: UsuariosService,
     private firestore: AngularFirestore,
     private alertController: AlertController,
-    private userService: UsuariosService,
     private router: Router
   ) { }
 
@@ -62,6 +61,8 @@ export class DetalleAdminPage implements OnInit {
   }
 
 ///////////////////
+
+
 
 async obtenerTipoUsuario(uid: string) {
   const doc = await this.firestore.collection('usuarios').doc(uid).get().toPromise();
@@ -112,7 +113,7 @@ async obtenerDatosUsuario(uid: string) {
               const doc = querySnapshot.docs[0];
               await doc.ref.update({ estadoCuenta: false });
               console.log('Usuario desactivado');
-              this.config(); // Actualizar la lista de usuarios
+              this.config(); 
             }
           }
         }
@@ -178,4 +179,5 @@ async obtenerDatosUsuario(uid: string) {
       });
     }
   }
+
 }

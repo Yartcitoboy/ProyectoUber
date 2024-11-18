@@ -3,8 +3,7 @@ import { AuthService } from 'src/app/services/firebase/auth.service';
 import { ModalController, Platform } from '@ionic/angular';
 import { ViajeService } from 'src/app/services/firebase/viaje.service';
 import { Viaje } from 'src/app/interfaces/viaje';
-import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
-import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
+
 import { Router } from '@angular/router';
 import { ModalDetallesComponent } from './modal-detalles.component'; // Asegúrate de importar el modal
 
@@ -14,9 +13,6 @@ import { ModalDetallesComponent } from './modal-detalles.component'; // Asegúra
   styleUrls: ['./buscar-viaje.page.scss'],
 })
 export class BuscarViajePage implements OnInit {
-
-  qrValue = '';
-  resultadoQR = '';
 
   viajes: Viaje[] = [];
   viajesFiltrados: Viaje[] = [];
@@ -34,16 +30,6 @@ export class BuscarViajePage implements OnInit {
     this.viajeService.obtenerViajes().subscribe(viajes => {
       this.viajes = viajes; // Filtra viajes disponibles
       this.filtrarViajes(); // Filtra los viajes al inicio
-    });
-
-    if (this.platform.is('capacitor')){
-      BarcodeScanner.isSupported().then()
-      BarcodeScanner.checkPermissions().then()
-      BarcodeScanner.removeAllListeners();
-    }
-    // OBTENEMOS EL UID DEL USUARIO LOGEADO Y LO ASIGNAMOS AL QR
-    this.authService.isLogged().subscribe((user: any) => {
-      this.qrValue = user.uid;
     });
   }
 
@@ -79,30 +65,5 @@ export class BuscarViajePage implements OnInit {
     }
   }
 
-  async openCamera() {
-    const modal = await this.modalController.create({
-      component: BarcodeScanningModalComponent,
-      cssClass: 'barcode-scanning-modal',
-      showBackdrop: false,
-      backdropDismiss: false,
-      componentProps: {
-        formats: [],
-        lensFacing: LensFacing.Back
-      },
-      mode: 'ios'
-    });
-
-    document.body.classList.add('barcode-scanning-active');
-    await modal.present();
-
-    const { data } = await modal.onDidDismiss();
-    document.body.classList.remove('barcode-scanning-active');
-
-    if (data?.barcode?.displayValue) {
-      this.resultadoQR = data.barcode.displayValue;
-      setTimeout(() => {
-        this.router.navigate(['/prueba-qr', this.resultadoQR]);
-      }, 1000);
-    }
-  }
+  
 }

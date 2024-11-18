@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ViajeService } from 'src/app/services/firebase/viaje.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Viaje } from 'src/app/interfaces/viaje';
+import { NavController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/firebase/auth.service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-detalle-viaje',
@@ -7,9 +14,67 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetalleViajePage implements OnInit {
 
-  constructor() { }
+  tipoSeleccionado = 'pasajero';
+  usuariosFiltrados: any[] = [];
+
+  usuarios: any = [];
+
+  nombreUsuario: string = '';
+  apellidoUsuario: string = '';
+  emailUsuario: string = '';
+  tipoUsuario: string = '';
+
+  constructor(
+    private menuController: MenuController,
+    private firestore: AngularFirestore,
+    private authService: AuthService,
+    private router: Router,
+    private navCtrl: NavController,) { }
 
   ngOnInit() {
+    this.menuController.enable(true);
+    this.config();
+
+    this.authService.isLogged().subscribe((user: any) => {
+      if (user) {
+        this.emailUsuario = user.email;
+        this.obtenerDatosUsuario(user.uid);
+        this.obtenerTipoUsuario(user.uid);
+      } else {
+        this.navCtrl.navigateRoot('/loguear');
+      }
+    });
   }
+
+  async obtenerTipoUsuario(uid: string) {
+    const doc = await this.firestore.collection('usuarios').doc(uid).get().toPromise();
+    if (doc && doc.exists) {
+      this.tipoUsuario = (doc.data() as { tipo: string })?.tipo;
+    }
+  }
+
+  async obtenerDatosUsuario(uid: string) {
+    const doc = await this.firestore.collection('usuarios').doc(uid).get().toPromise();
+    if (doc && doc.exists) {
+      const userData = doc.data() as { nombre?: string, apellido?: string };
+      this.nombreUsuario = userData.nombre || 'Nombre desconocido';
+      this.apellidoUsuario = userData.apellido || 'Apellido desconocido';
+    } else {
+      this.nombreUsuario = 'Usuario';
+      this.apellidoUsuario = 'Desconocido';
+    }
+  }
+
+  config() {
+    this.firestore.collection('usuarios').valueChanges().subscribe(aux => {
+      this.usuarios = aux;
+      this.filtrarUsuarios();
+    });
+  }
+
+  filtrarUsuarios() {
+    this.usuariosFiltrados = this.usuarios.filter((usuario: any) => usuario.tipo === this.tipoSeleccionado);
+  }
+  
 
 }

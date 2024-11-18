@@ -120,6 +120,11 @@ const routes: Routes = [
     path: 'prueba-qr/:uid',
     loadChildren: () => import('./pages/prueba-qr/prueba-qr.module').then( m => m.PruebaQRPageModule)
   },
+  {
+    path: 'edit-viaje/:viajeId',
+    loadChildren: () => import('./TipoUsers/admin/edit-viaje/edit-viaje.module').then( m => m.EditViajePageModule)
+  },
+
   
 
 

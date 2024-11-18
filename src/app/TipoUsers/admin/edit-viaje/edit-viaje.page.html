@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar Viaje</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="editViajeForm!" (ngSubmit)="actualizarViaje()">
+    <ion-item>
+      <ion-label position="stacked">Dirección Actual:</ion-label>
+      <ion-input formControlName="direccionActual"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Dirección Destino:</ion-label>
+      <ion-input formControlName="direccionDestino"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Costo:</ion-label>
+      <ion-input formControlName="costo" type="number"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Cantidad de Pasajeros:</ion-label>
+      <ion-input formControlName="cantidadPasajeros" type="number"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Horario:</ion-label>
+      <ion-input formControlName="horario"></ion-input>
+    </ion-item>
+
+    <ion-footer>
+      <ion-button type="submit">Modificar</ion-button>
+    </ion-footer>
+  </form>
+</ion-content>

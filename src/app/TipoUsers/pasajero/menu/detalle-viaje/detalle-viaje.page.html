@@ -1,13 +1,19 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>detalle-viaje</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pasajero-dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ver Viaje</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">detalle-viaje</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list>
+    <ion-item *ngFor="let aux of usuariosFiltrados" [routerLink]="['/usuarios', aux.email]">
+      <ion-label class="ion-text-wrap">
+        <h2 *ngIf="aux.nombreConductor && aux.apellidoConductor">{{ aux.nombreConductor }} {{ aux.apellidoConductor }}</h2>
+        <h2 *ngIf="!aux.nombreConductor || !aux.apellidoConductor">Datos del conductor no disponibles</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
