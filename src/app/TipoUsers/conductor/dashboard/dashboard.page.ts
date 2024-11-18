@@ -99,7 +99,7 @@ export class DashboardPage implements OnInit {
         throw new Error('No hay usuario autenticado');
       }
 
-      this.viajeService.obtenerViajePorId(user.uid).subscribe( // cambiar por obtenerViajePorConductor a conductorId 
+      this.viajeService.obtenerViajePorConductor(user.uid).subscribe( // cambiar por obtenerViajePorConductor a conductorId 
         viaje => {
           if (viaje) {
             // Si existe un viaje, navegar a los detalles

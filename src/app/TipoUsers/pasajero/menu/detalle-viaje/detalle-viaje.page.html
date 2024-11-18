@@ -4,16 +4,13 @@
       <ion-back-button defaultHref="/pasajero-dashboard"></ion-back-button>
     </ion-buttons>
     <ion-title>Ver Viaje</ion-title>
+    <ion-button slot="end" (click)="openCamera()" fill="clear">
+      <ion-icon name="camera" slot="icon-only"></ion-icon>
+      Pagar
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
-    <ion-item *ngFor="let aux of usuariosFiltrados" [routerLink]="['/usuarios', aux.email]">
-      <ion-label class="ion-text-wrap">
-        <h2 *ngIf="aux.nombreConductor && aux.apellidoConductor">{{ aux.nombreConductor }} {{ aux.apellidoConductor }}</h2>
-        <h2 *ngIf="!aux.nombreConductor || !aux.apellidoConductor">Datos del conductor no disponibles</h2>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  
 </ion-content>

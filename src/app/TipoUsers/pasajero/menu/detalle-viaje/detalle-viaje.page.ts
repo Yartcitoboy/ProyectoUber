@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ViajeService } from 'src/app/services/firebase/viaje.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Viaje } from 'src/app/interfaces/viaje';
-import { NavController } from '@ionic/angular';
+
+import { Router } from '@angular/router';
+
+import { ModalController, Platform } from '@ionic/angular';
 import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/firebase/auth.service';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+
+
+import { BarcodeScanningModalComponent } from './barcode-scanning-modal.component';
+import { BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 
 @Component({
   selector: 'app-detalle-viaje',
@@ -14,67 +17,64 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class DetalleViajePage implements OnInit {
 
-  tipoSeleccionado = 'pasajero';
-  usuariosFiltrados: any[] = [];
+  qrValue = '';
+  resultadoQR = '';
 
-  usuarios: any = [];
-
-  nombreUsuario: string = '';
-  apellidoUsuario: string = '';
-  emailUsuario: string = '';
-  tipoUsuario: string = '';
 
   constructor(
     private menuController: MenuController,
-    private firestore: AngularFirestore,
     private authService: AuthService,
     private router: Router,
-    private navCtrl: NavController,) { }
+    private modalCtrl: ModalController,
+    private platform: Platform,
+  ) {}
 
   ngOnInit() {
-    this.menuController.enable(true);
-    this.config();
 
+    if (this.platform.is('capacitor')){
+      BarcodeScanner.isSupported().then()
+      BarcodeScanner.checkPermissions().then()
+      BarcodeScanner.removeAllListeners();
+    }
+    // OBTENEMOS EL UID DEL USUARIO LOGEADO Y LO ASIGNAMOS AL QR
     this.authService.isLogged().subscribe((user: any) => {
-      if (user) {
-        this.emailUsuario = user.email;
-        this.obtenerDatosUsuario(user.uid);
-        this.obtenerTipoUsuario(user.uid);
-      } else {
-        this.navCtrl.navigateRoot('/loguear');
-      }
+      this.qrValue = user.uid;
     });
+
+    this.menuController.enable(true);
+    
+
+    
   }
 
-  async obtenerTipoUsuario(uid: string) {
-    const doc = await this.firestore.collection('usuarios').doc(uid).get().toPromise();
-    if (doc && doc.exists) {
-      this.tipoUsuario = (doc.data() as { tipo: string })?.tipo;
+  async openCamera() {
+    const modal = await this.modalCtrl.create({
+      component: BarcodeScanningModalComponent,
+      cssClass: 'barcode-scanning-modal',
+      showBackdrop: false,
+      backdropDismiss: false,
+      componentProps: {
+        formats: [],
+        lensFacing: LensFacing.Back
+      },
+      mode: 'ios'
+    });
+
+    document.body.classList.add('barcode-scanning-active');
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    document.body.classList.remove('barcode-scanning-active');
+
+    if (data?.barcode?.displayValue) {
+      this.resultadoQR = data.barcode.displayValue;
+      setTimeout(() => {
+        this.router.navigate(['/prueba-qr', this.resultadoQR]);
+      }, 1000);
     }
   }
 
-  async obtenerDatosUsuario(uid: string) {
-    const doc = await this.firestore.collection('usuarios').doc(uid).get().toPromise();
-    if (doc && doc.exists) {
-      const userData = doc.data() as { nombre?: string, apellido?: string };
-      this.nombreUsuario = userData.nombre || 'Nombre desconocido';
-      this.apellidoUsuario = userData.apellido || 'Apellido desconocido';
-    } else {
-      this.nombreUsuario = 'Usuario';
-      this.apellidoUsuario = 'Desconocido';
-    }
-  }
-
-  config() {
-    this.firestore.collection('usuarios').valueChanges().subscribe(aux => {
-      this.usuarios = aux;
-      this.filtrarUsuarios();
-    });
-  }
-
-  filtrarUsuarios() {
-    this.usuariosFiltrados = this.usuarios.filter((usuario: any) => usuario.tipo === this.tipoSeleccionado);
-  }
+  
   
 
 }

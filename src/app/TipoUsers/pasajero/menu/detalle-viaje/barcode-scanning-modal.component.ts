@@ -57,6 +57,16 @@ import {
         background: transparent;
         z-index: 1;
       }
+
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5); /* Fondo semiopaco */
+        z-index: 10; /* Asegúrate de que esté por encima de otros elementos */
+}
   
       .square {
         position: absolute;
@@ -83,6 +93,7 @@ import {
     public squareElement: ElementRef<HTMLDivElement> | undefined;
   
     public isTorchAvailable = false;
+    public isScanning = false;
   
     constructor(
       private readonly ngZone: NgZone,
@@ -106,6 +117,7 @@ import {
     }
   
     public async closeModal(barcode?: Barcode): Promise<void> {
+      this.isScanning = false;
       this.modalController.dismiss({ barcode });
     }
   
@@ -114,8 +126,7 @@ import {
     }
   
     private async startScan(): Promise<void> {
-      // Hide everything behind the modal (see `src/theme/variables.scss`)
-      document.querySelector('body')?.classList.add('barcode-scanning-active');
+      this.isScanning = true;
   
       const options: StartScanOptions = {
         formats: this.formats,
@@ -177,8 +188,7 @@ import {
     }
   
     private async stopScan(): Promise<void> {
-      // Show everything behind the modal again
-      document.querySelector('body')?.classList.remove('barcode-scanning-active');
+      this.isScanning = false;
   
       await BarcodeScanner.stopScan();
     }

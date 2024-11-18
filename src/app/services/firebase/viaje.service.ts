@@ -59,27 +59,26 @@ export class ViajeService {
     return viajeActivo && viajeActivo.docs.length > 0;
   }
   
-  obtenerConductorPorId(conductorId: string): Observable<any> {
-    return this.firestore.collection('conductores').doc(conductorId).snapshotChanges().pipe(
-      map(doc => {
-        if (doc.payload.exists) {
-          const data = doc.payload.data() as any;
-          return { id: doc.payload.id, ...data };
-        }
-        return null;
-      }),
-      catchError(error => {
-        console.error('Error al obtener el conductor:', error);
-        return of(null);
-      })
-    );
+  obtenerViajePorConductor(conductorId: string): Observable<Viaje | null> {
+    return this.firestore.collection<Viaje>('viajes', ref => ref
+      .where('conductorId', '==', conductorId)
+      .limit(1))
+      .snapshotChanges()
+      .pipe(
+        map(actions => {
+          if (actions.length > 0) {
+            const data = actions[0].payload.doc.data() as Viaje;
+            const id = actions[0].payload.doc.id;
+            return { ...data, id };
+          }
+          return null;
+        })
+      );
   }
 
   obtenerUsuariosPorIds(ids: string[]): Observable<any[]> {
     return this.firestore.collection('usuarios', ref => ref.where('id', 'in', ids)).valueChanges();
   }
-  
-  
 
   obtenerViajesPorPasajero(pasajeroId: string): Observable<Viaje[]> {
     return this.firestore.collection<Viaje>('viajes', ref => 
