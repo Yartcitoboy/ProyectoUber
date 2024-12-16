@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 import { Viaje } from 'src/app/interfaces/viaje';
 import { map, catchError, from, throwError, of, tap } from 'rxjs';
+import { ref } from 'firebase/storage';
 @Injectable({
   providedIn: 'root'
 })
@@ -135,7 +136,14 @@ export class ViajeService {
   return this.firestore.collection('viajes').doc(viajeId).delete();
 }
 
-async reservarViaje(viajeId: string): Promise<boolean> {
+async verificaReservaViaje(pasajeroId: string): Promise<boolean> {
+  const viajes = await this.firestore.collection<Viaje>('viajes', ref =>
+    ref.where('pasajerosReservados', 'array-contains', pasajeroId)
+  ).get().toPromise();
+  return viajes?.empty === false;
+}
+
+async reservarViaje(viajeId: string, userId: string): Promise<any> {
   try {
     const user = await this.auth.currentUser;
     if (!user) {
@@ -189,5 +197,39 @@ async verificarExistenciaViaje(viajeId: string) {
     data: doc?.data()
   });
 }
+
+async cancelarReserva(viajeId: string, userId: string): Promise<any> {
+  try {
+    const viajeRef = this.firestore.collection('viajes').doc(viajeId);
+    const viajeDoc = await viajeRef.get().toPromise();
+
+    if (!viajeDoc || !viajeDoc.exists) {
+      throw new Error('El viaje no existe');
+    }
+
+    const viajeData = viajeDoc.data() as Viaje;
+    console.log('Datos del viaje:', viajeData); // Verifica los datos del viaje
+
+    if (!viajeData.pasajerosReservados?.includes(userId)) {
+      throw new Error('No tienes una reserva en este viaje');
+    }
+
+    const nuevosReservados = viajeData.pasajerosReservados.filter(id => id !== userId);
+    const nuevaCantidad = viajeData.cantidadPasajeros + 1;
+
+    await viajeRef.update({
+      pasajerosReservados: nuevosReservados,
+      cantidadPasajeros: nuevaCantidad,
+      estado: nuevaCantidad > 0 ? 'disponible' : 'completo'
+    });
+
+    console.log('Reserva cancelada. Nuevos pasajeros reservados:', nuevosReservados); // Verifica los nuevos pasajeros
+    return true;
+  } catch (error) {
+    console.error('Error al cancelar la reserva:', error);
+    throw error;
+  }
+}
   
+
 }

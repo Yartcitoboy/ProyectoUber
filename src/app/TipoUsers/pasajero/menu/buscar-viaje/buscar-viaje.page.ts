@@ -21,9 +21,6 @@ export class BuscarViajePage implements OnInit {
   constructor(
     private viajeService: ViajeService,
     private modalController: ModalController, // Modal Controller de Ionic
-    private authService: AuthService,
-    private platform: Platform,
-    private router: Router
   ) { }
 
   ngOnInit() {

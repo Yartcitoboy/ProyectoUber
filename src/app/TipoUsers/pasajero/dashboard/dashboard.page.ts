@@ -2,12 +2,14 @@ import { Component, OnInit , ViewChild} from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { person, time, home } from 'ionicons/icons';
-import { Page } from 'src/app/interfaces/page';
 import { NavController } from '@ionic/angular';
 import { IonMenu } from '@ionic/angular';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
+import { ViajeService } from 'src/app/services/firebase/viaje.service';
+import { Viaje } from 'src/app/interfaces/viaje';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -22,13 +24,16 @@ export class DashboardPage implements OnInit {
   public apellidoUsuario?: string;
   public tipoUsuario?: string;
 
+  viajes: Viaje[] = [];
+
 
   constructor(
     private menuController: MenuController ,
     private navCtrl: NavController,
     private authService: AuthService,
     private firestore: AngularFirestore,
-    private router: Router
+    private router: Router,
+    private viajeService: ViajeService
   ) { 
     addIcons({ person, time, home})
   }
@@ -41,6 +46,10 @@ export class DashboardPage implements OnInit {
 
   ngOnInit() {
     this.menuController.enable(true);
+
+    this.viajeService.obtenerViajes().subscribe(viajes => {
+      this.viajes = viajes;
+    });
 
     // this.map = await GoogleMap.create({
     //   id: 'my-map',
@@ -91,6 +100,11 @@ export class DashboardPage implements OnInit {
   irABuscarViaje() {
     console.log('Navegando a la página de Buscar Viaje');
     this.navCtrl.navigateRoot('/pasajero-buscar-viaje');
+  }
+
+  verDetalles(viajeId: string) {
+    console.log('Navegando a detalles del viaje con ID:', viajeId); // Para depuración
+    this.router.navigate(['/detalle-viaje', viajeId]);
   }
 };
   

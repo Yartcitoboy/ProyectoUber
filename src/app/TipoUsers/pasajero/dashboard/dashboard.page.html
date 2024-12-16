@@ -40,7 +40,7 @@
         <ion-button expand="default" class="yellow-button" routerLink="/buscar-viaje">
           Buscar Viaje
         </ion-button>
-        <ion-button expand="default" class="yellow-button" routerLink="/detalle-viaje">
+        <ion-button expand="default" class="yellow-button" *ngFor="let viaje of viajes" (click)="verDetalles(viaje.id)" >
           Ver Viaje
         </ion-button>
       </div>

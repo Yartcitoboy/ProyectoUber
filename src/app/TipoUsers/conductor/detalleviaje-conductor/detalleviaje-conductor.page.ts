@@ -24,7 +24,6 @@ export class DetalleviajeConductorPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('Iniciando DetalleviajeConductorPage');
     this.route.params.subscribe(params => {
       this.viajeId = params['viajeId'];
       console.log('ID del viaje recibido:', this.viajeId);
@@ -56,6 +55,14 @@ export class DetalleviajeConductorPage implements OnInit {
     );
   }
 
+  
+  // Método para obtener el total de asientos originales
+  getTotalAsientosOriginales(): number {
+    if (!this.viajeSeleccionado) return 0;
+    return this.viajeSeleccionado.cantidadPasajeros + 
+    (this.viajeSeleccionado.pasajerosReservados?.length || 0);
+  }
+  
   async cancelarViaje() {
     try {
       await this.viajeService.cancelarViaje(this.viajeId);
@@ -65,7 +72,7 @@ export class DetalleviajeConductorPage implements OnInit {
       console.error('Error al cancelar el viaje:', error);
     }
   }
-
+  
   async comenzarViaje() {
     const alert = await this.alertController.create({
       header: 'Información',
@@ -74,13 +81,5 @@ export class DetalleviajeConductorPage implements OnInit {
     });
     await alert.present();
   }
-
-  // Método para obtener el total de asientos originales
-  getTotalAsientosOriginales(): number {
-    if (!this.viajeSeleccionado) return 0;
-    return this.viajeSeleccionado.cantidadPasajeros + 
-           (this.viajeSeleccionado.pasajerosReservados?.length || 0);
-  }
-
   
 }

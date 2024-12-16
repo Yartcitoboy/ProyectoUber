@@ -4,6 +4,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { Viaje } from 'src/app/interfaces/viaje';
 import { Router } from '@angular/router';
 import { ViajeService } from 'src/app/services/firebase/viaje.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 @Component({
   selector: 'app-modal-detalles',
   template: `
@@ -199,16 +200,19 @@ export class ModalDetallesComponent implements OnInit {
   @Input() viajeId?: string;
   @Input() pasajerosReservados: string[] = [];
 
+
   constructor(
     private modalController: ModalController,
     private alertController: AlertController,
     private firestore: AngularFirestore,
     private router: Router,
-    private viajeService: ViajeService
+    private viajeService: ViajeService,
+    private auth: AngularFireAuth
   ) { }
 
   ngOnInit() {
     console.log('Modal inicializado con viajeId:', this.viajeId);
+    
   }
 
   cerrarModal() {
@@ -217,12 +221,34 @@ export class ModalDetallesComponent implements OnInit {
 
   async reservarViaje() {
     try {
-      if (!this.viajeId) {
-        throw new Error('ID de viaje no válido');
+      const userId = (await this.auth.currentUser)?.uid;
+      if (!userId) {
+        throw new Error('Usuario no autenticado');
       }
 
-      const resultado = await this.viajeService.reservarViaje(this.viajeId);
+      const tieneReserva = await this.viajeService.verificaReservaViaje(userId);
+      if (tieneReserva) {
+        const alert = await this.alertController.create({
+          header: 'Alerta',
+          message: 'Ya tienes una reserva activa. No puedes reservar otro viaje.',
+          buttons: ['OK']
+        });
+        await alert.present();
+        return;
+      }
 
+      const viajeReservado = await this.viajeService.verificaReservaViaje(this.viajeId!);
+      if (viajeReservado) {
+        const alert = await this.alertController.create({
+          header: 'Alerta',
+          message: 'Este viaje ya tiene reservas. No puedes reservarlo.',
+          buttons: ['OK']
+        });
+        await alert.present();
+        return;
+      }
+
+      const resultado = await this.viajeService.reservarViaje(this.viajeId!, userId);
       if (resultado) {
         const alert = await this.alertController.create({
           header: 'Éxito',
@@ -230,7 +256,7 @@ export class ModalDetallesComponent implements OnInit {
           buttons: [{
             text: 'OK',
             handler: () => {
-              this.router.navigate(['/detalle-viaje']);
+              this.router.navigate(['/detalle-viaje', resultado]);
             }
           }]
         });
@@ -241,6 +267,33 @@ export class ModalDetallesComponent implements OnInit {
       const alert = await this.alertController.create({
         header: 'Error',
         message: error.message || 'Error al reservar el viaje',
+        buttons: ['OK']
+      });
+      await alert.present();
+    }
+  }
+
+  async cancelarReserva() {
+    try {
+      const userId = (await this.auth.currentUser)?.uid;
+      if (!userId) {
+        throw new Error('Usuario no autenticado');
+      }
+  
+      const resultado = await this.viajeService.cancelarReserva(this.viajeId!, userId);
+      if (resultado) {
+        const alert = await this.alertController.create({
+          header: 'Éxito',
+          message: 'Reserva cancelada correctamente',
+          buttons: ['OK']
+        });
+        await alert.present();
+        this.cerrarModal();
+      }
+    } catch (error: any) {
+      const alert = await this.alertController.create({
+        header: 'Error',
+        message: error.message || 'Error al cancelar la reserva',
         buttons: ['OK']
       });
       await alert.present();
@@ -262,9 +315,5 @@ export class ModalDetallesComponent implements OnInit {
     return await modal.present();
   }
 
-
-  reservarViaje1() {
-    this.router.navigate(['/detalle-viaje']);
-  }
 
 }

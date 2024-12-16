@@ -101,7 +101,7 @@ const routes: Routes = [
     loadChildren: () => import('./TipoUsers/pasajero/menu/buscar-viaje/buscar-viaje.module').then( m => m.BuscarViajePageModule)
   },
   {
-    path: 'detalle-viaje',
+    path: 'detalle-viaje/:id',
     loadChildren: () => import('./TipoUsers/pasajero/menu/detalle-viaje/detalle-viaje.module').then( m => m.DetalleViajePageModule)
   },
   {

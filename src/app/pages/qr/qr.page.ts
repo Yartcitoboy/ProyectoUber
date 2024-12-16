@@ -21,47 +21,47 @@ export class QrPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.viajeId = this.route.snapshot.paramMap.get('viajeId') || '';
-    this.qrValue = `reservar-viaje/${this.viajeId}`;
+    // this.viajeId = this.route.snapshot.paramMap.get('viajeId') || '';
+    // this.qrValue = `reservar-viaje/${this.viajeId}`;
   }
 
-  async scanQRCode() {
-    try {
-      const data = await this.barcodeScanner.scan();
-      if (data.text) {
-        const viajeId = data.text.split('/').pop();
-        if (viajeId) {
-          await this.reservarViaje(viajeId);
-        }
-      }
-    } catch (error) {
-      const alert = await this.alertController.create({
-        header: 'Error',
-        message: 'Error al escanear el código QR',
-        buttons: ['OK'],
-      });
-      await alert.present();
-    }
-  }
+  // async scanQRCode() {
+  //   try {
+  //     const data = await this.barcodeScanner.scan();
+  //     if (data.text) {
+  //       const viajeId = data.text.split('/').pop();
+  //       if (viajeId) {
+  //         await this.reservarViaje(viajeId);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     const alert = await this.alertController.create({
+  //       header: 'Error',
+  //       message: 'Error al escanear el código QR',
+  //       buttons: ['OK'],
+  //     });
+  //     await alert.present();
+  //   }
+  // }
 
-  async reservarViaje(viajeId: string) {
-    try {
-      const resultado = await this.viajeService.reservarViaje(viajeId);
-      if (resultado) {
-        const alert = await this.alertController.create({
-          header: 'Éxito',
-          message: 'Viaje reservado correctamente',
-          buttons: ['OK'],
-        });
-        await alert.present();
-      }
-    } catch (error) {
-      const alert = await this.alertController.create({
-        header: 'Error',
-        message: 'Error al reservar el viaje',
-        buttons: ['OK'],
-      });
-      await alert.present();
-    }
-  }
+  // async reservarViaje(viajeId: string) {
+  //   try {
+  //     const resultado = await this.viajeService.reservarViaje(viajeId);
+  //     if (resultado) {
+  //       const alert = await this.alertController.create({
+  //         header: 'Éxito',
+  //         message: 'Viaje reservado correctamente',
+  //         buttons: ['OK'],
+  //       });
+  //       await alert.present();
+  //     }
+  //   } catch (error) {
+  //     const alert = await this.alertController.create({
+  //       header: 'Error',
+  //       message: 'Error al reservar el viaje',
+  //       buttons: ['OK'],
+  //     });
+  //     await alert.present();
+  //   }
+  // }
 }

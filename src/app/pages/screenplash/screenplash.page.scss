@@ -1,5 +1,3 @@
-@import 'animate.css';
-
 .center-content {
   height: 100%;
   display: flex;
@@ -22,19 +20,3 @@
   }
 }
 
-@keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-// Animación de salida
-.animate__fadeOutUp {
-  animation-duration: 0.8s;
-}
