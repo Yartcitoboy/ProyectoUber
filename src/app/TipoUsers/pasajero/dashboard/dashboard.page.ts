@@ -25,6 +25,7 @@ export class DashboardPage implements OnInit {
   public tipoUsuario?: string;
 
   viajes: Viaje[] = [];
+  viajeSeleccionado?: Viaje;
 
 
   constructor(
@@ -49,6 +50,10 @@ export class DashboardPage implements OnInit {
 
     this.viajeService.obtenerViajes().subscribe(viajes => {
       this.viajes = viajes;
+
+      if (this.viajes.length > 0) {
+        this.viajeSeleccionado = this.viajes[0]; // Por ejemplo, selecciona el primer viaje
+      }
     });
 
     // this.map = await GoogleMap.create({
@@ -68,6 +73,14 @@ export class DashboardPage implements OnInit {
       } else {
         this.navCtrl.navigateRoot('/loguear');
       }
+    });
+
+    this.firestore.collection('viajes').snapshotChanges().subscribe(actions => {
+      this.viajes = actions.map(a => {
+        const data = a.payload.doc.data() as Viaje;
+        const documentId = a.payload.doc.id; // Obtén el ID del documento
+        return { documentId, ...data }; // Combina el ID con los datos del viaje
+      });
     });
   }
 
@@ -102,9 +115,9 @@ export class DashboardPage implements OnInit {
     this.navCtrl.navigateRoot('/pasajero-buscar-viaje');
   }
 
-  verDetalles(viajeId: string) {
-    console.log('Navegando a detalles del viaje con ID:', viajeId); // Para depuración
-    this.router.navigate(['/detalle-viaje', viajeId]);
+  verDetalles(viaje: Viaje) {
+    console.log('Navegando a detalles del viaje con ID:', viaje.id); // Para depuración
+    this.router.navigate(['/detalle-viaje', viaje.id]);
   }
 };
   
